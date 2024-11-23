@@ -1,0 +1,598 @@
+.Template_id_contian {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.Head_title {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.Template_id_Card {
+    padding-top: 20px;
+}
+
+.datatable.Table {
+    margin: 0;
+}
+
+.datatable.Table thead th,
+.datatable.Table tbody td {
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+
+.datatable.Table thead th:first-child,
+.datatable.Table td:first-child {
+    border-left: 1px solid #bbbaba;
+}
+
+.datatable.Table thead tr th {
+    border-top: 1px solid #bbbaba;
+}
+
+.datatable.Table thead th {
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.datatable.Table thead th span {
+    font-size: 13px;
+}
+
+.datatable.Table td {
+    font-size: 12px;
+    font-weight: 400;
+    background-color: #fbf0ef;
+    vertical-align: middle;
+}
+
+.datatable.Table td p {
+    width: 250px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.datatable.Table td input {
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.datatable.Table td button {
+    border: none;
+    /* background-color: #343a40; */
+    background-color: #f90000;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    margin-top: 5px;
+}
+
+.datatable.Table td button.status_deactive,
+.datatable.Table td.status_deactive {
+    color: #f90000;
+}
+
+.datatable.Table td button.status_active,
+.datatable.Table td.status_active {
+    color: green;
+}
+
+.datatable.Table td button:hover {
+    background-color: #161616;
+}
+
+.datatable.Table td button.download_icon {
+    background-color: #00acc1;
+}
+
+.datatable.Table td button img {
+    width: 14px;
+    filter: invert();
+}
+
+.add_btn6 {
+    border: none;
+    background-color: #343a40;
+    font-size: 14px;
+    width: 85px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+}
+
+.add_btn6 img {
+    width: 18px;
+    filter: invert();
+    margin-right: 5px;
+}
+
+.dt-layout-full:has(.dataTable) {
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+
+.row.dt-layout-table {
+    margin: 0;
+}
+
+.dt-info {
+    font-weight: 400;
+}
+
+/* modal style start */
+#Add_btn_modal {
+    padding: 0;
+}
+
+/* #Add_btn_modal .modal-dialog{
+    max-width: 800px;
+} */
+.Modal_table {
+    width: 100%;
+}
+
+
+.Modal_table td {
+    font-size: 13px;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    background-color: #E6F5EB;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.Modal_table td input,
+.Modal_table td textarea,
+.Modal_table td select {
+    font-size: 13px;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #dee2e6;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+.Modal_table td select option,
+.Modal_table td label {
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.Modal_table td input.radio {
+    width: fit-content;
+    margin-right: 5px;
+    margin-left: 15px;
+}
+
+.Modal_table td input.radio:first-child {
+    margin-left: 0;
+}
+
+.Modal_table td input:focus-visible,
+.Modal_table td textarea:focus-visible,
+.Modal_table td select:focus-visible {
+    outline: none;
+}
+
+.Modal_table td input::placeholder {
+    font-weight: 400;
+}
+
+.Modal_table td button {
+    font-size: 13px;
+    background-color: #343a40;
+    color: #fff;
+    width: 85px;
+    border: none;
+    padding: 7px 0;
+    border-radius: 5px;
+}
+
+.required_icon {
+    font-size: 12px;
+    color: #f90000;
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.modal-header {
+    background-color: gray;
+}
+
+.btn-close {
+    filter: invert();
+    opacity: 1;
+}
+
+.Modal_Table_contain {
+    max-height: 375px;
+    overflow: auto;
+}
+
+
+@media(max-width:768px) {
+
+    #Table_wrapper .dt-layout-start,
+    #Table_wrapper .dt-layout-end {
+        width: fit-content;
+    }
+}
+
+@media(max-width:480px) {
+    .Head_title {
+        text-align: left;
+        padding-left: 20px;
+    }
+
+}
+
+@media(max-width:332px) {
+    .add_btn6 {
+        position: static;
+        margin-top: 5px;
+    }
+}
+
+
+.green-text {
+    color: green;
+}
+
+.Modal_table td:has(> .check-dealer-button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal_table td button.check-dealer-button {
+    text-wrap: nowrap;
+    width: 130px;
+    margin-left: 5px;
+}
+
+.Modal_table td button.bg_blue {
+    background-color: #00acc1;
+    color: #fff;
+}
+
+.Modal_table td:has(> .PSIcon) {
+
+    position: relative;
+}
+
+.Modal_table td:has(> .PSIcon) input,
+.Modal_table td:has(> .PSIcon) input:-internal-autofill-selected {
+    background-color: #fff;
+}
+
+.Modal_table td button.PSIcon {
+    width: 30px;
+    background-color: transparent;
+    position: absolute;
+    right: 15px;
+    top: 11px;
+}
+
+.PSIcon svg {
+    color: #000;
+}
+
+
+.Dealer_Mtable.Modal_table tr td:first-child {
+    text-align: left;
+}
+
+/* ----g-- */
+
+.Template_id_contian .Table {
+    padding-left: 10px;
+}
+
+.Template_id_contian .Table tr td button {
+    background-color: transparent;
+    color: #000;
+    box-shadow: none;
+}
+
+.icon-spacing {
+    margin-right: 8px;
+}
+
+.BoxShadowNone .MuiMenu-paper {
+    box-shadow: rgba(214, 213, 213, 0.35) 0px 5px 15px;
+}
+
+
+
+/* form */
+.manage_dealer_form .modal-dialog {
+    max-width: none;
+}
+
+.manage_dealer_form.wb_mange_content .modal-content {
+    width: 750px;
+    max-width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 0px;
+    border-radius: 10px;
+    border: none;
+}
+
+.manage_dealer_form.wb_mange_content .modal-content .modal-header {
+    display: initial;
+}
+
+.manage_dealer_form.wb_mange_content .modal-content .modal-header .modal-title {
+    text-align: center;
+}
+
+.manage_dealer_form .form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.manage_dealer_form .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.manage_dealer_form .form-group {
+    flex: 1;
+    margin-right: 15px;
+    margin-bottom: 7px;
+    flex-direction: column;
+    align-items: self-start;
+    position: relative;
+}
+
+.manage_dealer_form .form-group:last-child {
+    margin-right: 0;
+}
+
+.manage_dealer_form .form-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.manage_dealer_form .form-group.password_form_group input {
+    width: 218px;
+}
+
+.manage_dealer_form .form-group input:focus,
+.manage_dealer_form .form-group input:hover {
+    border-color: #00acc1;
+}
+
+.manage_dealer_form .check-dealer-button {
+    margin-top: 10px;
+    background-color: #00acc1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.manage_dealer_form .check-dealer-button:hover {
+    background-color: #048596;
+}
+
+.manage_dealer_form .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    position: absolute;
+    bottom: -23px;
+
+}
+
+.manage_dealer_form .PSIcon {
+    position: absolute;
+    margin-top: 13px;
+    border: none;
+    right: 7px;
+    top: 27px;
+    background-color: transparent;
+}
+
+.manage_dealer_form .modal-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+    .manage_dealer_form .modal-content {
+        width: 100%;
+        padding: 15px;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .manage_dealer_form .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .manage_dealer_form .form-group {
+        margin-right: 0;
+    }
+
+    .manage_dealer_form .form-group.password_form_group input {
+        width: 100%;
+    }
+
+    .manage_dealer_form .check-dealer-button {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .manage_dealer_form .modal-content {
+        padding: 8px;
+    }
+
+    .manage_dealer_form .form-group input {
+        padding: 6px;
+    }
+
+    .manage_dealer_form .form-group.password_form_group input {
+        width: 100%;
+    }
+    .manage_dealer_form .check-dealer-button {
+        padding: 6px;
+    }
+}
+
+button.check-dealer-button {
+    position: absolute;
+    right: 0;
+    top: 22px;
+}
+
+.modal-footer button.btn.btn-primary {
+    background-color: #00acc1;
+    border: 1px solid #00acc1;
+}
+
+p.validation_green {
+    position: absolute;
+    bottom: -23px;
+}
+
+
+/* General form styling */
+#form-row {
+    margin-bottom: 15px;
+  }
+  
+  #form-group {
+    margin-bottom: 10px;
+  }
+  
+  #form-row label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  #required_icon {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Checkbox Group Styling */
+  #checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  #checkbox-item {
+    display: flex;
+    align-items: baseline;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  
+  #checkbox-item input[type="checkbox"] {
+    margin-right: 5px;
+    transform: scale(1.2); /* Slightly increase the size of the checkbox */
+  }
+  
+  #checkbox-item label {
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* Focus and Hover Effects */
+  #checkbox-item input[type="checkbox"]:focus {
+    outline: 2px solid #4D90FE;
+  }
+  
+  #checkbox-item input[type="checkbox"]:hover {
+    cursor: pointer;
+  }
+  
+  /* Styling for the entire form */
+  #form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Error message styling (if you have validation messages) */
+  #error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Optional: Button Styling */
+  #button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive design: stack checkboxes in small screens */
+  @media (max-width: 600px) {
+    #checkbox-group {
+      flex-direction: column;
+    }
+  
+    #checkbox-item {
+      margin-right: 0;
+    }
+  }
+  

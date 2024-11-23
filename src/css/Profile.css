@@ -1,0 +1,117 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 70vh; */
+  background-color: #f5f5f5;
+}
+
+.profile-form,
+.profile-view {
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+.profile-view p {
+  margin-bottom: 10px;
+}
+.profile-view p:last-child {
+  margin-bottom: 0;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.save_edit_btn_profile {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.save_edit_btn_profile:hover {
+  background-color: #0056b3;
+}
+.save_edit_btn_profile.Cancel {
+  background-color: red;
+  color: #fff;
+}
+.save_edit_btn_profile.Cancel:hover {
+  background-color: rgb(212, 7, 7);
+}
+.profile-image,
+.preview-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+.ProfileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.form-group:has(> .EditProfileBtn) {
+  position: relative;
+  text-align: center;
+}
+.EditProfileBtn {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+}
+.profile-form-contain,
+.profile-view-contain {
+  max-width: 400px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.ProfileCardTitle {
+  background-color: #8d8d8d;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #fff;
+  padding: 7px;
+  text-align: center;
+}
+.profile_title_l {
+  background-color: #549be7;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
+  width: 115px;
+  height: 114px;
+  margin: auto;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}

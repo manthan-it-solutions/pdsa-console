@@ -1,0 +1,210 @@
+.Header {
+    color: #555555;
+    width: 100%;
+    border: 0;
+    display: block;
+    padding: 10px 0;
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+    box-shadow: none;
+    min-height: 50px;
+    transition: all 150ms ease 0s;
+    padding-top: 10px;
+    border-bottom: 0;
+    /* border-radius: 3px; */
+    margin-bottom: 0;
+    /* background-color: #f90000; */
+    background-color: #212529;
+    /* background-color: #acb98a; */
+}
+
+.Header_contain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.Header_menu {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#Header_menu {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Header_end {
+    display: flex;
+    align-items: center;
+}
+
+.Header_end h4 {
+    margin: 0;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.Header_menu button,
+.Header_end button {
+    background-color: #fff;
+    border-radius: 50%;
+    border: none;
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+}
+
+.Header_menu img {
+    width: 17px;
+}
+
+.Header_end img {
+    width: 17px;
+}
+
+.Header_content {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    /* background-color: #fff; */
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: #fff;
+}
+
+.Header_content a span {
+    font-size: 18px;
+    color: #eff59a;
+}
+
+.Header_content p {
+    margin-right: 15px;
+    margin-bottom: 0px;
+}
+
+.Header_content p:last-child {
+    margin-right: 0;
+}
+
+.User_drop {
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 200px;
+    height: 150px;
+    top: 100%;
+    border: 0;
+    margin: 2px 0 0;
+    z-index: 1000;
+    font-size: 14px;
+    min-width: 160px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    list-style: none;
+    text-align: left;
+    border-radius: 3px;
+    background-clip: padding-box;
+    background-color: #FFF;
+    padding: 15px 0;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: none;
+    border: 2px solid #424141;
+}
+
+.User_drop.show {
+    display: block;
+}
+
+.User_drop a,
+.User_drop button {
+    clear: both;
+    color: #333;
+    margin: 0 5px;
+    display: block;
+    padding: 10px 20px;
+    position: relative;
+    font-size: 13px;
+    min-height: unset;
+    transition: all 150ms linear;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5em;
+    white-space: nowrap;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+.User_drop button {
+    width: 95%;
+    text-align: left;
+    height: auto;
+    padding: 10px 20px;
+}
+
+.User_drop a:hover,
+.User_drop button:hover {
+    color: #FFF;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(156, 39, 176, .4);
+    /* background-color: var(--praimary-color); */
+    background-color: #424141;
+}
+
+.User_drop a:last-child {
+    border-top: 1px solid var(--praimary-color);
+    margin-top: 10px;
+}
+
+#Log_out_modal .modal-header {
+    background-color: gray;
+}
+
+#Log_out_modal .modal-title {
+    color: #fff;
+}
+
+#User_close {
+    width: 35px;
+    /* Set the width of the button */
+    height: 35px;
+    /* Set the height of the button */
+    border: none;
+    /* Remove the border */
+    border-radius: 50%;
+    /* Make it circular */
+    background-size: cover;
+    /* Make sure the background image covers the entire button */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Prevent the image from repeating */
+    overflow: hidden;
+    /* Hide any overflow */
+    cursor: pointer;
+    /* Make it look clickable */
+}
+
+.Header_content.admin_nav_item {
+    gap: 40px;
+
+}
+
+.Header_content.admin_nav_item p {
+    color: #fff;
+}
+
+@media (max-width: 992px) {
+    .Header_content.admin_nav_item {
+        gap: initial;
+    }
+}

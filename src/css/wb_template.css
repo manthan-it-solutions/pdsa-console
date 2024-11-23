@@ -1,0 +1,452 @@
+.Template_id_contian1 {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.Head_titleTemplate {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.Template_id_Card1 {
+    padding-top: 20px;
+}
+
+.Table {
+    margin: 0;
+}
+
+.Table thead th,
+.Table tbody td {
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+
+.Table thead th:first-child,
+.Table td:first-child {
+    border-left: 1px solid #bbbaba;
+}
+
+.Table thead tr th {
+    border-top: 1px solid #bbbaba;
+}
+
+.Table thead th {
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.Table thead th span {
+    font-size: 13px;
+}
+
+.Table td {
+    font-size: 12px;
+    font-weight: 400;
+    background-color: #fbf0ef;
+    vertical-align: middle;
+}
+
+.Table td p {
+    width: 250px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.Table td input {
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.Table td button {
+    border: none;
+    /* background-color: #343a40; */
+    background-color: #f90000;
+    color: #fff;
+    padding: 3px 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    margin-top: 5px;
+}
+
+.Table td button.status_deactive,
+.Table td.status_deactive {
+    color: #f90000;
+}
+
+.Table td button.status_active,
+.Table td.status_active {
+    color: green;
+}
+
+.Table td button:hover {
+    background-color: #161616;
+}
+
+.Table td button.download_icon {
+    background-color: #00acc1;
+}
+
+.Table td button img {
+    width: 16px;
+    filter: invert();
+}
+
+.add_btn1 {
+    border: none;
+    background-color: #343a40;
+    font-size: 14px;
+    /* width: 85px; */
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    cursor: pointer;
+}
+
+.add_btn1 img {
+    width: 18px;
+    filter: invert();
+    margin-right: 5px;
+}
+
+.dt-layout-full:has() {
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+
+.row.dt-layout-table {
+    margin: 0;
+}
+
+.dt-info {
+    font-weight: 400;
+}
+
+.modal-title {
+    color: #fff;
+}
+
+.modal-header {
+    background-color: gray;
+}
+
+.btn-close {
+    filter: invert();
+    opacity: 1;
+}
+
+.Modal_Table_contain {
+    max-height: 375px;
+    overflow: auto;
+}
+
+.Modal_Table_contain h5 {
+    color: #f90000;
+    text-align: center;
+}
+
+.Modal_Table_contain p {
+    font-weight: 400;
+}
+
+
+.WMadd_btntemp1.add_btn1 {
+    width: 130px;
+}
+
+label.buttonText_1111 {
+    margin-bottom: 0px !important;
+    margin-right: 30px;
+    width: 63px;
+}
+
+.viewCount {
+    margin-top: 24px;
+}
+
+.actionBtn {
+    width: 40px !important;
+}
+
+li.css-1t6ue01-MuiListSubheader-root {
+    position: static;
+}
+
+div#tableContain {
+    max-height: 500px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 10px 10px;
+}
+
+.pending {
+    color: yellow;
+    font-size: 13px;
+}
+
+.approved {
+    color: green;
+    font-size: 13px;
+}
+
+.rejected {
+    color: #f90000;
+    font-size: 13px;
+}
+
+/* new */
+.modal-title.m_title {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+@media(max-width:768px) {
+
+    #Table_wrapper .dt-layout-start,
+    #Table_wrapper .dt-layout-end {
+        width: fit-content;
+    }
+}
+
+@media(max-width:498px) {
+    .Head_titleTemplate {
+        text-align: left;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}
+
+@media(max-width:375px) {
+    .Head_titleTemplate .add_btn1 {
+        position: static;
+        margin-left: 5px;
+        margin-top: 5px;
+        display: inline-block;
+    }
+
+    .Head_titleTemplate {
+        text-align: center;
+    }
+}
+
+
+/* Modal overlay to cover the whole screen */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal content styling */
+#modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+}
+
+/* Title styling */
+#file-modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Styling for image preview */
+#image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for PDF preview */
+#pdf-preview {
+    width: 100%;
+    max-height: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for video preview */
+#video-preview {
+    width: 100%;
+    max-height: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Message for unsupported file type */
+#unsupported-file {
+    color: #ff4757;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+/* Close button styling */
+#modal-close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4757;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#modal-close-button:hover {
+    background-color: #ff6b81;
+}
+
+.Head_titleTemplate.new_title_c {
+    text-align: center;
+}
+
+.custom_search_data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+#dateFilterContainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+#dateFilterContainer input[type="date"] {
+    padding: 8px 12px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #333;
+    width: 150px;
+}
+
+#dateFilterContainer button {
+    padding: 8px 16px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#dateFilterContainer button:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Modal overlay */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal content */
+#modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    /* Scrollable if content overflows */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Close button styling */
+#modal-content button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#modal-content button:hover {
+    background-color: #0056b3;
+}
+
+/* Image, video, and embed preview styles */
+#modal-content img,
+#modal-content video,
+#modal-content embed {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+}
+
+.Head_title.transition_head_title .TransactionSearch.new_search_t {
+    right: 10px;
+}

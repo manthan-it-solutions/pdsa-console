@@ -1,0 +1,10 @@
+.Error_contain{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+}
+.Error_contain img{
+margin-top: 50px;
+}
+

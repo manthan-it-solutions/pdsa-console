@@ -1,0 +1,207 @@
+.Creattebot {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* createbot.css */
+/* Debugging Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  /* Ensure it's above other content */
+}
+
+.modal1 {
+  background-color: white;
+  /* Background color for modal content */
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  /* Higher than overlay to ensure visibility */
+  /*  border: 2px solid red; Debugging border */
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.modal1 input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* background-color: yellow;  Debugging background */
+}
+
+.create_bot_btn {
+  border: none;
+  background-color: #343a40;
+  font-size: 14px;
+  color: #fff;
+  padding: 7px 10px 7px 4px;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: .4s;
+  float: right;
+  cursor: pointer;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.create_bot_btn img {
+  width: 18px;
+  filter: invert();
+}
+
+.Modal_save_btn {
+  background-color: #00acc1;
+}
+
+.Modal_cancel_btn {
+  background-color: red;
+}
+
+.Modal_save_btn,
+.Modal_cancel_btn {
+  font-size: 13px;
+
+  color: #fff;
+  width: 85px;
+  border: none;
+  padding: 7px 0;
+  border-radius: 5px;
+}
+
+.modal_input_bot {
+  outline: none;
+  border: 1px solid #ddd;
+}
+
+.modal_input_bot:focus,
+.modal_input_bot:hover {
+  border: 1px solid #343a40;
+}
+.modal1{
+  position: relative;
+}
+.modal1 h5 {
+  font-size: 16px;
+}
+
+.bot_modal_container {
+  flex-direction: column;
+}
+
+.bot_modal_close_btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  filter: none;
+}
+.Table_bot tr th {
+  background-color: #e1dede;
+  font-size: 13px;
+  vertical-align: middle;
+  padding: 10px;
+}
+.CreatBotSelection.form-select{
+  min-width: 125px;
+  width: 100%;
+  font-size: 13px;
+  margin: 0 10px;
+}
+.CreatBotSelection.form-select:focus{
+  outline: none;
+  box-shadow: none;
+  border-color: #dee2e6;
+}
+.FormGroup label{
+  margin-bottom: 5px;
+}
+.FormGroup{
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.FormGroup:last-child{
+  margin-bottom: 0;
+}
+.FormGroupError{
+  position: absolute;
+  bottom: -18px;
+  left: 5px;
+  font-size: 11px;
+  color: red;
+  margin-top: 5px;
+}
+.FormGroup input,.FormGroup select,.FormGroup textarea{
+  color: #000;
+  font-size: 13px;
+  padding: 7px 10px;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 5px;
+  width: 100%;
+
+}
+.FormGroup input::placeholder,.FormGroup textarea::placeholder{
+  color: #000;
+}
+.FormGroup select{
+  padding-left: 6px;
+}
+.CreateBotAddBtn{
+  border: none;
+  background-color: #343a40;
+  font-size: 14px;
+  /* width: 85px; */
+  color: #fff;
+  padding: 7px;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: .4s;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  cursor: pointer;
+  width: 110px;
+}
+.CreateBotAddBtn img{
+  width: 18px;
+    filter: invert();
+    margin-right: 5px;
+}
+@media(max-width:320px){
+  .Template_id_contian2 .Head_title2{
+    text-align: left;
+  }
+  
+}
+@media(max-width:275px){
+  .CreateBotAddBtn{
+    position: static;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  .Template_id_contian2 .Head_title2{
+    text-align: center;
+  }
+}

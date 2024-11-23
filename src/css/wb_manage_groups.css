@@ -1,0 +1,202 @@
+.Manage_groups_contian{ 
+    background-color: #fff;
+    border-radius: 10px;
+}
+.Head_title3{ 
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+.Manage_groups_Card{
+    padding-top: 20px;
+}
+
+.Table{
+    margin: 0;
+    width: 100%;
+}
+.Table thead th,.datatable.Table tbody td{
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+.Table thead th:first-child,.datatable.Table td:first-child{
+    border-left: 1px solid #bbbaba;
+}
+.Table thead tr th{
+    border-top: 1px solid #bbbaba;
+}
+.Table thead th{
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+.Table td{
+    font-size: 12px;
+    font-weight: 400;
+    background-color:#fbf0ef;
+    vertical-align: middle;
+}
+.Table td p{
+    width: 250px;
+    font-size: 13px;
+    font-weight: 400;
+}
+.Table td input{
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+.Table td button,.View_btn{
+    border: none;
+    background-color: #f90000;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    transition: .4s;
+    margin-top: 5px;
+}
+.Table td.status{
+    color: green;
+}
+.Table td button.download_icon,.Table td button.View_btn{
+    background-color: #00acc1;
+}
+
+.Table td button img,.Table td button.View_btn img{
+    width: 16px;
+    filter: invert();
+}
+.add_btn4,.exist_btn{
+    border: none;
+    background-color: #343a40;
+    font-size: 14px;
+    width: 85px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    transition: .4s;
+}
+.add_btn4{
+    right: 100px;
+}
+.add_btn4:hover,.exist_btn:hover{
+    background-color: #fff;
+    color: #343a40;
+}
+.add_btn4 img,.exist_btn img{
+    width: 18px;
+    filter: invert();
+    margin-right: 5px;
+    transition: .4s;
+}
+.add_btn4:hover img,.exist_btn:hover img{
+    filter: none;
+}
+.dt-layout-full:has(.dataTable){
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+.row.dt-layout-table{
+    margin: 0;  
+}
+.dt-info{
+    font-weight: 400;
+}
+/* modal style start */
+#Add_btn_modal{
+    padding: 0;
+}
+.Modal_table{
+    width: 100%;
+}
+.Modal_table td{
+    font-size: 13px;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    background-color: #E6F5EB;
+    text-align: center;
+    vertical-align: middle;
+}
+.Modal_table td input,.Modal_table td textarea,.Modal_table td select{
+    font-size: 13px;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #dee2e6;
+    font-weight: 400;
+    border-radius: 5px;
+}
+.Modal_table td input:focus-visible,.Modal_table td textarea:focus-visible,.Modal_table td select:focus-visible{
+    outline: none;
+}
+.Modal_table td input::placeholder{
+    font-weight: 400;
+}
+.Modal_table td button{
+    font-size: 13px;
+    background-color: #343a40;
+    color: #fff;
+    width: 85px;
+    border: none;
+    padding: 7px 0;
+    border-radius: 5px;
+}
+.required_icon{
+    font-size: 12px;
+    color: #f90000;
+}
+
+.modal-title{
+    color: #fff;
+}
+.modal-header{
+    background-color: gray;
+}
+.btn-close{
+    filter: invert();
+    opacity: 1;
+}
+@media(max-width:768px){
+    #Table_wrapper .dt-layout-start,#Table_wrapper .dt-layout-end{
+        width: fit-content;
+    }
+
+}
+@media(max-width:570px){
+    .Head_title3{
+        text-align: left;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media(max-width:395px){
+    .add_btn4,.exist_btn {
+        position: static;
+        margin-top: 5px;
+        margin-left: 5px;
+    }
+    .exist_btn{
+    }
+
+}
+
+
+.LWbManage{
+    background-color: transparent !important;
+}

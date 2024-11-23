@@ -1,0 +1,238 @@
+.WB_Quick_contian{
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.Head_title{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* margin-bottom: 20px; */
+}
+.WB_Quick_Card{
+    padding: 20px;
+}
+.WB_Quick_Card textarea{
+    width: 100%;
+    padding: 10px;
+    font-weight: 400;
+    border: 1px solid #b7b5b5;
+}
+.icon{
+    width: 20px;
+}
+.Group_name > .Group_d{
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #b7b5b5;
+    min-height: 105px;
+}
+.List_cardQuick{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.List_cardQuick span{
+    margin-top: 10px;
+}
+
+.Button_list button{
+    margin-right: 5px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 7px 0;
+    width: 95px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.Button_list .clear_bg{background-color: #e53935;}
+.Button_list .unique_bg{background-color: #00acc1;}
+.Button_list .impoer_bg{background-color: #fb8c00;}
+.List button:last-child{
+    margin-right: 0;
+}
+.Button_list button img{
+    margin-right: 5px;
+    filter: invert();
+}
+.Plus_icon{
+    display: flex;
+    align-items: center;
+    color: black;
+}
+.Plus_icon span{
+    font-size: 22px;
+    line-height: 1px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.form_group1{
+    margin-top: 10px;
+}
+.form_group1 label{
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.form_groupInput input,.form_group1 select{
+    width: 100%;
+    border: 1px solid #b7b5b5;
+    font-weight: 400;
+    padding: 10px;
+}
+.form_groupInput input.p_7{
+    padding: 7px;
+}
+
+.form_group1 textarea{
+    border: 1px solid #b7b5b5;
+    padding: 10px;
+}
+.form_group1 textarea:focus-visible,.form_group1 select:focus-visible{
+    outline: none;
+}
+.form_group1 button{
+    border: none;
+    background-color: #343a40;
+    color: #fff;
+    padding: 7px 0;
+    width: 130px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    margin-top: 5px;
+}
+.form_group1 button:hover{
+    background-color: #161616;
+
+}
+
+/* sms preview modal style */
+
+#Sms_privew_modal.modal{
+    padding: 0;
+}
+#Sms_privew_modal.modal .modal-dialog{
+    max-width: 600px;
+}
+.Modal_table{
+    width: 100%;
+}
+.Modal_table th,.Modal_table td{
+    font-size: 13px;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    vertical-align: middle;
+}
+.Modal_table th,.Modal_table tfoot td{
+    font-weight: 600;
+    background-color: #E6F5EB;
+}
+.Modal_table .Message_modal p{
+    width: 100%;
+    max-height: 31px;
+    overflow: auto;
+    font-weight: 400;
+    font-size: 13px;
+    scrollbar-width: thin;
+    text-align: left;
+}
+.Modal_table td input,.Modal_table td textarea{
+    font-size: 13px;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #dee2e6;
+    font-weight: 400;
+    border-radius: 5px;
+}
+.Modal_table td input:focus-visible,.Modal_table td textarea:focus-visible{
+    outline: none;
+}
+.Modal_table td input::placeholder{
+    font-weight: 400;
+}
+.Modal_table td button{
+    font-size: 13px;
+    background-color: #343a40;
+    color: #fff;
+    width: 85px;
+    border: none;
+    padding: 7px 0;
+    border-radius: 5px;
+}
+.required_icon{
+    font-size: 12px;
+    color: #f90000;
+}
+.modal-title{
+    color: #fff;
+}
+.modal-header{
+    background-color: gray;
+}
+.btn-close{
+    filter: invert();
+    opacity: 1;
+}
+#Sms_privew_modal .form_group1 button{
+    margin-top: 12px;
+}
+
+
+/* group css start */
+.Group_d:has(> .Group_list){
+    padding: 10px;
+    height: 105px;
+}
+.Group_list{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    overflow: auto;
+}
+.Group_list li{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 5px;
+}
+.Group_list li:last-child{
+    margin-bottom: 0;
+}
+.Group_list li input{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+.Group_list li p{
+    margin: 0;
+}
+/* group css end */
+
+
+
+#image_upload{
+font-size: 11px;
+}
+
+
+
+.upfile{
+    border:1px solid black;
+  border-radius: 4px;
+}
+
+
+
+.input_upload{
+    padding: 6px;
+    border: 1px solid black;
+    background-color: #fdfafac9;
+
+}

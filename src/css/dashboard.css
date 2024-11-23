@@ -1,0 +1,246 @@
+.Dashboard_contain{ 
+    background-color: #fff;
+    border-radius: 10px;
+}
+.Head_title{ 
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+.Head_title span{
+    color: #fff;
+    font-size: 22px;
+}
+.Dashboard_card{
+    padding: 20px;
+    padding-top: 10px;
+}
+.Dashboard_card h5{
+    color: red;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    background-color: #f5f3f3;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;*/
+}
+.border_top{
+    padding-top: 15px;
+    margin-top: 10px;
+    border-top: 2px solid #dddada;
+}
+.Today_card{
+    color: rgba(0, 0, 0, 0.87);
+    width: 100%;
+    border: 0;
+    display: flex;
+    position: relative;
+    font-size: .875rem;
+    min-width: 0;
+    word-wrap: break-word;
+    background: #FFF;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    margin-top: 30px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    flex-direction: column;
+    padding: 10px;
+    padding-left: 0;
+}
+.Today_card_img_contain{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 15px;
+}
+.Today_card_img_contain span{
+    font-size: 14px;
+    color: #999;
+}
+.Today_card_img{
+    float: left;
+    padding: 15px;
+    margin-top: -40px;
+    margin-right: 15px;
+    border-radius: 3px;
+    background-color: #999;
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(255, 152, 0, .4);
+    border-radius: 50%;
+}
+.Today_card_img img{
+    width: 35px;
+    height: 35px;
+    overflow: unset;
+    text-align: center;
+    line-height: 56px;
+    margin-bottom: 1px;
+    filter: invert();
+}
+.Today_card div h4{
+    color: #999;
+    margin: 0;
+    font-size: 14px;
+    margin-top: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    border-top: 1px solid #b9b8b8;
+    text-align: center;
+    line-height: 2;
+}
+.bg_submission{    background: linear-gradient(60deg, #ffa726, #fb8c00);}
+.bg_delivered{background: linear-gradient(60deg, #8cc751, #8cc751);}
+.bg_failed{    background: linear-gradient(60deg, #ef5350, #e53935);}
+.bg_pending{ background: linear-gradient(60deg, #26c6da, #00acc1);}
+.bg_send{background: linear-gradient(60deg, #073e47, #073e47);}
+
+/* bar style start */
+
+.Today_bar{
+    /* padding: 10px; */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.Bar_contain{
+    padding: 10px;
+    height: 260px;
+}
+#myChart {
+    width: 100%; 
+  }
+.Bar_contain div:not(.Bar_persent){
+    margin-top: 5px;
+    height: 30px;
+    height: 65px;
+}
+.Bar_contain div:nth-child(1){
+    margin-top: 0;
+}
+/* .Submission_bar{
+    width: 35%;
+    background-color: #00acc1;
+} */
+/* .Delivered_bar{
+    width: 40%;
+    background-color: #8cc751;
+} */
+/* .Failed_bar{
+    width: 15%;
+    background-color: #e53935;
+} */
+.Pending_bar{
+    width: 10%;
+    background-color: #fb8c00;
+}
+.Bar_persent{
+    padding: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.Bar_persent p{
+    padding: 0 10px;
+    border-right: 2px solid grey;
+}
+.Bar_persent p:first-child{
+    padding-left: 0;
+}
+.Today_bar h4{
+    background-color: #8d8d8d;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 7px;
+    text-align: center;
+}
+/* bar style end */
+
+/* recharge table start */
+.Recharge_section{
+    padding-top: 15px;
+    border-top: 2px solid #dddada;
+}
+.Recharge_log{
+    padding-bottom: 10px ;
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+
+}
+.Recharge_log h4{
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #f90000;
+    color: #eff59a;
+    padding: 7px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+}
+.table_contain{
+    padding: 0 10px;
+    /* height: 176px; */
+    overflow: auto;
+}
+.Recharge_log table{
+    margin: 0;
+}
+.Recharge_log table thead th,.Recharge_log table td{
+    border: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+.Recharge_log table thead th{
+    background-color: #e1dede;
+    font-size: 13px;
+}
+.Recharge_log table td{
+    font-size: 12px;
+    font-weight: 400;
+    background-color:#fbf0ef;
+}
+
+.Width20{
+    width: 22px;
+}
+
+/* new chart */
+
+
+/* loader style start */
+
+#Loader_contain{
+    position: fixed;    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999999;
+    background-color: #0000003f;
+}
+#loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* loader style end */

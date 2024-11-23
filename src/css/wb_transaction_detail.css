@@ -1,0 +1,379 @@
+.Manage_voice_contian {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.Head_title {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.Manage_voice_Card {
+    padding-top: 20px;
+}
+
+.datatable.Table {
+    margin: 0;
+}
+
+.datatable.Table thead th,
+.datatable.Table tbody td {
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+
+.datatable.Table thead th:first-child,
+.datatable.Table td:first-child {
+    border-left: 1px solid #bbbaba;
+}
+
+.datatable.Table thead tr th {
+    border-top: 1px solid #bbbaba;
+}
+
+.datatable.Table thead th {
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.datatable.Table thead th span {
+    font-size: 13px;
+}
+
+.datatable.Table td {
+    font-size: 12px;
+    font-weight: 400;
+    background-color: #fbf0ef;
+    vertical-align: middle;
+}
+
+.datatable.Table td input {
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.datatable.Table td button:hover {
+    background-color: #161616;
+
+}
+
+.datatable.Table td button img {
+    width: 16px;
+    filter: invert();
+}
+
+.add_btn7 {
+    border: none;
+    background-color: #343a40;
+    font-size: 14px;
+    width: 85px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+}
+
+.add_btn7 img {
+    width: 18px;
+    filter: invert();
+    margin-right: 5px;
+}
+
+.dt-layout-full:has(.dataTable) {
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+
+.row.dt-layout-table {
+    margin: 0;
+}
+
+.dt-info {
+    font-weight: 400;
+}
+
+
+@media(max-width:768px) {
+
+    #Table_wrapper .dt-layout-start,
+    #Table_wrapper .dt-layout-end {
+        width: fit-content;
+    }
+
+    .Head_title {
+        text-align: left;
+        padding-left: 20px;
+    }
+}
+
+@media(max-width:292px) {
+    .add_btn7 {
+        position: static;
+    }
+}
+
+/* wallet table style start*/
+.Wallet_table {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.Table tr td button.DropBtn {
+    background-color: transparent;
+    box-shadow: none;
+    color: #000;
+}
+
+.Wallet_table .Table tr td {
+    border-bottom: 1px solid #bbbaba;
+    border-top: none;
+}
+
+.Wallet_table .Table tr td select {
+    border: 1px solid gray;
+    outline: none;
+    width: 80px;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.Wallet_table .Table tr td button.eyeBtn {
+    background-color: rgb(0, 153, 255);
+    margin: 0px;
+}
+
+.Wallet_table .Table tr td button.eyeBtn svg {
+    font-size: 16px;
+}
+
+.ModalBox {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px;
+}
+
+.WalletTitle {
+    background-color: gray;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 21px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 900;
+    margin: 0;
+    position: relative;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.CloseBtn {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+.WalletContain {
+    padding: 20px;
+}
+
+.WalletContain h5 {
+    font-size: 16px;
+}
+
+.CloseBtn img {
+    filter: invert();
+    width: 20px;
+}
+
+.Devider {
+    width: 100%;
+    height: 1px;
+    background-color: #f5f5f5;
+    margin: 12px 0;
+}
+
+.WalletSelect select {
+    border: none;
+    border-bottom: 1px solid #c1bdbd;
+    width: 100%;
+    padding-bottom: 4px;
+    outline: none;
+}
+
+.WalletAmount,
+.WalletRemarks {
+    position: relative;
+}
+
+.WalletAmount span {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.WalletAmount svg {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+}
+
+.WalletAmount input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #c1bdbd;
+    outline: none;
+    font-size: 22px;
+    padding-left: 20px;
+    font-weight: 400;
+}
+
+.WalletRemarks textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #c1bdbd;
+    outline: none;
+
+}
+
+.WalletBtns {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.TableRemarks {
+    width: 100%;
+    min-width: 120px;
+    border: none;
+    text-align: center;
+    outline: none;
+}
+
+.Table .HTable tr td .TableRemarks {
+    background-color: transparent;
+}
+
+.Fixed_size {
+    resize: none;
+}
+
+/* wallet table style end */
+
+/* history table style start */
+.Table .HTable {
+    margin: 25px 0;
+}
+
+.Table .HTable tr {
+    border-bottom: 1px solid #f7f7f7;
+    border-left: 1px solid #f7f7f7;
+    border-right: 1px solid #f7f7f7;
+}
+
+.Table .HTable thead tr:first-child {
+    border-top: 1px solid #0099ff;
+    border-color: #0099ff;
+}
+
+.Table .HTable tr th,
+.Table .HTable tr td {}
+
+.Table .HTable tr th:first-child,
+.Table .HTable tr td:first-child {
+    /* background: #fff; */
+    /* border: none; */
+}
+
+.Table .HTable thead tr:first-child th {
+    background-color: #0099ff;
+    color: #fff;
+}
+
+.ExportBtn,
+.Table tr td button.ExportBtn {
+    background-color: #fff;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px 15px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0;
+}
+
+.ExportBtn,
+.Table tr td button.ExportBtn img {
+    filter: none;
+}
+
+.TransactionSearch {
+    position: absolute;
+    right: 100px;
+    top: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.RequiredStar {
+    position: absolute;
+    right: -7px;
+    top: -1px;
+}
+
+.Errormsg {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+}
+
+p.Errormsg {
+    font-size: 11px;
+}
+
+/* history table style end */
+@media(max-width: 992px) {
+    .Head_title.transition_head_title {
+        text-align: left;
+        padding-left: 10px;
+    }
+}
+
+@media(max-width: 520px) {
+
+    .Head_title.transition_head_title .TransactionSearch,
+    .Head_title.transition_head_title .add_btn7 {
+        position: initial;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+}

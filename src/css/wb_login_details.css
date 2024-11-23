@@ -1,0 +1,103 @@
+.Sender_id_contian{ 
+    background-color: #fff;
+    border-radius: 10px;
+}
+.Head_title{ 
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+.Sender_id_Card{
+    padding-top: 20px;
+}
+
+.datatable.Table{
+    margin: 0;
+}
+.datatable.Table thead th,.datatable.Table tbody td{
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+.datatable.Table thead th:first-child,.datatable.Table td:first-child{
+    border-left: 1px solid #bbbaba;
+}
+.datatable.Table thead tr th{
+    border-top: 1px solid #bbbaba;
+}
+.datatable.Table thead th{
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+.datatable.Table td{
+    font-size: 12px;
+    font-weight: 400;
+    background-color:#fbf0ef;
+    vertical-align: middle;
+}
+.datatable.Table td input{
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+.datatable.Table td button img{
+    width: 16px;
+    filter: invert();
+}
+.add_btn{
+    border: none;
+    /* background-color: #343a40; */
+    background-color: green;
+    font-size: 14px;
+    width: 85px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+}
+.add_btn img{
+    width: 16px;
+    filter: invert();
+    margin-right: 5px;
+}
+.dt-layout-full:has(.dataTable){
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+.row.dt-layout-table{
+    margin: 0;  
+}
+.dt-info{
+    font-weight: 400;
+}
+@media(max-width:768px){
+    #Table_wrapper .dt-layout-start,#Table_wrapper .dt-layout-end{
+        width: fit-content;
+    }
+}
+@media(max-width:480px){
+    .Delivery_report_contian .Head_title{
+        text-align: center;
+        padding-left: 20px;
+    }
+}
+@media(max-width:300px){
+    .add_btn {
+        position: static;
+    }}

@@ -1,0 +1,12 @@
+a,Link{
+    text-decoration: none;
+}
+
+
+body a,
+body a:visited {
+    text-decoration: none;
+}
+div p{
+    margin-bottom: 0;
+}

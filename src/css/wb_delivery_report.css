@@ -1,0 +1,227 @@
+.Delivery_report_contian {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.Delivery_report_contian .Head_title {
+    text-align: center;
+    padding: 12px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+/* .Delivery_report_Card{
+    padding: 20px;
+} */
+
+.datatable.Table {
+    margin: 0;
+}
+
+.datatable.Table thead th,
+.datatable.Table tbody td {
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #bbbaba;
+    border-bottom: 1px solid #bbbaba;
+    text-align: center;
+    padding: 7px;
+}
+
+.datatable.Table thead th:first-child,
+.datatable.Table td:first-child {
+    border-left: 1px solid #bbbaba;
+}
+
+.datatable.Table thead tr th {
+    border-top: 1px solid #bbbaba;
+}
+
+.datatable.Table thead th {
+    background-color: #e1dede;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.datatable.Table thead th span {
+    font-size: 13px;
+}
+
+.datatable.Table td {
+    font-size: 12px;
+    font-weight: 400;
+    background-color: #fbf0ef;
+    vertical-align: middle;
+}
+
+.datatable.Table td input {
+    width: 100%;
+    border: 1px solid #cbc8c8;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.datatable.Table td button {
+    border: none;
+    /* background-color: #343a40; */
+    background-color: #f90000;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    margin-top: 5px;
+}
+
+.datatable.Table td button.status_deactive,
+.datatable.Table td.status_deactive {
+    color: #f90000;
+}
+
+.datatable.Table td button.status_active,
+.datatable.Table td.status_active {
+    color: green;
+}
+
+.datatable.Table td button:hover {
+    background-color: #161616;
+
+}
+
+.datatable.Table td button img {
+    width: 16px;
+    filter: invert();
+}
+
+.add_btn {
+    border: none;
+    background-color: #343a40;
+    font-size: 14px;
+    width: 85px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: .4s;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+}
+
+.add_btn img {
+    width: 18px;
+    filter: invert();
+    margin-right: 5px;
+}
+
+.row.dt-layout-table {
+    margin: 0;
+}
+
+.dt-layout-full:has(.dataTable) {
+    max-height: 400px;
+    overflow: auto;
+    padding: 0;
+}
+
+.dt-info {
+    font-weight: 400;
+}
+
+@media(max-width:768px) {
+
+    #Table_wrapper .dt-layout-start,
+    #Table_wrapper .dt-layout-end {
+        width: fit-content;
+    }
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 20px 0; */
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+.page-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.page-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.page-button.active {
+    background-color: #0056b3;
+    font-weight: bold;
+}
+
+.ellipsis {
+    margin: 0 5px;
+    font-size: 18px;
+    color: #007bff;
+}
+
+.table_contain_deliveryReport {
+    padding: 0 10px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.SearchContain {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+.SearchContain input {
+    font-size: 13px;
+    padding: 5px 10px;
+    padding-right: 20px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+}
+
+.SearchContain button {
+    border: none;
+    background: transparent;
+}
+
+.SearchContain button svg {
+    font-size: 20px;
+    color: #000;
+    position: absolute;
+    margin-top: -13px;
+    z-index: 9;
+    margin-left: -23px;
+}
+
+@media(max-width:678px){
+    .Delivery_report_contian .Head_title{
+        padding-left: 10px;
+        text-align: left;
+    }
+}
+@media(max-width:479px){
+    .SearchContain{
+        position: static;
+        margin-top: 10px;
+    }
+}

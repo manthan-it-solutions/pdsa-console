@@ -1,0 +1,222 @@
+.Login_contain{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(33, 37, 41);
+  background-color: #f2f4f7;
+}
+.Login_card{
+width: 400px;
+/* width: 100%; */
+background-color: #fff;
+box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+border-radius: 5px;
+padding: 30px 20px;
+margin-left: auto;
+}
+.Login_card h4{
+font-size: 1.25 rem;
+text-align: center;
+}
+.CreatPera{
+margin-top: 20px;
+text-align: center  ;
+width: 400px;
+margin-left: auto;
+}
+.DiverDer{
+   height: 1px;
+   width: 100%;
+   background-color: #dadde1;
+   margin: 20px 0;
+}
+.Login_card .Form_grOUp{
+   margin-bottom: 15px;
+   position: relative;
+}
+.Login_card .Form_grOUp:has( > input), .Login_card .Form_grOUp > div:has( > input){
+  margin-bottom: 30px;
+}
+.Login_card .Form_grOUp label{
+   display: block;
+}
+.Login_card .error{
+  position: absolute;
+  left: 0;
+  bottom: -21px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.Login_card .Form_grOUp input{
+   background-color: #FFFFFF ;
+   border: 1px solid #dddfe2;
+   color: #1d2129;
+   font-family: Helvetica, Arial, sans-serif;
+   line-height: 16px;
+   vertical-align: middle;
+   font-size: 17px;
+   padding: 14px 16px;
+   width: 100%;
+   border-radius: 6px;
+}
+.Login_card .Form_grOUp input[type='checkbox']{
+   width: fit-content;
+   margin-right: 5px;
+}
+.Login_card .Form_grOUp input[type='checkbox'] + label{
+   display: inline-block;
+}
+.Login_card .Form_grOUp button#submitBtn{
+   background-color: #0866ff;
+   border: none;
+   border-radius: 6px;
+   font-size: 20px;
+   line-height: 48px;
+   padding: 0 16px;
+   width: 100%;
+}
+
+.Login_card .Form_grOUp button:hover{
+   background-color: #42474d;
+}
+.Form_grOUp a{
+   color: #0866ff;
+   font-size: 14px;
+   font-weight: 500;
+   text-align: center;
+}
+#submitBtn {
+   background-color: #4CAF50; /* Default button color */
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease, opacity 0.3s ease; /* Add transition for smooth effect */
+ }
+ 
+ #submitBtn:disabled {
+   background-color: #a5d6a7; /* Light green color for disabled state */
+   color: #ffffff; /* Text color for disabled state */
+   opacity: 0.6; /* Reduced opacity for fade effect */
+   cursor: not-allowed; /* Change cursor to not-allowed */
+ }
+ 
+
+ .required {
+   color: red; /* Red color for the asterisk */
+   font-weight: bold; /* Make it bold for emphasis */
+   margin-left: 2px; /* Small space between the label text and asterisk */
+ }
+ .Login_card .Form_grOUp button.btn.CreateNewAccount{
+  background-color: #42b72a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 17px;
+  /* line-height: 48px; */
+  padding: 10px 16px;
+  width: 100%;
+}
+.Login_card .Form_grOUp button.btn.CreateNewAccount:hover{
+  background-color: #339c1e;
+}
+
+
+ .LoginLogoContain{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 20px;
+ }
+ 
+.LoginLogoContain img{
+  height: 75px;
+}
+.LoginLogoContain img.Manthan_logo{
+  height: 50px;
+}
+ .LoginCardLeft{
+   position: relative;
+   height: 100%;
+ }
+ .LoginCardLeft h2{
+  font-size: 22px;
+  line-height: 32px;
+  font-weight: 500;
+  padding: 20px 0;
+  text-align: left;
+  font-family: Arial, Sans-Serif;
+}
+.ConnectSuppot{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+}
+ .ConnectSuppot p{
+   margin: 0;
+ }
+
+
+/* enquiry form start */
+.Enquiry_form .modal-header{
+  background-color: #0866ff;
+}
+.Enquiry_form .modal-dialog{
+  max-width: 400px;
+  width: 100%;
+}
+.Enquiry_form .Form_grOUp{
+  margin-bottom: 15px;
+}
+.Enquiry_form .Form_grOUp:last-child{
+  margin-bottom: 0;
+}
+.Enquiry_form .Form_grOUp label{
+  display: block;
+}
+.Enquiry_form .Form_grOUp input{
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+/* enquiry form end */
+@media (max-width:991px){
+  .ConnectSuppot{
+    position: static;
+    margin-bottom: 20px;
+  }
+  .CreatPera{
+    text-align: center;
+    width: 100%;
+  }
+  .Login_card{
+    margin: auto;
+  }
+  .LoginCardLeft h2{
+    font-size: 20px;
+  }
+  .LoginLogoContain{
+    justify-content: space-between;
+  }
+}
+@media (max-width:425px){
+  .Login_card{
+    width: 100%;
+  }
+  .Login_contain{
+    height: auto;
+  }
+  .ConnectSuppot{
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+}

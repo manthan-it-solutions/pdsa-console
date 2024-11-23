@@ -1,0 +1,241 @@
+/* managebot.css */
+:root {
+    --row-width: 100%; /* Total width available for a row */
+    --item-width: 373px; /* Width of each item */
+  }
+  #ManageBot {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .ManageBot_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #424141;
+    /* background-color: #acb98a; */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .ManageBot_header a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .ManageBot_contain {
+    margin-top: 20px;
+    width: 100%;
+    height: 80vh;
+    overflow: auto;
+  }
+  
+  .parent-inputs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .parent-inputs input ,.parent-inputs textarea{
+    min-width: 150px;
+    width: 100%;
+  }
+  .parent-inputs input ,.parent-inputs textarea{
+    outline: none;
+  } 
+  .parent-inputs input::placeholder,.parent-inputs textarea::placeholder{
+    color: #000;
+  }
+  /* .parent-inputs input.QuestionInput{
+    width: 80px;
+  } */
+  
+  .AddBtn img,
+  .DeleteBtn img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Tree Layout */
+  
+  .tree-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+    padding-top: 10px;
+    /* border-top: 1px solid gray; */
+    position: relative;
+  }
+  .tree-row::after{
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: calc(100% - 394px);
+    background-color: gray;
+    top: 0px;
+    left: 188px;
+  }
+  
+  .tree-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px; /* Space between items */
+    position: relative;
+  }
+  .tree-item:first-child{
+    margin: 0;
+  }
+  
+  
+  .tree-item input,.tree-item textarea {
+    min-width: 150px;
+    width: 100%;
+  }
+  .tree-item input::placeholder{
+    color: #000;
+  }
+  .Item_parent{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ada8a8;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+  }
+  .Item_parent::before{
+    position: absolute;
+    content: '';
+    height: 10px;
+    width: 1px;
+    background-color: gray;
+    transform: rotate(-3deg);
+    top: -11px;
+    left: 50%;
+  }
+  .Item_parent:has(+ .tree-row)::after{
+    position: absolute;
+    content: '';
+    height: 10px;
+    width: 1px;
+    background-color: gray;
+    transform: rotate(-3deg);
+    bottom: -11px;
+    left: 50%;
+    }
+  .Item_parent button {
+    margin-top: 5px;
+    margin: 0;
+    width: fit-content;
+    padding: 8px;
+  }
+  .GenerateBot{
+    border: none;
+    padding: 10px 20px;
+    background-color: #fff;
+    /* background-color: #00acc1; */
+    /* color: #007bff; */
+    color: #000;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px;
+  }
+  .Item_parent .DeleteBtn{
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+  
+  }
+  .Item_parent .DeleteBtn img{
+    filter: invert();
+  }
+  .IputBtn_contain{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  /* managebot.css */
+  
+  .tree-row {
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    position: relative;
+  }
+  
+  .tree-row::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    /* width: calc(var(--row-width) - ( var(--item-width) + 20px)); */
+    /* width: calc(var(--row-width) - ( (var(--item-width) * 0.5) + 206px)); */
+    
+    /* width: calc(var(--row-width) - ( (var(--item-width) * 0.5 ) + 186px)); */
+    width: calc(var(--row-width) - ( (var(--item-width) * 0.5 ) + (var(--last-item-width) * 0.5 ) ));
+    background-color: gray;
+    top: 0px;
+    left: calc(var(--item-width) * 0.5);
+  }
+  /* .tree-row:has(.tree-item:last-child:has(> .Item_parent + .tree-row))::after {
+    width: 591px;
+  } */
+  
+  
+  /* .ManageBot_contain > .tree{
+    display: flex;
+    justify-content: center;
+  } */
+  .parent-inputs.justify-content-center{
+    border: 1px solid #ada8a8;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    margin: auto;
+  margin-bottom: 10px;
+  position: relative;
+  flex-direction: column;
+  gap: 10px;
+  }
+  /* .First_roW{
+    position: relative;
+    min-width: 100%;
+    width: var(--tree-width);
+    text-align: center;
+  } */
+  /* .tree .tree-row ~  */
+  .First_roW_child::after{
+    content: '';
+    position: absolute;
+    height: 10px;
+    width: 1px;
+    background-color: gray;
+    bottom  : -11px;
+    left: 50%;
+  }
+  .First_roW + .tree{
+    width: fit-content;
+    margin: auto;
+  }
+  
+  .tree{
+    position: relative;
+  }
+  .Maximum::after{
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: calc((var(--window-width) * 0.5) - 20px - var(--manage-bot-height));
+    width: calc((var(--tree-width) * 0.5 - var(--window-width) * 0.5) + 25px);
+    height: 1px;
+    background-color: gray;
+  }
+  
+  .HomeIcon {
+    filter: invert();
+    width: 20px;
+  }

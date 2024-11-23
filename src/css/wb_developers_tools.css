@@ -1,0 +1,121 @@
+.Developers_tools_contain{ 
+    background-color: #fff;
+    border-radius: 10px;
+}
+.Head_title{ 
+    text-align: center;
+    padding: 10px 0;
+    font-size: 22px;
+    background-color: gray;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+.Developers_tools_card{
+    padding: 20px;
+}
+.table_contain{
+    padding-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+}
+.Table  th,.Table  td{
+    border: 1px solid #dee2e6;
+    border: 1px solid #bbbaba;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+.Table thead th{
+    font-size: 13px;
+    background-color: #e1dede;
+}
+.Table tbody td{
+    font-size: 12px;
+}
+.Table thead th button{
+    font-size: 13px;
+    background-color: #00acc1;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+
+}
+.Table tbody td input{
+    border: 1px solid #dee2e6;
+    background-color: transparent;
+    font-size: 12px;
+    padding: 7px;
+    border-radius: 5px;
+    text-align: center;
+}
+.Table tbody td input:focus-visible{
+    outline: none;
+
+}
+.url_contain{
+    background-color: #f1efef;
+    padding: 10px;
+}
+.cotain_title{
+    font-size: 18px;
+    color: rgb(148, 17, 17);
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ada8a8;
+}
+.url_card{
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ada8a8;
+}
+.url_card:last-child{
+    border: none;
+}
+.url_card:first-child{
+    margin-top: 0;
+}
+.url_card h4{
+    color: green;
+}
+.url_card h6{
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.url_card p{
+    word-break: break-all;
+    overflow-wrap: break-word;
+    font-weight: 400;
+}
+/* symbol table style start */
+.symbol_contian{
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.symbol_contian table{
+    position: relative;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+}
+.symbol_contian table th{
+    position: sticky;
+    left: 0;
+    background-color: #f0e2da;
+}
+.symbol_contian table th,.symbol_contian table td{
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+.symbol_contian table th{
+    border-left: 1px solid;
+}
+.symbol_contian table tr:first-child th,.symbol_contian table tr:first-child td{
+    border-top: 1px solid;
+}
