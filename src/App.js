@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/footer';
 import WbQuickCampaigns from './pages/WbQuickCampaigns';
@@ -54,14 +54,14 @@ import NotFound from './pages/404_page.jsx'
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Move useNavigate here
-  const showNavbarFooter = !['/login','/managebot'].includes(location.pathname);
+  const showNavbarFooter = !['/login','/managebot','/notfound'].includes(location.pathname);
   const { isSidebarCollapsed } = useUIContext();
   const [userType, setUserType] = useState(null); 
 
 
 
 
-  const excludedPaths = ['/login', '/managebot'];
+  const excludedPaths = ['/login', '/managebot','/notfound'];
   const isLoginPage = excludedPaths.includes(location.pathname);
   useEffect(() => {
     const fetchData = async () => {
@@ -220,8 +220,8 @@ const Layout = () => {
             
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Login />} />
-            <Route path="*"   element={<NotFound />} />
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="*"   element={<Navigate to="/notfound" />} />
 
           </Routes>
         </div>
