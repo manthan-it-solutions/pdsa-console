@@ -46,6 +46,8 @@ import DealerDetailsPage from './pages/admin/show_data_zone_wise.jsx'
 
 import DealerDetailsPageregion from './pages/admin/show_data_region_wise.jsx'
 
+import NotFound from './pages/404_page.jsx'
+
 
 
 
@@ -218,6 +220,9 @@ const Layout = () => {
             
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
+            <Route path="*"   element={<NotFound />} />
+
           </Routes>
         </div>
       </section>
