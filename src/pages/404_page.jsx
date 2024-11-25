@@ -8,6 +8,9 @@ const NotFound = () => {
   const navigate = useNavigate();
   const location = useLocation(); // To capture the current URL path
 
+ 
+  
+ 
   // Function to navigate to the homepage
   const goHome = () => {
     navigate('/'); // Redirect to home page
@@ -16,6 +19,10 @@ const NotFound = () => {
   // Function to log the 404 event to the API
   const log404Error = async () => {
     try {
+
+        const fromPath = location.state?.from || "unknown path";
+        console.log('fromPath: ', fromPath);
+   
       // Get client's geolocation data using an external API (ip-api)
       const geoResponse = await axios.get('http://ip-api.com/json/');
       const geoData = geoResponse.data;
@@ -29,7 +36,7 @@ const NotFound = () => {
           endpoint: 'api/log-404',
           method: 'POST',
           payload: {
-            url: location.pathname, // Sending the current URL path
+            url: fromPath, // Sending the current URL path
             latitude: lat,
             longitude: lon,
             city:city,
@@ -37,11 +44,11 @@ const NotFound = () => {
             country:country
           },
         });
-
+console.log(res,'shgch');
         if (res?.success) {
           const redirectUrl = res.orgUrl; // Assuming the server returns the original URL
           if (redirectUrl) {
-            window.open(redirectUrl, '_blank'); // Open the URL in a new tab
+            window.location.href(redirectUrl); // Open the URL in a new tab
           }
           console.log('404 log successfully sent to the server.');
         } else {

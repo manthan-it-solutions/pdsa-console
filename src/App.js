@@ -221,7 +221,11 @@ const Layout = () => {
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/notfound" element={<NotFound />} />
-            <Route path="*"   element={<Navigate to="/notfound" />} />
+            <Route 
+  path="*" 
+  element={<Navigate to="/notfound" state={{ from: location.pathname }} />} 
+/>
+
 
           </Routes>
         </div>
