@@ -40,7 +40,7 @@ const AdminSidebar = () => {
 
 
 
-            
+
 
 
 
@@ -52,7 +52,7 @@ const AdminSidebar = () => {
             </h2>
 
 
-          
+
 
 
 
@@ -62,7 +62,7 @@ const AdminSidebar = () => {
                 <NavLink to="/admin/manage-dealer" className={({ isActive }) => isActive ? 'active' : ''}>
                   <img src={List} alt="img" />Manage User
                 </NavLink>
-                
+
               </div>
             </div>
 
@@ -82,7 +82,7 @@ const AdminSidebar = () => {
                 <img src={ICON_report} alt="img" /> <span>Report</span>
               </button>
             </h2>
-      
+
 
             <div id="Dropdown_4" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               <div className="accordion-body">
@@ -108,10 +108,15 @@ const AdminSidebar = () => {
                 </NavLink>
               </div>
             </div>
-
-         
           </div>
 
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button className={`accordion-button collapsed ${isActivePath('/admin/manage-dealer') ? 'active' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target="#Dropdown_3" aria-expanded="false" aria-controls="Dropdown_3">
+                <img src={Manage} alt="img" /> <span>Feedback</span>
+              </button>
+            </h2>
+          </div>
 
 
           {/* <div className="accordion-item">
@@ -132,7 +137,7 @@ const AdminSidebar = () => {
 
 
 
-        
+
           {/* Add more admin-specific sidebar items */}
         </div>
       </div>

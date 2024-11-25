@@ -596,3 +596,17 @@ p.validation_green {
     }
   }
   
+  .TransactionSearch{
+    position: absolute;
+    right: 100px;
+    top: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    outline: none;
+  }
+  .Sidebar_contain .accordion-body{
+    padding: 4px 20px;
+  }
