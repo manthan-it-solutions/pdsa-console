@@ -36,8 +36,8 @@ const Feedback = () => {
 try {
     
 const res= apiCall({
-    endpoint:"select_user_details",
-    method:"POST",
+    endpoint:"user/select_user_details_by_link",
+    method:"post",
     payload:{id:id}
 })
 
