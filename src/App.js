@@ -19,10 +19,10 @@ import Changepassword from './pages/Changepassword';
 import CompeleteCampaign from './pages/admin/CompleteCompaign.jsx'
 
 import ZoneReprot from '../src/pages/admin/zonewise_report.jsx'
-import ZoneWise_Report_User from './pages/zonewise_report_user.jsx'
+import ZoneWiseReportUser from './pages/zonewise_report_user.jsx'
 
 
-import RegionWise_report_user from './pages/regionwise_report.jsx'
+import RegionWisereportuser from './pages/regionwise_report.jsx'
 
 import DealerDetailsPage from './pages/admin/show_data_zone_wise.jsx'
 
@@ -136,10 +136,10 @@ const Layout = () => {
             <Route path="/ZoneWiseReport" element={<AuthGuard><ZoneReprot /></AuthGuard>} />
 
 
-            <Route path="/ZoneWiseReport_user" element={<AuthGuard><ZoneWise_Report_User /></AuthGuard>} />
+            <Route path="/ZoneWiseReport_user" element={<AuthGuard><ZoneWiseReportUser /></AuthGuard>} />
 
 
-            <Route path="/RegioneWise_report_user" element={<AuthGuard><RegionWise_report_user /></AuthGuard>} />
+            <Route path="/RegioneWise_report_user" element={<AuthGuard><RegionWisereportuser /></AuthGuard>} />
 
             <Route path="/admin/manage-dealer" element={<AuthGuard><AdminGuard><WbManageDealer /></AdminGuard></AuthGuard>} />
             <Route path="/DealerDetailsPage" element={<AuthGuard><DealerDetailsPage /></AuthGuard>} />
