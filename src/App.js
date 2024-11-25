@@ -31,6 +31,7 @@ import DealerDetailsPageregion from './pages/admin/show_data_region_wise.jsx'
 import NotFound from './pages/404_page.jsx'
 import AdminDashboard from './pages/admin/adminDashboard';
 import WbManageDealer from './pages/admin/WbManageDealer';
+import Feedback from './pages/admin/Feedback.jsx';
 
 
 
@@ -38,29 +39,29 @@ import WbManageDealer from './pages/admin/WbManageDealer';
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Move useNavigate here
-  const showNavbarFooter = !['/login','/managebot','/notfound'].includes(location.pathname);
+  const showNavbarFooter = !['/login', '/managebot', '/notfound'].includes(location.pathname);
   const { isSidebarCollapsed } = useUIContext();
-  const [userType, setUserType] = useState(null); 
+  const [userType, setUserType] = useState(null);
 
 
 
 
-  const excludedPaths = ['/login', '/managebot','/notfound'];
+  const excludedPaths = ['/login', '/managebot', '/notfound'];
   const isLoginPage = excludedPaths.includes(location.pathname);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await Me();
         const userType = userData?.data?.user_type
-        setUserType(userType); 
+        setUserType(userType);
         if (location.pathname === '/' && userType === '2') {
-          navigate('/admin'); 
+          navigate('/admin');
         }
         else if (location.pathname === '/' && userType === '1') {
-          navigate('/user_dashbaord'); 
+          navigate('/user_dashbaord');
         }
       } catch (error) {
-        navigate('/login'); 
+        navigate('/login');
       }
     };
 
@@ -68,59 +69,59 @@ const Layout = () => {
   }, [navigate]); // Empty dependency array ensures this runs on every component mount
 
 
-//  // Function to get client IP and geo-location (mocked for frontend)
-//  const getClientInfo = async () => {
-//   try {
-//     // You would typically get the client IP and geo info from an external service
-//     const ipResponse = await apiCall({endpoint:'https://api.ipify.org?format=json'}); // Get the IP address
-//     const ip = ipResponse.data.ip;
+  //  // Function to get client IP and geo-location (mocked for frontend)
+  //  const getClientInfo = async () => {
+  //   try {
+  //     // You would typically get the client IP and geo info from an external service
+  //     const ipResponse = await apiCall({endpoint:'https://api.ipify.org?format=json'}); // Get the IP address
+  //     const ip = ipResponse.data.ip;
 
-//     // Using a geo service like geoip-lite or an API like ipinfo.io to get geo info
-//     const geoResponse = await apiCall({endpoint:`https://ipinfo.io/${ip}/json?token=YOUR_API_KEY`,
-//       method:'get'
-//     });
-//     const geo = geoResponse.data;
+  //     // Using a geo service like geoip-lite or an API like ipinfo.io to get geo info
+  //     const geoResponse = await apiCall({endpoint:`https://ipinfo.io/${ip}/json?token=YOUR_API_KEY`,
+  //       method:'get'
+  //     });
+  //     const geo = geoResponse.data;
 
-//     return { ip, geo };
-//   } catch (error) {
-//     console.error('Error getting client info:', error);
-//     return { ip: 'Unknown', geo: {} }; // Fallback values
-//   }
-// };
+  //     return { ip, geo };
+  //   } catch (error) {
+  //     console.error('Error getting client info:', error);
+  //     return { ip: 'Unknown', geo: {} }; // Fallback values
+  //   }
+  // };
 
-//   useEffect(() => {
-//     // Log the 404 error when URL is not found
-//     const log404Error = async () => {
-//       try {
-   
-//         const { ip, geo } = await getClientInfo();
+  //   useEffect(() => {
+  //     // Log the 404 error when URL is not found
+  //     const log404Error = async () => {
+  //       try {
 
-//         // Prepare the payload to send to the backend
-//         const payload = {
-//           path: location.pathname, // The current path the user tried to access
-//           clientIp: ip,             // The client's IP address
-//           geo: geo,                 // Geo info based on IP
-//                        // Current time
-//         };
+  //         const { ip, geo } = await getClientInfo();
 
-//         // Make the backend API call to log the 404 error
-//         const response = await apiCall({endpoint:'api/log-404',method:"post", payload:payload}); // Use your custom apiCall function here
-//         console.log('404 error logged successfully:', response);
-//       } catch (error) {
-//         console.error('Error logging 404:', error);
-//       }
-//     };
+  //         // Prepare the payload to send to the backend
+  //         const payload = {
+  //           path: location.pathname, // The current path the user tried to access
+  //           clientIp: ip,             // The client's IP address
+  //           geo: geo,                 // Geo info based on IP
+  //                        // Current time
+  //         };
 
-//     // Make the API call only if the path is not '/' or '/login'
-//     if (location.pathname !== '/' && location.pathname !== '/login') {
-//       log404Error();
-//     }
-//   }, [location]); // Triggered on path change
+  //         // Make the backend API call to log the 404 error
+  //         const response = await apiCall({endpoint:'api/log-404',method:"post", payload:payload}); // Use your custom apiCall function here
+  //         console.log('404 error logged successfully:', response);
+  //       } catch (error) {
+  //         console.error('Error logging 404:', error);
+  //       }
+  //     };
+
+  //     // Make the API call only if the path is not '/' or '/login'
+  //     if (location.pathname !== '/' && location.pathname !== '/login') {
+  //       log404Error();
+  //     }
+  //   }, [location]); // Triggered on path change
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
-    <section className={isLoginPage ? '' : 'Contain'} id="Contain">
-    {showNavbarFooter && <Header isSidebarCollapsed={isSidebarCollapsed} />}
-      <div  className={isLoginPage ? '' : 'Dash_contain'}>
+      <section className={isLoginPage ? '' : 'Contain'} id="Contain">
+        {showNavbarFooter && <Header isSidebarCollapsed={isSidebarCollapsed} />}
+        <div className={isLoginPage ? '' : 'Dash_contain'}>
           <Routes>
             {/* Protected Routes */}
             {/* <Route path="/drag" element={<Drag />} /> */}
@@ -128,11 +129,11 @@ const Layout = () => {
 
 
             <Route path="/admin" element={<AuthGuard><AdminGuard><AdminDashboard /></AdminGuard></AuthGuard>} />
-                  
-            <Route path="/wblogindetails" element={<AuthGuard><WbLoginDetails /></AuthGuard>} />
-      
 
-            
+            <Route path="/wblogindetails" element={<AuthGuard><WbLoginDetails /></AuthGuard>} />
+
+
+
             <Route path="/ZoneWiseReport" element={<AuthGuard><ZoneReprot /></AuthGuard>} />
 
 
@@ -147,30 +148,31 @@ const Layout = () => {
 
             <Route path="/DealerDetailsPageregion" element={<AuthGuard><DealerDetailsPageregion /></AuthGuard>} />
 
-            
+
 
 
             {/* report routes   start  */}
 
 
-          
-            <Route path="/CompleteCampaign" element={<AuthGuard><CompeleteCampaign /></AuthGuard>} />
 
-            
+            <Route path="/CompleteCampaign" element={<AuthGuard><CompeleteCampaign /></AuthGuard>} />
+            <Route path="/feedback" element={<AuthGuard><Feedback /></AuthGuard>} />
+
+
 
 
             {/* Admin Routes*/}
-  
-            <Route path="/profile" element={<AuthGuard><Profile/></AuthGuard>} />
-            <Route path="/changepassword" element={<AuthGuard><Changepassword/></AuthGuard>} />
-            
+
+            <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
+            <Route path="/changepassword" element={<AuthGuard><Changepassword /></AuthGuard>} />
+
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/notfound" element={<NotFound />} />
-            <Route 
-  path="*" 
-  element={<Navigate to="/notfound" state={{ from: location.pathname }} />} 
-/>
+            <Route
+              path="*"
+              element={<Navigate to="/notfound" state={{ from: location.pathname }} />}
+            />
 
 
           </Routes>
