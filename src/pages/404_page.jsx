@@ -44,11 +44,13 @@ const NotFound = () => {
             country:country
           },
         });
-console.log(res,'shgch');
+
         if (res?.success) {
           const redirectUrl = res.orgUrl; // Assuming the server returns the original URL
           if (redirectUrl) {
-            window.location.href(redirectUrl); // Open the URL in a new tab
+            console.log('redirectUrl: ', redirectUrl);
+
+            window.location.href=redirectUrl; // Open the URL in a new tab
           }
           console.log('404 log successfully sent to the server.');
         } else {
