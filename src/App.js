@@ -156,7 +156,7 @@ const Layout = () => {
 
 
             <Route path="/CompleteCampaign" element={<AuthGuard><CompeleteCampaign /></AuthGuard>} />
-            <Route path="/feedback" element={<AuthGuard><Feedback /></AuthGuard>} />
+            <Route path="/feedback" element={<><Feedback /></>} />
 
 
 

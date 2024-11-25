@@ -49,8 +49,13 @@ const NotFound = () => {
           const redirectUrl = res.orgUrl; // Assuming the server returns the original URL
           if (redirectUrl) {
             console.log('redirectUrl: ', redirectUrl);
-
-            window.location.href=redirectUrl; // Open the URL in a new tab
+          
+            // Append the id (unique_id) to the redirect URL as a query parameter
+            const url = new URL(redirectUrl); // Use the URL constructor for safety
+            url.searchParams.append('id', res.unique_id);
+          
+            // Redirect the user to the updated URL
+            window.location.href = url.toString();
           }
           console.log('404 log successfully sent to the server.');
         } else {

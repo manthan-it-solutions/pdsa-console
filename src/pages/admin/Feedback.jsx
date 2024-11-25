@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../../css/Feedback.css';
 import logo from "../../Assets/images/logo1.png"
 import GoogleTranslateWidget from '../../GoogleTranslateWidget';
+import { useLocation } from 'react-router-dom';
+import { apiCall } from '../../services/authServieces';
+
+
+
+
+
+
 const Feedback = () => {
+    const location = useLocation();
     const [isToggleOn, setIsToggleOn] = useState(false);
     const [isReadMoreVisible, setIsReadMoreVisible] = useState(false);
     const [showQuestion2, setShowQuestion2] = useState(true);
@@ -17,6 +26,43 @@ const Feedback = () => {
     const handleReadMoreToggle = () => {
         setIsReadMoreVisible(!isReadMoreVisible);
     };
+
+    // Extract the id from the query parameters
+        // Extract the id from the query parameters
+        const params = new URLSearchParams(location.search);
+        const id = params.get('id');
+
+    const SelectDetails=()=>{
+try {
+    
+const res= apiCall({
+    endpoint:"select_user_details",
+    method:"POST",
+    payload:{id:id}
+})
+
+if(res.success){
+   
+    console.log('res.data: ', res.data);
+
+}
+else{
+    console.log('error');
+}
+
+} catch (error) {
+    console.log('error: ', error);
+    
+}
+
+}
+   
+      
+
+
+     
+
+  
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -35,6 +81,13 @@ const Feedback = () => {
         e.preventDefault();
         console.log(formData);
     };
+
+
+useEffect(() => {
+    SelectDetails()
+}, [])
+
+ 
 
     return (
         <div className="feedback-container">
