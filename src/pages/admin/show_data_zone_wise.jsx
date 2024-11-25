@@ -112,12 +112,12 @@ const DealerDetailsPage = () => {
                 <td>{item.Dealer_State}</td>
                 <td>{item.Dealer_City}</td>
                 <td>{item.model_name}</td>
-                <td>{item.feedback_answer1}</td>
-                <td>{item.feedback_answer2}</td>
-                <td>{item.feedback_answer3}</td>
-                <td>{item.feedback_answer4}</td>
-                <td>{item.feedback_answer5}</td>
-                <td>{item.feedback_date}</td>
+                <td>{item.feedback_answer1  || "-"}</td>
+                <td>{item.feedback_answer2 || "-"}</td>
+                <td>{item.feedback_answer3 || "-"}</td>
+                <td>{item.feedback_answer4 || "-"}</td>
+                <td>{item.feedback_answer5 || "-"}</td>
+                <td>{item.feedback_date || "-"}</td>
               </tr>
             ))
           ) : (
