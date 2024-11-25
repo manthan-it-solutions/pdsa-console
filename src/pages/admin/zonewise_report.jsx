@@ -11,7 +11,9 @@ const ZoneWise_Report = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
- 
+
+  
+
   const navigate = useNavigate(); // For navigation to details page
 
   // Fetch data from API
@@ -78,7 +80,19 @@ const ZoneWise_Report = () => {
   return (
     <>
       <div className="Template_id_contian1">
-        <h4 className="Head_titleTemplate">View Region Report</h4>
+        <h4 className="Head_titleTemplate date_input_container">
+
+          <div className="date_box">
+            <input type="date"  className="date_box_input"/>
+            To
+            <input type="date" className="date_box_input" />
+          </div>
+
+
+
+          View Region Report
+
+        </h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
@@ -128,35 +142,35 @@ const ZoneWise_Report = () => {
                           {region.video_click_count || 0}
                         </button>
                       </td>
-                     
-<td>
-                      <button
-                          className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
-                        >
-                         {region.video_send_count || 0}
-                        </button>
-                 
-                        </td>
 
                       <td>
-                      <button
+                        <button
                           className="btn btn-link"
                           onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
                         >
-                       {region.total_feedback_click_count || 0}
+                          {region.video_send_count || 0}
                         </button>
-                    
-                        </td>
 
-                        <td>
-                      <button
+                      </td>
+
+                      <td>
+                        <button
                           className="btn btn-link"
                           onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
                         >
-                {region.feedback_sms_video_count || 0}
+                          {region.total_feedback_click_count || 0}
                         </button>
-                        </td>
+
+                      </td>
+
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                        >
+                          {region.feedback_sms_video_count || 0}
+                        </button>
+                      </td>
                       <td>{subTotal}</td> {/* Subtotal for each row */}
                     </tr>
                   );

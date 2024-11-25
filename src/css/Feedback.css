@@ -301,12 +301,16 @@
     margin: 0;
 }
 
-.description p.para_f{
+.description p.para_f {
     font-size: 14px;
     text-align: justify;
     padding-left: 40px;
     padding-top: 10px;
 }
+
+
+
+
 
 @media (min-width: 768px) {
     .radio-grid {

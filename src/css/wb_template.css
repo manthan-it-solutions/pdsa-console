@@ -450,3 +450,43 @@ p {
 .Head_title.transition_head_title .TransactionSearch.new_search_t {
     right: 10px;
 }
+
+.date_box {
+    gap: 10px;
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: -3px;
+}
+
+.date_box_input {
+
+    font-size: 13px;
+    font-weight: 400;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+@media (max-width: 1130px) {
+    .Head_titleTemplate.date_input_container {
+        text-align: right;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 570px) {
+    .Head_titleTemplate.date_input_container {
+        text-align: center;
+
+    }
+
+    .date_box {
+        position: initial;
+        padding-bottom: 10px;
+        justify-content: center;
+    }
+}
