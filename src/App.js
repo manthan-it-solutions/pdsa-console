@@ -2,39 +2,25 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Header from './components/header/Header';
 import Footer from './components/footer/footer';
-
 import WbLoginDetails from './pages/WbLoginDetails';
 import Dashboard from './pages/Dashboard.jsx'
 import Login from './pages/Login';
 import { useUIContext } from './context';
 import AuthGuard from './guards/authGuards';
 import { apiCall, Me } from './services/authServieces';
-
 import AdminGuard from './guards/AdminGuard';
-
 import Profile from './pages/profile';
 import Changepassword from './pages/Changepassword';
-
-
 import CompeleteCampaign from './pages/admin/CompleteCompaign.jsx'
-
 import ZoneReprot from '../src/pages/admin/zonewise_report.jsx'
 import ZoneWiseReportUser from './pages/zonewise_report_user.jsx'
-
-
 import RegionWisereportuser from './pages/regionwise_report.jsx'
-
 import DealerDetailsPage from './pages/admin/show_data_zone_wise.jsx'
-
 import DealerDetailsPageregion from './pages/admin/show_data_region_wise.jsx'
-
 import NotFound from './pages/404_page.jsx'
 import AdminDashboard from './pages/admin/adminDashboard';
 import WbManageDealer from './pages/admin/WbManageDealer';
 import Feedback from './pages/admin/Feedback.jsx';
-
-
-
 
 const Layout = () => {
   const location = useLocation();
@@ -43,30 +29,27 @@ const Layout = () => {
   const { isSidebarCollapsed } = useUIContext();
   const [userType, setUserType] = useState(null);
 
-
-
-
   const excludedPaths = ['/login', '/managebot', '/notfound'];
   const isLoginPage = excludedPaths.includes(location.pathname);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await Me();
-        const userType = userData?.data?.user_type
-        setUserType(userType);
-        if (location.pathname === '/' && userType === '2') {
-          navigate('/admin');
-        }
-        else if (location.pathname === '/' && userType === '1') {
-          navigate('/user_dashbaord');
-        }
-      } catch (error) {
-        navigate('/login');
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const userData = await Me();
+  //       const userType = userData?.data?.user_type
+  //       setUserType(userType);
+  //       if (location.pathname === '/' && userType === '2') {
+  //         navigate('/admin');
+  //       }
+  //       else if (location.pathname === '/' && userType === '1') {
+  //         navigate('/user_dashbaord');
+  //       }
+  //     } catch (error) {
+  //       navigate('/login');
+  //     }
+  //   };
 
-    fetchData();
-  }, [navigate]); // Empty dependency array ensures this runs on every component mount
+  //   fetchData();
+  // }, [navigate]); 
 
 
   //  // Function to get client IP and geo-location (mocked for frontend)
@@ -117,6 +100,27 @@ const Layout = () => {
   //       log404Error();
   //     }
   //   }, [location]); // Triggered on path change
+ 
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const token = JSON.parse(localStorage.getItem('user-cred'));
+      if (token && token?.token) {
+        if (token.user.status === '1') {
+          navigate('/user_dashbaord');
+        } else if (token.user.status === '2') {
+          navigate('/admin');
+        }
+        else {
+          navigate('/login');
+        }
+      } else {
+        navigate('/login')
+      }
+    };
+
+    checkAuthStatus();
+  }, [navigate, location.pathname]);
+ 
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
       <section className={isLoginPage ? '' : 'Contain'} id="Contain">
