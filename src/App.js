@@ -31,25 +31,25 @@ const Layout = () => {
 
   const excludedPaths = ['/login', '/managebot', '/notfound'];
   const isLoginPage = excludedPaths.includes(location.pathname);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const userData = await Me();
-  //       const userType = userData?.data?.user_type
-  //       setUserType(userType);
-  //       if (location.pathname === '/' && userType === '2') {
-  //         navigate('/admin');
-  //       }
-  //       else if (location.pathname === '/' && userType === '1') {
-  //         navigate('/user_dashbaord');
-  //       }
-  //     } catch (error) {
-  //       navigate('/login');
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await Me();
+        const userType = userData?.data?.user_type
+        setUserType(userType);
+        if (location.pathname === '/' && userType === '2') {
+          navigate('/admin');
+        }
+        else if (location.pathname === '/' && userType === '1') {
+          navigate('/user_dashbaord');
+        }
+      } catch (error) {
+        navigate('/login');
+      }
+    };
 
-  //   fetchData();
-  // }, [navigate]); 
+    fetchData();
+  }, [navigate]); 
 
 
   //  // Function to get client IP and geo-location (mocked for frontend)
@@ -101,25 +101,25 @@ const Layout = () => {
   //     }
   //   }, [location]); // Triggered on path change
  
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      const token = JSON.parse(localStorage.getItem('user-cred'));
-      if (token && token?.token) {
-        if (token.user.status === '1') {
-          navigate('/user_dashbaord');
-        } else if (token.user.status === '2') {
-          navigate('/admin');
-        }
-        else {
-          navigate('/login');
-        }
-      } else {
-        navigate('/login')
-      }
-    };
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     const token = JSON.parse(localStorage.getItem('user-cred'));
+  //     if (token && token?.token) {
+  //       if (token.user.status === '1') {
+  //         navigate('/user_dashbaord');
+  //       } else if (token.user.status === '2') {
+  //         navigate('/admin');
+  //       }
+  //       else {
+  //         navigate('/login');
+  //       }
+  //     } else {
+  //       navigate('/login')
+  //     }
+  //   };
 
-    checkAuthStatus();
-  }, [navigate, location.pathname]);
+  //   checkAuthStatus();
+  // }, [navigate, location.pathname]);
  
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
