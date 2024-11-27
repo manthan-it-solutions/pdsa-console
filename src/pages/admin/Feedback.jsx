@@ -42,6 +42,11 @@ const Feedback = () => {
     const id = params.get("id");
    
 
+
+    const [isDataReady, setIsDataReady] = useState(false); // Ensure data is ready before rendering
+
+
+
     const SelectDetails = async () => {
         try {
             const res = await apiCall({
@@ -71,6 +76,8 @@ const Feedback = () => {
             }
         } catch (error) {
             console.log("Error: ", error);
+        }finally{
+            setIsDataReady(false)
         }
     };
 
@@ -113,6 +120,12 @@ const Feedback = () => {
     useEffect(() => {
         SelectDetails();
     }, []);
+
+
+        // Conditionally render content based on loading state
+        if (isDataReady) {
+            return <div>Loading...</div>; // Show a spinner or placeholder
+        }
 
     return (
         <div className="feedback-container">
