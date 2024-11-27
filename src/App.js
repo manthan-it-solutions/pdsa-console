@@ -22,6 +22,8 @@ import AdminDashboard from './pages/admin/adminDashboard';
 import WbManageDealer from './pages/admin/WbManageDealer';
 import Feedback from './pages/admin/Feedback.jsx';
 
+import RegionWise_report_user from './pages/show_data_region_user.jsx'
+
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Move useNavigate here
@@ -152,7 +154,7 @@ const Layout = () => {
 
             <Route path="/DealerDetailsPageregion" element={<AuthGuard><DealerDetailsPageregion /></AuthGuard>} />
 
-
+            <Route path="/RegioneWise_report_user" element={<AuthGuard><RegionWise_report_user /></AuthGuard>} />
 
 
             {/* report routes   start  */}
