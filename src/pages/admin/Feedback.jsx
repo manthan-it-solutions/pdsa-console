@@ -10,6 +10,9 @@ const Feedback = () => {
     const [isToggleOn, setIsToggleOn] = useState(false);
     const [isReadMoreVisible, setIsReadMoreVisible] = useState(false);
     const [showQuestion2, setShowQuestion2] = useState(true);
+    const [ButtonToggle,setButtonToggle]  = useState(false)
+ 
+    
 
     const [formData, setFormData] = useState({
        
@@ -56,6 +59,11 @@ const Feedback = () => {
             });
 
             if (res.success) {
+
+                if(res.data[0].feedback_answer1 != ""){
+                    setButtonToggle(true)
+                }
+               
                 setFormData((prev) => ({
                     ...prev,
                     fullName: res.data[0].cust_name,
@@ -70,7 +78,7 @@ const Feedback = () => {
                     
                 }));
              
-                console.log("res.data: ", res.data);
+                
             } else {
                 console.log("Error fetching user details");
             }
@@ -91,20 +99,59 @@ const Feedback = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isToggleOn) {
-            alert("Please agree to the Terms and Conditions to proceed.");
+    console.log('httttttttttttt');
+        // Check if all mandatory fields are filled
+        const {
+            fullName,
+            mobileNumber,
+            modelName,
+            dealership,
+            receivedInfo,
+            infoFormat,
+            usedSimulator,
+            salesExperience,
+            deliveryExperience,
+            termsAgreed,
+        } = formData;
+        console.log('formData: ', formData);
+        
+
+   
+    
+        // General mandatory field check
+        if (
+            !formData.fullName.trim() ||
+            !formData.mobileNumber.trim() ||
+            !formData.modelName.trim() ||
+            !formData.dealer_name.trim() ||
+            !formData.simulator.trim() ||
+            !formData.satisfaction.trim() ||
+            !formData.deliveryExperience.trim()
+        ) {
+            alert("Please fill out all mandatory fields.");
             return;
         }
-
-        console.log(formData,'formDataformData');
-
+    
+        // Additional conditional validation for `receivedInfo` and `infoFormat`
+        if (formData.receivedInfo === "yes" && !formData.infoFormat.trim()) {
+            alert("Please specify the information format as it's mandatory when 'Received Information' is 'Yes'.");
+            return;
+        }
+    
+        if (receivedInfo === "no" && infoFormat.trim()) {
+            alert("Information format is not required when 'Received Information' is 'No'. Please clear the value.");
+            return;
+        }
+    
+        console.log("Form Da2222222222222 ", formData);
+    
         try {
             const res = await apiCall({
                 endpoint: "user/submit_feedback",
                 method: "post",
-                payload: {formData:formData, id:id},
+                payload: { formData: formData, id: id },
             });
-
+    
             if (res.success) {
                 alert("Feedback submitted successfully!");
                 console.log("Submitted data: ", formData);
@@ -116,6 +163,7 @@ const Feedback = () => {
             console.log("Error submitting feedback: ", error);
         }
     };
+    
 
     useEffect(() => {
         SelectDetails();
@@ -338,6 +386,7 @@ const Feedback = () => {
                                 className="toggle-input"
                                 checked={isToggleOn}
                                 onChange={handleToggleChange}
+                                disabled={ButtonToggle}
                             />
                             <span className="toggle-slider"></span>
                             <span>I agree to the Terms and Conditions</span>

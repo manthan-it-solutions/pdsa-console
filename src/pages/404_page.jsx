@@ -17,12 +17,11 @@ const NotFound = () => {
   // Function to log the 404 event to the API
   const log404Error = async () => {
     try {
-      const fromPath = location.state?.from || 'unknown path';
+      const fromPath = location.state?.from || location.pathname || 'unknown path';
       console.log('fromPath: ', fromPath);
 
-      const unique_id = `http://192.168.0.122:3000${fromPath}`
+      const unique_id = `http://192.168.0.122:3000${fromPath}`;
       console.log('unique_id: ', unique_id);
-    
 
       // Get client's geolocation data using an external API (ip-api)
       const geoResponse = await axios.get('http://ip-api.com/json/');
@@ -48,32 +47,25 @@ const NotFound = () => {
 
         if (res?.success) {
           const redirectUrl = res.orgUrl; // Assuming the server returns the original URL
-         
+
           if (redirectUrl) {
             console.log('redirectUrl: ', redirectUrl);
-const type_url =res.url_type
+            const type_url = res.url_type;
 
-if(type_url==="feedback"){
+            if (type_url === 'feedback') {
+              // Append the id (unique_id) to the redirect URL as a query parameter
+              const url = new URL(redirectUrl); // Use the URL constructor for safety
+              console.log('url: ', url);
+              url.searchParams.append('id', res.unique_id);
 
-        // Append the id (unique_id) to the redirect URL as a query parameter
-            const url = new URL(redirectUrl); // Use the URL constructor for safety
-            console.log('url: ', url);
-            url.searchParams.append('id', res.unique_id);
-           
-            // Redirect the user to the updated URL
-            window.location.href = url.toString();
-            return; // Ensure no further execution after redirection
-
-
+              // Redirect the user to the updated URL
+              window.location.href = url.toString();
+              return; // Ensure no further execution after redirection
+            } else {
+              window.location.href = redirectUrl;
+              return; // Ensure no further execution after redirection
+            }
           }
-
-          else{
-            window.location.href = redirectUrl
-            return; // Ensure no further execution after redirection
-          }
-    
-          }
-          console.log('404 log successfully sent to the server.');
         } else {
           console.error('Failed to log the 404 error:', res?.message);
         }
@@ -84,8 +76,8 @@ if(type_url==="feedback"){
       console.error('Error logging 404 or retrieving geolocation:', error.message);
     }
 
-    // Allow content rendering if redirection is not triggered
-    // setShouldRenderContent(true);
+    // If redirection doesn't happen, allow the 404 content to render
+    setShouldRenderContent(true);
   };
 
   // Call the log404Error function when the component mounts
