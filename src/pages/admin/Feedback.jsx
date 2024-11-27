@@ -10,7 +10,9 @@ const Feedback = () => {
     const [isToggleOn, setIsToggleOn] = useState(false);
     const [isReadMoreVisible, setIsReadMoreVisible] = useState(false);
     const [showQuestion2, setShowQuestion2] = useState(true);
+
     const [formData, setFormData] = useState({
+       
         fullName: '',
         mobileNumber: '',
         modelName: '',
@@ -38,6 +40,7 @@ const Feedback = () => {
 
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
+   
 
     const SelectDetails = async () => {
         try {
@@ -53,8 +56,15 @@ const Feedback = () => {
                     fullName: res.data[0].cust_name,
                     mobileNumber: res.data[0].mobile,
                     modelName: res.data[0].model_name,
-                    dealership: res.data[0].dealership,
+                    dealer_name: res.data[0].dealer_name,
+                    receivedInfo: res.data[0].feedback_answer1,
+                    infoFormat: res.data[0].feedback_answer2,
+                    simulator: res.data[0].feedback_answer3,
+                    satisfaction: res.data[0].feedback_answer4,
+                    deliveryExperience: res.data[0].feedback_answer5,
+                    
                 }));
+             
                 console.log("res.data: ", res.data);
             } else {
                 console.log("Error fetching user details");
@@ -79,23 +89,25 @@ const Feedback = () => {
             return;
         }
 
-        // try {
-        //     const res = await apiCall({
-        //         endpoint: "user/submit_feedback",
-        //         method: "post",
-        //         payload: formData,
-        //     });
+        console.log(formData,'formDataformData');
 
-        //     if (res.success) {
-        //         alert("Feedback submitted successfully!");
-        //         console.log("Submitted data: ", formData);
-        //     } else {
-        //         alert("Failed to submit feedback. Please try again.");
-        //         console.log("API response error: ", res.message);
-        //     }
-        // } catch (error) {
-        //     console.log("Error submitting feedback: ", error);
-        // }
+        try {
+            const res = await apiCall({
+                endpoint: "user/submit_feedback",
+                method: "post",
+                payload: {formData:formData, id:id},
+            });
+
+            if (res.success) {
+                alert("Feedback submitted successfully!");
+                console.log("Submitted data: ", formData);
+            } else {
+                alert("Failed to submit feedback. Please try again.");
+                console.log("API response error: ", res.message);
+            }
+        } catch (error) {
+            console.log("Error submitting feedback: ", error);
+        }
     };
 
     useEffect(() => {
@@ -171,7 +183,7 @@ const Feedback = () => {
                                 type="text"
                                 placeholder="Enter dealership name"
                                 className="form-input"
-                                value={formData.dealership}
+                                value={formData.dealer_name}
                                 disabled
                             />
                         </div>
@@ -193,6 +205,7 @@ const Feedback = () => {
                                         type="radio"
                                         name="receivedInfo"
                                         value="yes"
+                                        checked={formData.receivedInfo === "yes"}
                                         onChange={handleQuestion1Change}
                                     />
                                     <span>Yes</span>
@@ -202,6 +215,7 @@ const Feedback = () => {
                                         type="radio"
                                         name="receivedInfo"
                                         value="no"
+                                        checked={formData.receivedInfo === "no"}
                                         onChange={handleQuestion1Change}
                                     />
                                     <span>No</span>
@@ -229,6 +243,7 @@ const Feedback = () => {
                                                 type="radio"
                                                 name="infoFormat"
                                                 value={option}
+                                                checked={formData.infoFormat === option}
                                                 onChange={handleChange}
                                             />
                                             <span>{option}</span>
@@ -239,14 +254,77 @@ const Feedback = () => {
                         )}
                     </div>
 
+                    <div className="question-group">
+                            <label className='border_b'>
+                                3) Did you experience using the 2 Wheeler Riding Simulator / Riding Trainer in the Showroom?<span className="required">*</span>
+                            </label>
+                            <div className="radio-group border_t">
+                                <label className="radio-label">
+                                    <input type="radio" name="simulator"    value="yes" 
+                                     checked={formData.simulator === "yes"}
+                    onChange={handleChange} />
+                                  
+                                    <span>Yes</span>
+                                </label>
+                                <label className="radio-label">
+                                    <input type="radio" name="simulator"  value="no"
+                                     checked={formData.simulator === "no"}
+                    onChange={handleChange} />
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div className="question-group">
+                            <label className='border_b'>
+                                4) Are you Satisfied with the overall Sales Experience?<span className="required">*</span>
+                            </label>
+                            <div className="radio-group border_t">
+                                <label className="radio-label">
+                                    <input type="radio" name="satisfaction"  value="yes" 
+                                     checked={formData.satisfaction === "yes"}
+                                      onChange={handleChange} />
+                                    <span>Yes</span>
+                                </label>
+                                <label className="radio-label">
+                                    <input type="radio" name="satisfaction" 
+                                     value="no"
+                                     checked={formData.satisfaction === "no"} 
+                    onChange={handleChange}/>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div className="question-group">
+                            <label className='border_b'>
+                                5) Feedback on your Vehicle Delivery Experience<span className="required">*</span>
+                            </label>
+                            <div className="radio-group border_t">
+                                {[
+                                    'Excellent',
+                                    'Very Good',
+                                    'Fair',
+                                    'Poor',
+                                    'Needs Improvement'
+                                ].map((option) => (
+                                    <label key={option} className="radio-label">
+                                        <input type="radio" name="deliveryExperience" value={option}
+                                         checked={formData.deliveryExperience === option}
+                                           onChange={handleChange} />
+                                        <span>{option}</span>
+                                     
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    
+
                     <div className="terms-group">
                         <label className="toggle-label">
                             <input
                                 type="checkbox"
                                 className="toggle-input"
-                                name="termsAgreed"
-                                checked={formData.termsAgreed}
-                                onChange={handleChange}
+                                checked={isToggleOn}
+                                onChange={handleToggleChange}
                             />
                             <span className="toggle-slider"></span>
                             <span>I agree to the Terms and Conditions</span>
@@ -261,11 +339,11 @@ const Feedback = () => {
                         {isReadMoreVisible && (
                             <div className="additional-text">
                                 <p>
-                                    Kindly note that we may need to record your details which may include your personal
-                                    information... <a href="https://www.honda2wheelersindia.com/privacy-policy">Privacy Policy</a>
+                                    Kindly note that we may need to record your details which may include your personal information. Personal Information means any information that may be used to identify an individual. This includes but is not limited to: first and last name, email address, telephone number, title, gender, needed to provide a service you have requested. You do hereby give your consent to us to store, process and use your information for our business and promotional purposes. You also give your consent to us to disclose your information to any other party for our business or other promotional purpose or, if it is required to do so by law or in the good faith belief that such disclosure is reasonably necessary to respond to court orders, or other legal process. You shall always have the right to withdraw this consent at any point of time as per Privacy Policy of the Company published at HMSI website. Please visit the following link to check the Privacy Policy <a href="https://www.honda2wheelersindia.com/privacy-policy" target="_blank">https://www.honda2wheelersindia.com/privacy-policy</a>
                                 </p>
                             </div>
                         )}
+
                     </div>
 
                     <div className="submit-container">
