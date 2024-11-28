@@ -50,9 +50,10 @@ const ZoneWise_Report = () => {
     setPage(0);
   };
 
-  // Navigate to dealer details page with zone as a query parameter
-  const handleNavigateToDetails = (zone) => {
-    navigate(`/DealerDetailsPage?zone=${zone}`);
+  const handleNavigateToDetails = (encodedZone, columnName) => {
+    // Use the zone and columnName parameters directly without redeclaring them
+    const zone = encodeURIComponent(encodedZone);
+    navigate(`/DealerDetailsPage?zone=${zone}&columnName=${columnName}`);
   };
 
   // Calculate totals for the table footer
@@ -129,7 +130,7 @@ const ZoneWise_Report = () => {
                       <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.zone,"video_send_count") || "Unknown"}
                         >
                           {region.video_send_count || 0}
                         </button>
@@ -137,7 +138,7 @@ const ZoneWise_Report = () => {
                       <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.zone ,"video_click_count" ) || "Unknown"}
                         >
                           {region.video_click_count || 0}
                         </button>
@@ -146,7 +147,7 @@ const ZoneWise_Report = () => {
                       <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.zone, "video_send_count" ) || "Unknown"}
                         >
                           {region.video_send_count || 0}
                         </button>
@@ -156,7 +157,7 @@ const ZoneWise_Report = () => {
                       <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.zone,"total_feedback_click_count") || "Unknown"}
                         >
                           {region.total_feedback_click_count || 0}
                         </button>
@@ -166,7 +167,7 @@ const ZoneWise_Report = () => {
                       <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.zone) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.zone,"feedback_sms_video_count") || "Unknown"}
                         >
                           {region.feedback_sms_video_count || 0}
                         </button>

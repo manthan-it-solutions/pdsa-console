@@ -151,10 +151,11 @@ const Layout = () => {
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
       <section className={isLoginPage ? '' : 'Contain'} id="Contain">
         {showNavbarFooter && <Header isSidebarCollapsed={isSidebarCollapsed} />}
+
+        
         <div className={isLoginPage ? '' : 'Dash_contain'}>
           <Routes>
-            {/* Protected Routes */}
-            {/* <Route path="/drag" element={<Drag />} /> */}
+           
             <Route path="/user_dashbaord" element={<AuthGuard><Dashboard /></AuthGuard>} />
 
 
