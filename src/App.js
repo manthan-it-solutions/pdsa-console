@@ -26,31 +26,31 @@ import UserDetailspage from './pages/show_data_region_user.jsx';
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Move useNavigate here
-  const showNavbarFooter = !['/login', '/managebot', '/notfound'].includes(location.pathname);
+  // const showNavbarFooter = !['/login', '/managebot', '/notfound'].includes(location.pathname);
   const { isSidebarCollapsed } = useUIContext();
   const [userType, setUserType] = useState(null);
 
-  const excludedPaths = ['/login', '/managebot', '/notfound'];
-  const isLoginPage = excludedPaths.includes(location.pathname);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await Me();
-        const userType = userData?.data?.user_type
-        setUserType(userType);
-        if (location.pathname === '/' && userType === '2') {
-          navigate('/admin');
-        }
-        else if (location.pathname === '/' && userType === '1') {
-          navigate('/user_dashbaord');
-        }
-      } catch (error) {
-        navigate('/login');
-      }
-    };
+  // const excludedPaths = ['/login', '/managebot', '/notfound'];
+  // const isLoginPage = excludedPaths.includes(location.pathname);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const userData = await Me();
+  //       const userType = userData?.data?.user_type
+  //       setUserType(userType);
+  //       if (location.pathname === '/' && userType === '2') {
+  //         navigate('/admin');
+  //       }
+  //       else if (location.pathname === '/' && userType === '1') {
+  //         navigate('/user_dashbaord');
+  //       }
+  //     } catch (error) {
+  //       navigate('/login');
+  //     }
+  //   };
 
-    fetchData();
-  }, [navigate]); 
+  //   fetchData();
+  // }, [navigate]);
 
 
   //  // Function to get client IP and geo-location (mocked for frontend)
@@ -101,7 +101,7 @@ const Layout = () => {
   //       log404Error();
   //     }
   //   }, [location]); // Triggered on path change
- 
+
   // useEffect(() => {
   //   const checkAuthStatus = async () => {
   //     const token = JSON.parse(localStorage.getItem('user-cred'));
@@ -121,7 +121,32 @@ const Layout = () => {
 
   //   checkAuthStatus();
   // }, [navigate, location.pathname]);
- 
+
+  const excludedPaths = ['/login', '/managebot', '/notfound'];
+  const isLoginPage = excludedPaths.includes(location.pathname);
+  const showNavbarFooter = !excludedPaths.includes(location.pathname);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const token = JSON.parse(localStorage.getItem('user-cred'));
+      if (token && token?.token) {
+        if (location.pathname === '/') {
+          if (token.user.status === '1') {
+            navigate('/user_dashbaord');
+          } else if (token.user.status === '2') {
+            navigate('/admin');
+          }
+        }
+      } else {
+        navigate('/login');
+      }
+    };
+
+    checkAuthStatus();
+  }, [navigate, location.pathname]);
+
+
+
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
       <section className={isLoginPage ? '' : 'Contain'} id="Contain">
@@ -153,7 +178,7 @@ const Layout = () => {
 
             <Route path="/DealerDetailsPageregion" element={<AuthGuard><DealerDetailsPageregion /></AuthGuard>} />
 
-        
+
             <Route path="/UserDetailspage" element={<AuthGuard><UserDetailspage /></AuthGuard>} />
             {/* report routes   start  */}
 
