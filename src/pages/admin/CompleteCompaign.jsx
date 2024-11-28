@@ -146,9 +146,8 @@ const CompeleteCampaign = () => {
                         <td>
                       <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(region.region,"feedback_sms_video_count") }
-                        >
-                          
+                          onClick={() => handleNavigateToDetails(region.region,"feedback_sms_video_count")}>
+
                 {region.feedback_sms_video_count || 0}
                         </button>
                         </td>
