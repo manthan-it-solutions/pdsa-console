@@ -71,8 +71,9 @@ const CompeleteCampaign = () => {
 
 
     // Navigate to dealer details page with zone as a query parameter
-    const handleNavigateToDetails = (zone) => {
-      navigate(`/DealerDetailsPageregion?zone=${zone}`);
+    const handleNavigateToDetails = (zone,columnName ) => {
+      console.log('columnName: ', columnName);
+      navigate(`/DealerDetailsPageregion?zone=${zone}&columnName=${encodeURIComponent(columnName)}`);
     };
 
   return (
@@ -108,7 +109,7 @@ const CompeleteCampaign = () => {
                       <td>
                       <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.region) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.region,"video_send_count")}
                         >
                          {region.video_send_count || 0}
                         </button>
@@ -116,7 +117,7 @@ const CompeleteCampaign = () => {
                         <td>
                         <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.region) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.region,"video_click_count")}
                         >
                           {region.video_click_count || 0}
                         </button>
@@ -125,7 +126,7 @@ const CompeleteCampaign = () => {
 <td>
                       <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.region) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.region,"video_send_count") }
                         >
                          {region.video_send_count || 0}
                         </button>
@@ -135,7 +136,7 @@ const CompeleteCampaign = () => {
                       <td>
                       <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.region) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.region,"total_feedback_click_count") }
                         >
                        {region.total_feedback_click_count || 0}
                         </button>
@@ -145,8 +146,9 @@ const CompeleteCampaign = () => {
                         <td>
                       <button
                           className="btn btn-link"
-                          onClick={() => handleNavigateToDetails(encodeURIComponent(region.region) || "Unknown")}
+                          onClick={() => handleNavigateToDetails(region.region,"feedback_sms_video_count") }
                         >
+                          
                 {region.feedback_sms_video_count || 0}
                         </button>
                         </td>

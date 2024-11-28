@@ -19,6 +19,8 @@ const DealerDetailsPageregion = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zone = queryParams.get("zone");
+  const columnName = queryParams.get("columnName");
+
 
   // Fetch all dealer details
   const fetchDealerDetails = async () => {
@@ -29,7 +31,8 @@ const DealerDetailsPageregion = () => {
         endpoint: `admin/getDealerDetailsRegion?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
         payload: {
-          region: zone // Pass the zone as a query parameter
+          region: zone,
+          columnName:columnName // Pass the zone as a query parameter
          
         },
       });
