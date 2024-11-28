@@ -78,33 +78,53 @@ const UserDetailspage = () => {
       {!loading && !error && (
          <table className="Table w-100" id="Table">
          <thead>
-           <tr>
-              <th>Region</th>
-              <th>Dealer Code</th>
-              <th>Video Send Count</th>
-              <th>Creation Date</th>
-              <th>Creation Time</th>
-              {/* Add other fields as needed */}
-            </tr>
+         <tr>
+            <th>Region</th>
+            <th>Dealer Code</th>
+            <th>Video Send Count</th>
+            <th>Creation Date</th>
+            <th>Creation Time</th>
+            <th>Dealer Name</th>
+            <th>Dealer Type</th>
+            <th>Dealer State</th>
+            <th>Dealer City</th>
+            <th>Model Name</th>
+            <th>Road Safety Tips Info</th>
+            <th>Road Safety Tips Form</th>
+            <th>Riding Simulator Experience</th>
+            <th>Sales Experience Satisfaction</th>
+            <th>Vehicle Delivery Feedback</th>
+            <th>Feedback Date</th>
+          </tr>
           </thead>
           <tbody>
-            {data.length > 0 ? (
-              data.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.region}</td>
-                  <td>{item.dealer_code}</td>
-                  <td>{item.video_send_count}</td>
-                  <td>{item.cdate}</td>
-                  <td>{item.ctime}</td>
-                  {/* Render other fields here as necessary */}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No data available</td>
+          {data.length > 0 ? (
+            data.map((item, index) => (
+              <tr key={index}>
+                <td>{item.region}</td>
+                <td>{item.dealer_code}</td>
+                <td>{item.video_send_count}</td>
+                <td>{item.cdate}</td>
+                <td>{item.ctime}</td>
+                <td>{item.dealer_name}</td>
+                <td>{item.dealer_type}</td>
+                <td>{item.Dealer_State}</td>
+                <td>{item.Dealer_City}</td>
+                <td>{item.model_name}</td>
+                <td>{item.feedback_answer1 || "-"}</td>
+                <td>{item.feedback_answer2 || "-"}</td>
+                <td>{item.feedback_answer3 || "-"}</td>
+                <td>{item.feedback_answer4 || "-"}</td>
+                <td>{item.feedback_answer5 || "-"}</td>
+                <td>{item.feedback_date || "-"}</td>
               </tr>
-            )}
-          </tbody>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="16">No data available</td>
+            </tr>
+          )}
+        </tbody>
         </table>
       )}
     </div>

@@ -21,8 +21,7 @@ import NotFound from './pages/404_page.jsx'
 import AdminDashboard from './pages/admin/adminDashboard';
 import WbManageDealer from './pages/admin/WbManageDealer';
 import Feedback from './pages/admin/Feedback.jsx';
-
-import RegionWise_report_user from './pages/show_data_region_user.jsx'
+import UserDetailspage from './pages/show_data_region_user.jsx';
 
 const Layout = () => {
   const location = useLocation();
@@ -154,9 +153,8 @@ const Layout = () => {
 
             <Route path="/DealerDetailsPageregion" element={<AuthGuard><DealerDetailsPageregion /></AuthGuard>} />
 
-            <Route path="/RegioneWise_report_user" element={<AuthGuard><RegionWise_report_user /></AuthGuard>} />
-
-
+        
+            <Route path="/UserDetailspage" element={<AuthGuard><UserDetailspage /></AuthGuard>} />
             {/* report routes   start  */}
 
 
