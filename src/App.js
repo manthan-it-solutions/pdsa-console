@@ -129,7 +129,9 @@ const Layout = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = JSON.parse(localStorage.getItem('user-cred'));
-      if (token && token?.token) {
+      if (!token && location.pathname !== '/feedback') {
+        navigate('/login');
+      } else if (token?.token) {
         if (location.pathname === '/') {
           if (token.user.status === '1') {
             navigate('/user_dashbaord');
@@ -137,15 +139,33 @@ const Layout = () => {
             navigate('/admin');
           }
         }
-      } else {
-        navigate('/login');
       }
     };
-
+  
     checkAuthStatus();
   }, [navigate, location.pathname]);
+  
 
 
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     const token = JSON.parse(localStorage.getItem('user-cred'));
+  //     if (!token && location.pathname !== '/feedback') {
+  //       navigate('/login');
+  //     } else if (token?.token) {
+  //       if (location.pathname === '/') {
+  //         if (token.user.status === '1') {
+  //           navigate('/user_dashbaord');
+  //         } else if (token.user.status === '2') {
+  //           navigate('/admin');
+  //         }
+  //       }
+  //     }
+  //   };
+  
+  //   checkAuthStatus();
+  // }, [navigate, location.pathname]);
+  
 
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
