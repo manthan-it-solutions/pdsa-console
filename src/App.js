@@ -122,14 +122,16 @@ const Layout = () => {
   //   checkAuthStatus();
   // }, [navigate, location.pathname]);
 
-  const excludedPaths = ['/login', '/managebot', '/notfound'];
+  const excludedPaths = ['/login', '/managebot', '/notfound', '/feedback'];
   const isLoginPage = excludedPaths.includes(location.pathname);
   const showNavbarFooter = !excludedPaths.includes(location.pathname);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = JSON.parse(localStorage.getItem('user-cred'));
-      if (token && token?.token) {
+      if (!token && location.pathname !== '/feedback') {
+        navigate('/login');
+      } else if (token?.token) {
         if (location.pathname === '/') {
           if (token.user.status === '1') {
             navigate('/user_dashbaord');
@@ -137,15 +139,33 @@ const Layout = () => {
             navigate('/admin');
           }
         }
-      } else {
-        navigate('/login');
       }
     };
-
+  
     checkAuthStatus();
   }, [navigate, location.pathname]);
+  
 
 
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     const token = JSON.parse(localStorage.getItem('user-cred'));
+  //     if (!token && location.pathname !== '/feedback') {
+  //       navigate('/login');
+  //     } else if (token?.token) {
+  //       if (location.pathname === '/') {
+  //         if (token.user.status === '1') {
+  //           navigate('/user_dashbaord');
+  //         } else if (token.user.status === '2') {
+  //           navigate('/admin');
+  //         }
+  //       }
+  //     }
+  //   };
+  
+  //   checkAuthStatus();
+  // }, [navigate, location.pathname]);
+  
 
   return (
     <div id="page-body" className={!isSidebarCollapsed ? 'sidebar-collapsed' : ''}>
@@ -155,56 +175,31 @@ const Layout = () => {
         
         <div className={isLoginPage ? '' : 'Dash_contain'}>
           <Routes>
-           
+            {/* Protected Routes */}
             <Route path="/user_dashbaord" element={<AuthGuard><Dashboard /></AuthGuard>} />
-
-
             <Route path="/admin" element={<AuthGuard><AdminGuard><AdminDashboard /></AdminGuard></AuthGuard>} />
-
             <Route path="/wblogindetails" element={<AuthGuard><WbLoginDetails /></AuthGuard>} />
-
-
-
             <Route path="/ZoneWiseReport" element={<AuthGuard><ZoneReprot /></AuthGuard>} />
-
-
             <Route path="/ZoneWiseReport_user" element={<AuthGuard><ZoneWiseReportUser /></AuthGuard>} />
-
-
             <Route path="/RegioneWise_report_user" element={<AuthGuard><RegionWisereportuser /></AuthGuard>} />
-
             <Route path="/admin/manage-dealer" element={<AuthGuard><AdminGuard><WbManageDealer /></AdminGuard></AuthGuard>} />
             <Route path="/DealerDetailsPage" element={<AuthGuard><DealerDetailsPage /></AuthGuard>} />
-
-
             <Route path="/DealerDetailsPageregion" element={<AuthGuard><DealerDetailsPageregion /></AuthGuard>} />
-
-
             <Route path="/UserDetailspage" element={<AuthGuard><UserDetailspage /></AuthGuard>} />
             {/* report routes   start  */}
-
-
-
             <Route path="/CompleteCampaign" element={<AuthGuard><CompeleteCampaign /></AuthGuard>} />
-            <Route path="/feedback" element={<><Feedback /></>} />
-
-
-
 
             {/* Admin Routes*/}
-
             <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
             <Route path="/changepassword" element={<AuthGuard><Changepassword /></AuthGuard>} />
-
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />
+            <Route path="/feedback" element={<Feedback />} />
             <Route path="/notfound" element={<NotFound />} />
             <Route
               path="*"
               element={<Navigate to="/notfound" state={{ from: location.pathname }} />}
             />
-
-
           </Routes>
         </div>
       </section>
