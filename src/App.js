@@ -122,7 +122,7 @@ const Layout = () => {
   //   checkAuthStatus();
   // }, [navigate, location.pathname]);
 
-  const excludedPaths = ['/login', '/managebot', '/notfound'];
+  const excludedPaths = ['/login', '/managebot', '/notfound', '/feedback'];
   const isLoginPage = excludedPaths.includes(location.pathname);
   const showNavbarFooter = !excludedPaths.includes(location.pathname);
 
