@@ -17,6 +17,7 @@ const UserDetailspage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const region = queryParams.get("region");
+ 
   const columnName = queryParams.get("columnName");
 
   const fetchUserDetails = async () => {

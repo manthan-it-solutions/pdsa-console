@@ -84,7 +84,7 @@ const DealerDetailsPageregion = () => {
           <tr>
             <th>Region</th>
             <th>Dealer Code</th>
-            <th>Video Send Count</th>
+           
             <th>Creation Date</th>
             <th>Creation Time</th>
             <th>Dealer Name</th>
@@ -106,7 +106,7 @@ const DealerDetailsPageregion = () => {
               <tr key={index}>
                 <td>{item.region}</td>
                 <td>{item.dealer_code}</td>
-                <td>{item.video_send_count}</td>
+               
                 <td>{item.cdate}</td>
                 <td>{item.ctime}</td>
                 <td>{item.dealer_name}</td>

@@ -178,11 +178,54 @@ const ZoneWise_Report = () => {
                 })}
                 <tr className="font-weight-bold">
                   <td>Total</td>
-                  <td>{totals.totalVideoSendCount}</td>
-                  <td>{totals.totalVideoClickCount}</td>
-                  <td>{totals.totalFeedbackSmsSent}</td>
-                  <td>{totals.totalFeedbackClickCount}</td>
-                  <td>{totals.totalFeedbackSmsVideoCount}</td>
+
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_send_count") || "Unknown"}
+                        >
+                          {totals.totalVideoSendCount}
+                        </button>
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_click_count") || "Unknown"}
+                        >
+                      {totals.totalVideoClickCount}
+                        </button>
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_send_count") || "Unknown"}
+                        >
+                     {totals.totalFeedbackSmsSent}
+                        </button>
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","total_feedback_click_count") || "Unknown"}
+                        >
+                   {totals.totalFeedbackClickCount}
+                        </button>
+                    
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","feedback_sms_video_count") || "Unknown"}
+                        >
+                 {totals.totalFeedbackSmsVideoCount}
+                        </button>
+
+                  </td>
                   <td>
                     {totals.totalVideoSendCount +
                       totals.totalVideoClickCount +

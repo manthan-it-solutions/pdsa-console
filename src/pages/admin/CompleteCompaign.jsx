@@ -98,7 +98,7 @@ const CompeleteCampaign = () => {
                 {data.map((region, index) => {
                   const subTotal =
                     (region.video_send_count || 0) +
-                    (region.video_click_count || 0) +
+                    (region.totalVideoClickCount || 0) +
                     (region.video_send_count || 0) +
                     (region.total_feedback_click_count || 0) +
                     (region.feedback_sms_video_count || 0);
@@ -151,17 +151,64 @@ const CompeleteCampaign = () => {
                 {region.feedback_sms_video_count || 0}
                         </button>
                         </td>
-                      <td>{subTotal}</td> {/* Subtotal for each row */}
+                      <td>
+                  
+                          {subTotal || 0}
+                       
+                        </td> {/* Subtotal for each row */}
                     </tr>
                   );
                 })}
                 <tr className="font-weight-bold">
                   <td>Total</td>
-                  <td>{totals.totalVideoSendCount}</td>
-                  <td>{totals.totalVideoClickCount}</td>
-                  <td>{totals.totalVideoSendCount}</td>
-                  <td>{totals.totalFeedbackClickCount}</td>
-                  <td>{totals.totalFeedbackSmsVideoCount}</td>
+                  <td>
+                    
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_send_count")}>
+
+{totals.totalVideoSendCount}
+                        </button>
+                    </td>
+                  <td>
+
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_click_count")}>
+
+{totals.totalVideoClickCount}
+                        </button>
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","video_send_count")}>
+
+{totals.totalVideoSendCount}
+                        </button>
+                  </td>
+                  <td>
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","total_feedback_click_count")}>
+
+{totals.totalFeedbackClickCount}
+                        </button>
+                  </td>
+                  <td>
+
+
+
+                  <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails("total","feedback_sms_video_count")}>
+
+{totals.totalFeedbackSmsVideoCount}
+                        </button>
+                  </td>
                   <td>
                     {totals.totalVideoSendCount +
                       totals.totalVideoClickCount +

@@ -3,6 +3,7 @@ import "../css/wb_template.css";
 import { apiCall } from "../services/authServieces";
 import ShowSnackBar from "../components/snackBar";
 import TablePagination from "@mui/material/TablePagination";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const ZoneWise_Report_User = () => {
   const [data, setData] = useState([]); // API data
@@ -10,6 +11,7 @@ const ZoneWise_Report_User = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
+  const navigate = useNavigate(); // For navigation to details page
 
   const getTemplates = async () => {
     try {
@@ -17,12 +19,10 @@ const ZoneWise_Report_User = () => {
         endpoint: `user/getURL_data_zone_user?page=${page + 1}&limit=${rowsPerPage}`,
         method: "GET",
       });
-;
-console.log(res.data,'res.datares.data');
+      console.log(res.data, 'res.data');
       if (res?.success) {
         setData(res.data || []); // Store the API response data
         setTotalTemplates(res.totalPages); // Update pagination
-        setTotalTemplates(res.data.length)
       }
     } catch (error) {
       setSnackBar({
@@ -46,12 +46,17 @@ console.log(res.data,'res.datares.data');
     setPage(0);
   };
 
+  const handleNavigateToDetails = (zone,columnName) => {
+    navigate(`/UserDetailsZonePage?zone=${encodeURIComponent(zone)}&columnName=${encodeURIComponent(columnName)}`);
+  };
+
+ 
   const calculateTotals = () => {
     return data.reduce(
-      (totals, region) => ({
+      (totals,region) => ({
         totalVideoSendCount: totals.totalVideoSendCount + (region.video_send_count || 0),
         totalVideoClickCount: totals.totalVideoClickCount + (region.video_click_count || 0),
-        totalFeedbackSmsSent: totals.totalVideoSendCount + (region.totalVideoSendCount || 0),
+        totalFeedbackSmsSent: totals.totalFeedbackSmsSent + (region.total_feedback_sms_sent || 0),
         totalFeedbackClickCount: totals.totalFeedbackClickCount + (region.total_feedback_click_count || 0),
         totalFeedbackSmsVideoCount: totals.totalFeedbackSmsVideoCount + (region.feedback_sms_video_count || 0),
       }),
@@ -97,12 +102,51 @@ console.log(res.data,'res.datares.data');
                   return (
                     <tr key={index}>
                       <td>{region.zone || "Unknown"}</td>
-                      <td>{region.video_send_count || 0}</td>
-                      <td>{region.video_click_count || 0}</td>
-                      <td>{region.total_feedback_sms_sent || 0}</td>
-                      <td>{region.total_feedback_click_count || 0}</td>
-                      <td>{region.feedback_sms_video_count || 0}</td>
-                      <td>{subTotal}</td> {/* Subtotal for each row */}
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(region.zone,"video_send_count" || "Unknown")}
+                        >
+                          {region.video_send_count || 0}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(region.zone,"video_click_count" || "Unknown")}
+                        >
+                          {region.video_click_count || 0}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(region.zone,"video_send_count" || "Unknown")}
+                        >
+                          {region.total_feedback_sms_sent || 0}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(region.zone,"total_feedback_click_count" || "Unknown")}
+                        >
+                          {region.total_feedback_click_count || 0}
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-link"
+                          onClick={() => handleNavigateToDetails(region.zone,"feedback_sms_video_count" || "Unknown")}
+                        >
+                          {region.feedback_sms_video_count || 0}
+                        </button>
+                      </td>
+                      <td>
+                       
+                          {subTotal || 0} {/* Subtotal for each row */}
+                       
+                      </td>
                     </tr>
                   );
                 })}

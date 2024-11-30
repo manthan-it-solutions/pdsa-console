@@ -148,7 +148,11 @@ const RegionWise_report_user = () => {
                           {region.feedback_sms_video_count || 0}
                         </button>
                       </td>
-                      <td>{subTotal}</td> {/* Subtotal for each row */}
+                      <td>
+  
+
+    {subTotal}
+</td>
                     </tr>
                   );
                 })}

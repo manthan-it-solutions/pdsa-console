@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { apiCall } from "../../services/authServieces";
+import { apiCall } from "../services/authServieces";
 import { useLocation } from "react-router-dom";
-import "../../css/wb_template.css";
+import "../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
 
-const DealerDetailsPage = () => {
+const UserDetailsZonePage = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0); // 0-based index for Material UI pagination
   const [limit] = useState(10);
-  const [totalItems, setTotalItems] = useState(0); // Store total item count
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [error, setError] = useState(null);
 
+  // Extract the zone from the URL query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
 
-  // Fetch all dealer details
-  const fetchDealerDetails = async () => {
+  const fetchUserDetails = async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await apiCall({
-        endpoint: `admin/getDealerDetailsZone?page=${page + 1}&limit=${rowsPerPage}`,
+        endpoint: `user/getUserDetailsZone?page=${page + 1}&limit=${rowsPerPage}`, // page is 1-based for API
         method: "post",
-        payload: {
-          zone: zone,
-          columnName: columnName
-        },
+        payload: { zone:zone, columnName:columnName },
       });
-      console.log(response.data);
 
+      console.log("API Response:", response.data);
+
+      // Assuming the response structure has data and totalCount
       setData(response.data || []);
-      const totalItems = response.count_total || 0; // Total items in the response
-      setTotalItems(totalItems); // Set totalItems from API response
+      setTotalPages(Math.ceil(response.data?.totalCount / rowsPerPage)); // Adjust based on API response
     } catch (err) {
+      console.error("Error fetching data:", err);
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
       setLoading(false);
@@ -44,26 +43,24 @@ const DealerDetailsPage = () => {
   };
 
   useEffect(() => {
-    fetchDealerDetails();
-  }, [page, rowsPerPage]); // Trigger fetch when page or rowsPerPage changes
+    fetchUserDetails();
+  }, [zone, page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
-    console.log('newPage: ', newPage);
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset page to 0 when rowsPerPage changes
+    setPage(0); // Reset to the first page
   };
 
   return (
     <div className="Template_id_contian1">
-      <h4 className="Head_titleTemplate">Dealer Details</h4>
+      <h4 className="Head_titleTemplate">User Details</h4>
       <div className="Template_id_Card1">
         <div className="table_contain" id="tableContain">
-          <center><h2>Zone: {zone || "All Zones"}</h2></center>
-
+          <center><h2>Zone: {zone || "All zones"}</h2></center>
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -124,7 +121,7 @@ const DealerDetailsPage = () => {
 
       <TablePagination
         component="div"
-        count={totalItems} // Set the count from the API response
+        count={totalPages * rowsPerPage} // Adjust based on total records
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
@@ -135,4 +132,4 @@ const DealerDetailsPage = () => {
   );
 };
 
-export default DealerDetailsPage;
+export default UserDetailsZonePage;
