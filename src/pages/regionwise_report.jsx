@@ -4,11 +4,8 @@ import { apiCall } from "../services/authServieces";
 import ShowSnackBar from "../components/snackBar";
 import TablePagination from "@mui/material/TablePagination";
 import { NavLink, useNavigate } from "react-router-dom";
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { saveAs } from "file-saver";  // For downloading files
+
 
 const RegionWise_report_user = () => {
   const [data, setData] = useState([]); // API data
@@ -127,6 +124,63 @@ const RegionWise_report_user = () => {
     setFromDate(event.target.value); // Update the state with the selected "From" date
   };
 
+
+
+
+    // Export data to CSV
+    const exportToCSV = () => {
+      
+      const header = [
+        "Region",
+        "Video Send Count",
+        "Video Click Count",
+        "Total Feedback SMS Sent",
+        "Total Feedback Click Count",
+        "Total Feedback Given",
+        "Sub Total"
+      ];
+      
+      const rows = data.map(region => {
+        const subTotal =
+          (region.video_send_count || 0) +
+          (region.video_click_count || 0) +
+          (region.total_feedback_sms_sent || 0) +
+          (region.total_feedback_click_count || 0) +
+          (region.feedback_sms_video_count || 0);
+        
+        return [
+          region.region || "Unknown",
+          region.video_send_count || 0,
+          region.video_click_count || 0,
+          region.total_feedback_sms_sent || 0,
+          region.total_feedback_click_count || 0,
+          region.feedback_sms_video_count || 0,
+          subTotal,
+        ];
+      });
+  
+      // Add the totals row at the end
+      rows.push([
+        "Total",
+        totals.totalVideoSendCount,
+        totals.totalVideoClickCount,
+        totals.totalFeedbackSmsSent,
+        totals.totalFeedbackClickCount,
+        totals.totalFeedbackSmsVideoCount,
+        totals.totalVideoSendCount + totals.totalVideoClickCount + totals.totalFeedbackSmsSent + totals.totalFeedbackClickCount + totals.totalFeedbackSmsVideoCount,
+      ]);
+  
+      // Create CSV data
+      const csvContent = [
+        header.join(","),
+        ...rows.map(row => row.join(","))
+      ].join("\n");
+  
+      // Trigger file download
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      saveAs(blob, "region_report.csv");
+    };
+
   return (
     <>
       <div className="Template_id_contian1">
@@ -139,7 +193,11 @@ const RegionWise_report_user = () => {
 
             <button type="submit" onClick={Getdatetodata}>Submit</button>
           </div>
-          View Region Report</h4>
+          View Region Report
+          
+          
+          
+          <button onClick={exportToCSV}>Export to CSV</button> {/* Export button */}</h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
