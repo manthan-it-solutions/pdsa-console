@@ -12,22 +12,40 @@ const ZoneWise_Report = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
 
+  const [todate ,setToDate]   = useState("null")
+
+  const [fromdate ,setFromDate]   = useState("null")
   
 
+
   const navigate = useNavigate(); // For navigation to details page
+
+
+
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value); // Update the state with the selected "To" date
+  };
+
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value); // Update the state with the selected "From" date
+  };
+
 
   // Fetch data from API
   const getTemplates = async () => {
     try {
       const res = await apiCall({
         endpoint: `admin/getURL_data_zone?page=${page + 1}&limit=${rowsPerPage}`,
-        method: "GET",
+        method: "post",
+        
       });
 
-      if (res?.success) {
+      if (res?.success) {            
         setData(res.data || []); // Store the API response data
         setTotalTemplates(res.data.length || 0); // Update total count
       }
+
     } catch (error) {
       setSnackBar({
         open: true,
@@ -36,6 +54,37 @@ const ZoneWise_Report = () => {
       });
     }
   };
+
+
+
+
+   // Fetch data from API
+   const Getdatetodata = async () => {
+    try {
+      const res = await apiCall({
+        endpoint: `admin/Searh_button_api?page=${page + 1}&limit=${rowsPerPage}`,
+        method: "post",
+        payload:{fromdate,todate}
+        
+      });
+
+      if (res?.success) {            
+        setData(res.data || []); // Store the API response data
+        setTotalTemplates(res.data.length || 0); // Update total count
+      }
+
+    } catch (error) {
+      setSnackBar({
+        open: true,
+        severity: "error",
+        message: error?.response?.data?.message || "An error occurred",
+      });
+    }
+  };
+
+
+
+
 
   useEffect(() => {
     getTemplates();
@@ -51,10 +100,21 @@ const ZoneWise_Report = () => {
   };
 
   const handleNavigateToDetails = (encodedZone, columnName) => {
-    // Use the zone and columnName parameters directly without redeclaring them
+    // Encode the zone for use in query parameters
     const zone = encodeURIComponent(encodedZone);
-    navigate(`/DealerDetailsPage?zone=${zone}&columnName=${columnName}`);
+  
+    // Navigate with query parameters and pass fromdate and todate in state
+    navigate(`/DealerDetailsPage?zone=${zone}&columnName=${columnName}`, {
+      state: {
+        fromdate: fromdate,
+        todate: todate,
+      },
+    });
   };
+  
+
+
+
 
   // Calculate totals for the table footer
   const calculateTotals = () => {
@@ -80,13 +140,20 @@ const ZoneWise_Report = () => {
 
   return (
     <>
+
+
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate date_input_container">
 
+
+        
           <div className="date_box">
-            <input type="date"  className="date_box_input"/>
+            <input type="date"  className="date_box_input"   onChange={handleFromDateChange}/>
             To
-            <input type="date" className="date_box_input" />
+            <input type="date" className="date_box_input"   onChange={handleToDateChange} />
+
+
+            <button type="submit" onClick={Getdatetodata}>Submit</button>
           </div>
 
 

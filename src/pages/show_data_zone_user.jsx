@@ -7,33 +7,45 @@ import TablePagination from "@mui/material/TablePagination";
 const UserDetailsZonePage = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0); // 0-based index for Material UI pagination
-  const [limit] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [error, setError] = useState(null);
+  const [fromdate, setFromDate] = useState("");
+  const [todate, setToDate] = useState("");
 
-  // Extract the zone from the URL query parameters
+  // Extract the zone and columnName from the URL query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
 
+  // Retrieve `fromdate` and `todate` passed via state
+  const stateDates = location.state || {};
+  useEffect(() => {
+    if (stateDates.fromdate) setFromDate(stateDates.fromdate);
+    if (stateDates.todate) setToDate(stateDates.todate);
+  }, [stateDates]);
+
+  // Fetch user details based on filters and pagination
   const fetchUserDetails = async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await apiCall({
-        endpoint: `user/getUserDetailsZone?page=${page + 1}&limit=${rowsPerPage}`, // page is 1-based for API
+        endpoint: `user/getUserDetailsZone?page=${page + 1}&limit=${limit}`, // Page is 1-based for API
         method: "post",
-        payload: { zone:zone, columnName:columnName },
+        payload: {
+          zone: zone || "",
+          columnName: columnName || "",
+          fromdate: fromdate || null,
+          todate: todate || null,
+        },
       });
 
-      console.log("API Response:", response.data);
-
-      // Assuming the response structure has data and totalCount
+      // Assuming the API response has data and totalCount
       setData(response.data || []);
-      setTotalPages(Math.ceil(response.data?.totalCount / rowsPerPage)); // Adjust based on API response
+      setTotalRecords(response.totalCount || 0); // Total records from the API
     } catch (err) {
       console.error("Error fetching data:", err);
       setError(err.response?.data?.message || "Failed to fetch data");
@@ -44,23 +56,49 @@ const UserDetailsZonePage = () => {
 
   useEffect(() => {
     fetchUserDetails();
-  }, [zone, page, rowsPerPage]);
+  }, [zone, columnName, page, limit, fromdate, todate]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to the first page
+    const newLimit = parseInt(event.target.value, 10);
+    setLimit(newLimit);
+    setPage(0);
   };
 
   return (
     <div className="Template_id_contian1">
-      <h4 className="Head_titleTemplate">User Details</h4>
+      <h4 className="Head_titleTemplate">
+      <div className="date-filters">
+        <label>
+          From Date:
+          <input
+            type="date"
+            value={fromdate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+        </label>
+        <label>
+          To Date:
+          <input
+            type="date"
+            value={todate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+        </label>
+     
+      </div>
+      
+        
+        User Details</h4>
       <div className="Template_id_Card1">
         <div className="table_contain" id="tableContain">
-          <center><h2>Zone: {zone || "All zones"}</h2></center>
+          <center>
+            <h2>Zone: {zone || "All zones"}</h2>
+          
+          </center>
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -70,7 +108,6 @@ const UserDetailsZonePage = () => {
                 <tr>
                   <th>Zone</th>
                   <th>Dealer Code</th>
-                  <th>Video Send Count</th>
                   <th>Creation Date</th>
                   <th>Creation Time</th>
                   <th>Dealer Name</th>
@@ -92,7 +129,6 @@ const UserDetailsZonePage = () => {
                     <tr key={index}>
                       <td>{item.zone}</td>
                       <td>{item.dealer_code}</td>
-                      <td>{item.video_send_count}</td>
                       <td>{item.cdate}</td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
@@ -110,7 +146,7 @@ const UserDetailsZonePage = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="16">No data available</td>
+                    <td colSpan="15">No data available</td>
                   </tr>
                 )}
               </tbody>
@@ -121,10 +157,10 @@ const UserDetailsZonePage = () => {
 
       <TablePagination
         component="div"
-        count={totalPages * rowsPerPage} // Adjust based on total records
+        count={totalRecords} // Total records for pagination
         page={page}
         onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={limit}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
       />

@@ -14,6 +14,8 @@ const DealerDetailsPageregion = () => {
   const [loading, setLoading] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [error, setError] = useState(null);
+  const [fromdate, setFromDate] = useState("");
+  const [todate, setToDate] = useState("");
 
   // Extract the zone from the URL query parameters
   const location = useLocation();
@@ -21,6 +23,12 @@ const DealerDetailsPageregion = () => {
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
 
+    // Retrieve fromdate and todate passed via state
+    const stateDates = location.state || {};
+    useEffect(() => {
+      if (stateDates.fromdate) setFromDate(stateDates.fromdate);
+      if (stateDates.todate) setToDate(stateDates.todate);
+    }, [stateDates]);
 
   // Fetch all dealer details
   const fetchDealerDetails = async () => {
@@ -32,7 +40,10 @@ const DealerDetailsPageregion = () => {
         method: "post",
         payload: {
           region: zone,
-          columnName:columnName // Pass the zone as a query parameter
+          columnName:columnName, // Pass the zone as a query parameter,
+          fromdate:fromdate,
+          todate:todate
+
          
         },
       });
@@ -50,7 +61,7 @@ const DealerDetailsPageregion = () => {
 
   useEffect(() => {
     fetchDealerDetails();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage,fromdate, todate]);
 
   
   const handleChangePage = (event, newPage) => {
@@ -62,13 +73,35 @@ const DealerDetailsPageregion = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    fetchDealerDetails()
   };
 
  
 
   return (
     <div className="Template_id_contian1">
-    <h4 className="Head_titleTemplate">Dealer Details</h4>
+    <h4 className="Head_titleTemplate">
+    <div className="date-filters">
+        <label>
+          From Date:
+          <input
+            type="date"
+            value={fromdate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+        </label>
+        <label>
+          To Date:
+          <input
+            type="date"
+            value={todate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+        </label>
+     
+      </div>
+      
+      Dealer Details</h4>
     <div className="Template_id_Card1">
       <div className="table_contain" id="tableContain">
      

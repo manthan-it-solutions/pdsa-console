@@ -4,6 +4,11 @@ import { apiCall } from "../services/authServieces";
 import ShowSnackBar from "../components/snackBar";
 import TablePagination from "@mui/material/TablePagination";
 import { NavLink, useNavigate } from "react-router-dom";
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const RegionWise_report_user = () => {
   const [data, setData] = useState([]); // API data
@@ -11,7 +16,36 @@ const RegionWise_report_user = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
+  const [fromdate,setFromDate] = useState(null)
+  const [todate ,setToDate] = useState(null)
+  
   const navigate = useNavigate(); // For navigation to details page
+
+
+
+
+  const Getdatetodata = async () => {
+    try {
+      const res = await apiCall({
+        endpoint: `user/Searh_button_api_region_user?page=${page + 1}&limit=${rowsPerPage}`,
+        method: "post",
+        payload:{fromdate,todate}
+        
+      });
+
+      if (res?.success) {            
+        setData(res.data || []); // Store the API response data
+        setTotalTemplates(res.data.length || 0); // Update total count
+      }
+
+    } catch (error) {
+      setSnackBar({
+        open: true,
+        severity: "error",
+        message: error?.response?.data?.message || "An error occurred",
+      });
+    }
+  };
 
   // Fetching templates data from API
   const getTemplates = async () => {
@@ -23,8 +57,9 @@ const RegionWise_report_user = () => {
 
       if (res?.success) {
         setData(res.data || []); // Store the API response data
-        setTotalTemplates(res.totalItems || 0); // Update total templates count correctly
+        setTotalTemplates(res.data.length || 0); // Update total templates count correctly
       }
+
     } catch (error) {
       setSnackBar({
         open: true,
@@ -50,7 +85,13 @@ const RegionWise_report_user = () => {
   // Navigate to the detailed region report page
   const handleNavigateToDetails = (region, columnName) => {
     console.log('columnName:', columnName)
-    navigate(`/UserDetailspage?region=${encodeURIComponent(region)}&columnName=${encodeURIComponent(columnName)}`);
+    navigate(`/UserDetailspage?region=${encodeURIComponent(region)}&columnName=${encodeURIComponent(columnName)}`,{
+      state: {
+        fromdate: fromdate,
+        todate: todate,
+      },
+    },
+    );
   };
 
   // Calculate totals for all regions
@@ -75,10 +116,30 @@ const RegionWise_report_user = () => {
 
   const totals = calculateTotals();
 
+
+
+  
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value); // Update the state with the selected "To" date
+  };
+
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value); // Update the state with the selected "From" date
+  };
+
   return (
     <>
       <div className="Template_id_contian1">
-        <h4 className="Head_titleTemplate">View Region Report</h4>
+        <h4 className="Head_titleTemplate">
+        <div className="date_box">
+            <input type="date"  className="date_box_input"   onChange={handleFromDateChange}/>
+            To
+            <input type="date" className="date_box_input"   onChange={handleToDateChange} />
+
+
+            <button type="submit" onClick={Getdatetodata}>Submit</button>
+          </div>
+          View Region Report</h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
@@ -158,11 +219,43 @@ const RegionWise_report_user = () => {
                 })}
                 <tr className="font-weight-bold">
                   <td>Total</td>
-                  <td>{totals.totalVideoSendCount}</td>
-                  <td>{totals.totalVideoClickCount}</td>
-                  <td>{totals.totalFeedbackSmsSent}</td>
-                  <td>{totals.totalFeedbackClickCount}</td>
-                  <td>{totals.totalFeedbackSmsVideoCount}</td>
+                  <td>
+                    <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_send_count")}
+                    >
+                      {totals.totalVideoSendCount}
+                    </button>
+                  </td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_click_count")}
+                    >
+                      {totals.totalVideoClickCount}
+                    </button>
+                    </td>                  
+
+                  {/* <td>{totals.totalFeedbackSmsSent}</td> */}
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_send_count")}
+                    >
+                      {totals.totalFeedbackSmsSent}
+                    </button></td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "total_feedback_click_count")}
+                    >
+                    {totals.totalFeedbackClickCount}</button></td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "feedback_sms_video_count")}
+                    >
+                    {totals.totalFeedbackSmsVideoCount}</button></td>
                   <td>
                     {totals.totalVideoSendCount +
                       totals.totalVideoClickCount +

@@ -11,6 +11,8 @@ const CompeleteCampaign = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
+  const [fromdate,setFromDate] = useState(null)
+  const [todate ,setToDate] = useState(null)
   const navigate = useNavigate(); // For navigation to details page
 
   const getTemplates = async () => {
@@ -33,6 +35,42 @@ const CompeleteCampaign = () => {
       });
     }
   };
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value); // Update the state with the selected "To" date
+  };
+
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value); // Update the state with the selected "From" date
+  };
+
+
+     // Fetch data from API
+     const Getdatetodata = async () => {
+      try {
+        const res = await apiCall({
+          endpoint: `admin/Searh_button_api_region?page=${page + 1}&limit=${rowsPerPage}`,
+          method: "post",
+          payload:{fromdate,todate}
+          
+        });
+  
+        if (res?.success) {            
+          setData(res.data || []); // Store the API response data
+          setTotalTemplates(res.data.length || 0); // Update total count
+        }
+  
+      } catch (error) {
+        setSnackBar({
+          open: true,
+          severity: "error",
+          message: error?.response?.data?.message || "An error occurred",
+        });
+      }
+    };
+  
+
+
 
   useEffect(() => {
     getTemplates();
@@ -73,15 +111,33 @@ const CompeleteCampaign = () => {
     // Navigate to dealer details page with zone as a query parameter
     const handleNavigateToDetails = (zone,columnName ) => {
       console.log('columnName: ', columnName);
-      navigate(`/DealerDetailsPageregion?zone=${zone}&columnName=${encodeURIComponent(columnName)}`);
+      navigate(`/DealerDetailsPageregion?zone=${zone}&columnName=${encodeURIComponent(columnName) }`,{
+        state: {
+          fromdate: fromdate,
+          todate: todate,
+        },
+      }
+    );
     };
 
   return (
     <>
       <div className="Template_id_contian1">
-        <h4 className="Head_titleTemplate">View Region Report</h4>
+        <h4 className="Head_titleTemplate">
+        <div className="date_box">
+            <input type="date"  className="date_box_input"   onChange={handleFromDateChange}/>
+            To
+            <input type="date" className="date_box_input"   onChange={handleToDateChange} />
+
+
+            <button type="submit" onClick={Getdatetodata}>Submit</button>
+          </div>
+          
+          View Region Report</h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
+
+        
             <table className="Table w-100" id="Table">
               <thead>
                 <tr>

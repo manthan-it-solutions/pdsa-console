@@ -11,7 +11,37 @@ const ZoneWise_Report_User = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
+  const [fromdate,setFromDate] = useState(null)
+  const [todate ,setToDate] = useState(null)
   const navigate = useNavigate(); // For navigation to details page
+
+
+
+
+
+       // Fetch data from API
+       const Getdatetodata = async () => {
+        try {
+          const res = await apiCall({
+            endpoint: `user/Searh_button_api_zone_user?page=${page + 1}&limit=${rowsPerPage}`,
+            method: "post",
+            payload:{fromdate,todate}
+            
+          });
+    
+          if (res?.success) {            
+            setData(res.data || []); // Store the API response data
+            setTotalTemplates(res.data.length || 0); // Update total count
+          }
+    
+        } catch (error) {
+          setSnackBar({
+            open: true,
+            severity: "error",
+            message: error?.response?.data?.message || "An error occurred",
+          });
+        }
+      };
 
   const getTemplates = async () => {
     try {
@@ -19,10 +49,10 @@ const ZoneWise_Report_User = () => {
         endpoint: `user/getURL_data_zone_user?page=${page + 1}&limit=${rowsPerPage}`,
         method: "GET",
       });
-      console.log(res.data, 'res.data');
+     
       if (res?.success) {
         setData(res.data || []); // Store the API response data
-        setTotalTemplates(res.totalPages); // Update pagination
+        setTotalTemplates(res.data.length); // Update pagination
       }
     } catch (error) {
       setSnackBar({
@@ -47,8 +77,13 @@ const ZoneWise_Report_User = () => {
   };
 
   const handleNavigateToDetails = (zone,columnName) => {
-    navigate(`/UserDetailsZonePage?zone=${encodeURIComponent(zone)}&columnName=${encodeURIComponent(columnName)}`);
-  };
+    navigate(`/UserDetailsZonePage?zone=${encodeURIComponent(zone)}&columnName=${encodeURIComponent(columnName)}`,{
+      state: {
+        fromdate: fromdate,
+        todate: todate,
+      },
+    },
+    )}
 
  
   const calculateTotals = () => {
@@ -72,10 +107,29 @@ const ZoneWise_Report_User = () => {
 
   const totals = calculateTotals();
 
+
+
+  const handleToDateChange = (event) => {
+    setToDate(event.target.value); // Update the state with the selected "To" date
+  };
+
+  const handleFromDateChange = (event) => {
+    setFromDate(event.target.value); // Update the state with the selected "From" date
+  };
+
   return (
     <>
       <div className="Template_id_contian1">
-        <h4 className="Head_titleTemplate">View Region Report</h4>
+        <h4 className="Head_titleTemplate">
+        <div className="date_box">
+            <input type="date"  className="date_box_input"   onChange={handleFromDateChange}/>
+            To
+            <input type="date" className="date_box_input"   onChange={handleToDateChange} />
+
+
+            <button type="submit" onClick={Getdatetodata}>Submit</button>
+          </div>
+          View Region Report</h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
@@ -152,11 +206,44 @@ const ZoneWise_Report_User = () => {
                 })}
                 <tr className="font-weight-bold">
                   <td>Total</td>
-                  <td>{totals.totalVideoSendCount}</td>
-                  <td>{totals.totalVideoClickCount}</td>
-                  <td>{totals.totalFeedbackSmsSent}</td>
-                  <td>{totals.totalFeedbackClickCount}</td>
-                  <td>{totals.totalFeedbackSmsVideoCount}</td>
+                  <td>
+                    <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_send_count")}
+                    >
+                      {totals.totalVideoSendCount}
+                    </button>
+                  </td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_click_count")}
+                    >
+                      {totals.totalVideoClickCount}
+                    </button>
+                    </td>                  
+
+                  {/* <td>{totals.totalFeedbackSmsSent}</td> */}
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "video_send_count")}
+                    >
+                      {totals.totalFeedbackSmsSent}
+                    </button></td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "total_feedback_click_count")}
+                    >
+                    {totals.totalFeedbackClickCount}</button></td>
+                  <td>
+                  <button
+                      className="btn btn-link"
+                      onClick={() => handleNavigateToDetails("total", "feedback_sms_video_count")}
+                    >
+                    {totals.totalFeedbackSmsVideoCount}</button></td>
+                  
                   <td>
                     {totals.totalVideoSendCount +
                       totals.totalVideoClickCount +
