@@ -49,9 +49,10 @@ const DealerDetailsPageregion = () => {
       });
 
       setData(response.data || []);
+      console.log('response: ', response);
       const totalItems = response.data?.length || 0; // Total items in the response
-      console.log('totalItems: ', totalItems);
-      setTotalPages(totalItems  || 0); // Calculate total pages based on data length
+
+      setTotalPages(response.total  || 0); // Calculate total pages based on data length
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
