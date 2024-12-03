@@ -5,6 +5,8 @@ import ShowSnackBar from "../components/snackBar";
 import TablePagination from "@mui/material/TablePagination";
 import { NavLink, useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";  // For downloading files
+import excel from '../Assets/images/excel.png'
+import search from '../Assets/images/search.png'
 
 
 const RegionWise_report_user = () => {
@@ -13,12 +15,29 @@ const RegionWise_report_user = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
-  const [fromdate,setFromDate] = useState(null)
-  const [todate ,setToDate] = useState(null)
-  
+  const [fromdate, setFromDate] = useState(null)
+  const [todate, setToDate] = useState(null)
+
   const navigate = useNavigate(); // For navigation to details page
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
+
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
 
 
+
+
+  const handleFromDateChange = (event) => {
+    // setFromDate(event.target.value); 
+    const selectedFromDate = event.target.value;
+    setFromDate(selectedFromDate);
+    if (selectedFromDate) {
+      setIsToDateEnabled(true);
+    }
+  };
 
 
   const Getdatetodata = async () => {
@@ -26,11 +45,11 @@ const RegionWise_report_user = () => {
       const res = await apiCall({
         endpoint: `user/Searh_button_api_region_user?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
-        payload:{fromdate,todate}
-        
+        payload: { fromdate, todate }
+
       });
 
-      if (res?.success) {            
+      if (res?.success) {
         setData(res.data || []); // Store the API response data
         setTotalTemplates(res.data.length || 0); // Update total count
       }
@@ -82,7 +101,7 @@ const RegionWise_report_user = () => {
   // Navigate to the detailed region report page
   const handleNavigateToDetails = (region, columnName) => {
     console.log('columnName:', columnName)
-    navigate(`/UserDetailspage?region=${encodeURIComponent(region)}&columnName=${encodeURIComponent(columnName)}`,{
+    navigate(`/UserDetailspage?region=${encodeURIComponent(region)}&columnName=${encodeURIComponent(columnName)}`, {
       state: {
         fromdate: fromdate,
         todate: todate,
@@ -115,115 +134,117 @@ const RegionWise_report_user = () => {
 
 
 
-  
+
   const handleToDateChange = (event) => {
     setToDate(event.target.value); // Update the state with the selected "To" date
   };
 
-  const handleFromDateChange = (event) => {
-    setFromDate(event.target.value); // Update the state with the selected "From" date
-  };
 
 
 
 
-    // Export data to CSV
-    const exportToCSV = () => {
-      
-      const header = [
-        "Region",
-        "Video Send Count",
-        "Video Click Count",
-        "Total Feedback SMS Sent",
-        "Total Feedback Click Count",
-        "Total Feedback Given",
-        "Sub Total"
+
+  // Export data to CSV
+  const exportToCSV = () => {
+
+    const header = [
+      "Region",
+      "Video Send Count",
+      "Video Click Count",
+      "Total Feedback SMS Sent",
+      "Total Feedback Click Count",
+      "Total Feedback Given",
+      "Sub Total"
+    ];
+
+    const rows = data.map(region => {
+      const subTotal =
+        (region.video_send_count || 0) +
+        (region.video_click_count || 0) +
+        (region.total_feedback_sms_sent || 0) +
+        (region.total_feedback_click_count || 0) +
+        (region.feedback_sms_video_count || 0);
+
+      return [
+        region.region || "Unknown",
+        region.video_send_count || 0,
+        region.video_click_count || 0,
+        region.total_feedback_sms_sent || 0,
+        region.total_feedback_click_count || 0,
+        region.feedback_sms_video_count || 0,
+        subTotal,
       ];
-      
-      const rows = data.map(region => {
-        const subTotal =
-          (region.video_send_count || 0) +
-          (region.video_click_count || 0) +
-          (region.total_feedback_sms_sent || 0) +
-          (region.total_feedback_click_count || 0) +
-          (region.feedback_sms_video_count || 0);
-        
-        return [
-          region.region || "Unknown",
-          region.video_send_count || 0,
-          region.video_click_count || 0,
-          region.total_feedback_sms_sent || 0,
-          region.total_feedback_click_count || 0,
-          region.feedback_sms_video_count || 0,
-          subTotal,
-        ];
-      });
-  
-      // Add the totals row at the end
-      rows.push([
-        "Total",
-        totals.totalVideoSendCount,
-        totals.totalVideoClickCount,
-        totals.totalFeedbackSmsSent,
-        totals.totalFeedbackClickCount,
-        totals.totalFeedbackSmsVideoCount,
-        totals.totalVideoSendCount + totals.totalVideoClickCount + totals.totalFeedbackSmsSent + totals.totalFeedbackClickCount + totals.totalFeedbackSmsVideoCount,
-      ]);
-  
-      // Create CSV data
-      const csvContent = [
-        header.join(","),
-        ...rows.map(row => row.join(","))
-      ].join("\n");
-  
-      // Trigger file download
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      saveAs(blob, "region_report.csv");
-    };
+    });
+
+    // Add the totals row at the end
+    rows.push([
+      "Total",
+      totals.totalVideoSendCount,
+      totals.totalVideoClickCount,
+      totals.totalFeedbackSmsSent,
+      totals.totalFeedbackClickCount,
+      totals.totalFeedbackSmsVideoCount,
+      totals.totalVideoSendCount + totals.totalVideoClickCount + totals.totalFeedbackSmsSent + totals.totalFeedbackClickCount + totals.totalFeedbackSmsVideoCount,
+    ]);
+
+    // Create CSV data
+    const csvContent = [
+      header.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    // Trigger file download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "region_report.csv");
+  };
 
   return (
     <>
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate">
-        View Region Report
-        <div className="row">
-  <div className="col-auto">
-    <label className="mr-2" htmlFor="fromDate">From:</label>
-    <input
-      type="date"
-      className="form-control ms-3"
-      id="fromDate"
-      onChange={handleFromDateChange}
-    />
-  </div>
+          <div className="date_box date_box1">
+            <input type="date" className="date_box_input" id="fromDate" onChange={handleFromDateChange} min={twoMonthsAgoString} max={todayString} />
+            To
+            <input type="date" className="date_box_input" id="toDate" onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate} max={todayString} />
 
-  <div className="col-auto">
-    <label className="mr-2" htmlFor="toDate">To:</label>
-    <input
-      type="date"
-      className="form-control"
-      id="toDate"
-      onChange={handleToDateChange}
-    />
-  </div>
+            <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div>
+          </div>
+          View Region Report
+          {/* <div className="row">
+            <div className="col-auto">
+              <label className="mr-2" htmlFor="fromDate">From:</label>
+              <input
+                type="date"
+                className="form-control ms-3"
+                id="fromDate"
+                onChange={handleFromDateChange}
+              />
+            </div>
 
-  <div className="col-auto mt-3">
-    <button
-      type="button"
-      className="btn btn-primary p-2"
-      onClick={Getdatetodata}
-    >
-      Submit
-    </button>
-  </div>
-</div>
+            <div className="col-auto">
+              <label className="mr-2" htmlFor="toDate">To:</label>
+              <input
+                type="date"
+                className="form-control"
+                id="toDate"
+                onChange={handleToDateChange}
+              />
+            </div>
 
-
-         
+            <div className="col-auto mt-3">
+              <button
+                type="button"
+                className="btn btn-primary p-2"
+                onClick={Getdatetodata}
+              >
+                Submit
+              </button>
+            </div>
+          </div> */}
+          {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
+          <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
           
-          
-          
-          <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}</h4>
+          </h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
@@ -255,7 +276,7 @@ const RegionWise_report_user = () => {
                       {/* These columns are clickable */}
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.region, "video_send_count" || "Unknown")}
                         >
                           {region.video_send_count || 0}
@@ -263,7 +284,7 @@ const RegionWise_report_user = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.region, "video_click_count" || "Unknown")}
                         >
                           {region.video_click_count || 0}
@@ -271,7 +292,7 @@ const RegionWise_report_user = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.region, "video_send_count" || "Unknown")}
                         >
                           {region.total_feedback_sms_sent || 0}
@@ -279,7 +300,7 @@ const RegionWise_report_user = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.region, "total_feedback_click_count" || "Unknown")}
                         >
                           {region.total_feedback_click_count || 0}
@@ -287,17 +308,17 @@ const RegionWise_report_user = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.region, "feedback_sms_video_count" || "Unknown")}
                         >
                           {region.feedback_sms_video_count || 0}
                         </button>
                       </td>
                       <td>
-  
 
-    {subTotal}
-</td>
+
+                        {subTotal}
+                      </td>
                     </tr>
                   );
                 })}
@@ -305,41 +326,41 @@ const RegionWise_report_user = () => {
                   <td>Total</td>
                   <td>
                     <button
-                      className="btn btn-link"
+                      className="btn btn-link btn-link1"
                       onClick={() => handleNavigateToDetails("total", "video_send_count")}
                     >
                       {totals.totalVideoSendCount}
                     </button>
                   </td>
                   <td>
-                  <button
-                      className="btn btn-link"
+                    <button
+                      className="btn btn-link btn-link1"
                       onClick={() => handleNavigateToDetails("total", "video_click_count")}
                     >
                       {totals.totalVideoClickCount}
                     </button>
-                    </td>                  
+                  </td>
 
                   {/* <td>{totals.totalFeedbackSmsSent}</td> */}
                   <td>
-                  <button
-                      className="btn btn-link"
+                    <button
+                      className="btn btn-link btn-link1"
                       onClick={() => handleNavigateToDetails("total", "video_send_count")}
                     >
                       {totals.totalFeedbackSmsSent}
                     </button></td>
                   <td>
-                  <button
-                      className="btn btn-link"
+                    <button
+                      className="btn btn-link btn-link1"
                       onClick={() => handleNavigateToDetails("total", "total_feedback_click_count")}
                     >
-                    {totals.totalFeedbackClickCount}</button></td>
+                      {totals.totalFeedbackClickCount}</button></td>
                   <td>
-                  <button
-                      className="btn btn-link"
+                    <button
+                      className="btn btn-link btn-link1"
                       onClick={() => handleNavigateToDetails("total", "feedback_sms_video_count")}
                     >
-                    {totals.totalFeedbackSmsVideoCount}</button></td>
+                      {totals.totalFeedbackSmsVideoCount}</button></td>
                   <td>
                     {totals.totalVideoSendCount +
                       totals.totalVideoClickCount +

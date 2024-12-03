@@ -16,9 +16,26 @@ const ZoneWise_Report_User = () => {
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
   const [fromdate, setFromDate] = useState(null)
   const [todate, setToDate] = useState(null)
-  const navigate = useNavigate(); // For navigation to details page
+  const navigate = useNavigate();
+
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
 
 
+
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
+
+  const handleFromDateChange = (event) => {
+    // setFromDate(event.target.value); 
+    const selectedFromDate = event.target.value;
+    setFromDate(selectedFromDate);
+    if (selectedFromDate) {
+      setIsToDateEnabled(true);
+    }
+  };
 
 
 
@@ -117,9 +134,7 @@ const ZoneWise_Report_User = () => {
     setToDate(event.target.value); // Update the state with the selected "To" date
   };
 
-  const handleFromDateChange = (event) => {
-    setFromDate(event.target.value); // Update the state with the selected "From" date
-  };
+
 
 
 
@@ -182,15 +197,15 @@ const ZoneWise_Report_User = () => {
     <>
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate">
-        <div className="date_box date_box1">
+          <div className="date_box date_box1">
             <input type="date" className="date_box_input" id="fromDate"
-                onChange={handleFromDateChange} />
+              onChange={handleFromDateChange} min={twoMonthsAgoString} max={todayString}  />
             To
             <input type="date" className="date_box_input" id="toDate"
-                onChange={handleToDateChange} />
+              onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate} max={todayString} />
 
             <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div>
-    
+
           </div>
           View Region Report
 
@@ -228,6 +243,7 @@ const ZoneWise_Report_User = () => {
             </div>
           </div> */}
           {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
+          
         </h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">

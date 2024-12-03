@@ -3,6 +3,8 @@ import { apiCall } from "../services/authServieces";
 import { useLocation } from "react-router-dom";
 import "../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
+import excel from '../Assets/images/excel.png'
+import search from '../Assets/images/search.png'
 
 const UserDetailspage = () => {
   const [data, setData] = useState([]);
@@ -19,6 +21,35 @@ const UserDetailspage = () => {
   const queryParams = new URLSearchParams(location.search);
   const region = queryParams.get("region");
   const columnName = queryParams.get("columnName");
+
+
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
+
+  const handleFromDateChange = (e) => {
+    const selectedFromDate = e.target.value;
+    setFromDate(selectedFromDate);
+    setIsToDateEnabled(!!selectedFromDate); 
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+  };
+
+
+
+
+
+
+
+
+
+
+
 
   // Retrieve `fromdate` and `todate` passed via state
   const stateDates = location.state || {};
@@ -132,8 +163,16 @@ const UserDetailspage = () => {
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
-        Dealer Details
-        <div className="date-filters">
+      <div className="date_box date_box1">
+          <input type="date" className="date_box_input" value={fromdate}
+            onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
+          To
+          <input type="date" className="date_box_input" value={todate}
+            onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString} />
+
+        </div>
+        Dealer Details ( Region: {region || "All Regions"} )
+        {/* <div className="date-filters">
           <label>
             From Date:
             <input
@@ -152,13 +191,15 @@ const UserDetailspage = () => {
           </label>
         </div>
 
-        <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}
+        <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
+
+        <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
       </h4>
       <div className="Template_id_Card1">
         <div className="table_contain" id="tableContain">
-          <center>
+          {/* <center>
             <h2>Region: {region || "All Regions"}</h2>
-          </center>
+          </center> */}
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
