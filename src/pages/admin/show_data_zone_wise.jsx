@@ -3,6 +3,8 @@ import { apiCall } from "../../services/authServieces";
 import { useLocation } from "react-router-dom";
 import "../../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
+import excel from '../../Assets/images/excel.png'
+import search from '../../Assets/images/search.png'
 
 const DealerDetailsPage = () => {
   const [data, setData] = useState([]);
@@ -74,7 +76,7 @@ const DealerDetailsPage = () => {
 
 
 
-  
+
   const exportToCSV = () => {
     if (data.length === 0) {
       alert("No data available to export!");
@@ -138,7 +140,7 @@ const DealerDetailsPage = () => {
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
-      <div className="date-filters">
+        {/* <div className="date-filters">
         <label>
           From Date:
           <input
@@ -156,18 +158,28 @@ const DealerDetailsPage = () => {
           />
         </label>
      
-      </div>
-        
-        
-        Dealer Details
-        <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}
-        </h4>
+      </div> */}
+        <div className="date_box date_box1">
+          <input type="date" className="date_box_input" value={fromdate}
+            onChange={(e) => setFromDate(e.target.value)} />
+          To
+          <input type="date" className="date_box_input" value={todate}
+            onChange={(e) => setToDate(e.target.value)} />
+
+          {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
+        </div>
+
+
+        Dealer Details ( Zone: {zone || "All Zones"} )
+        {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
+        <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
+      </h4>
       <div className="Template_id_Card1">
-        
+
         <div className="table_contain" id="tableContain">
 
-       
-          <center><h2>Zone: {zone || "All Zones"}</h2></center>
+
+          {/* <center><h2>Zone: {zone || "All Zones"}</h2></center> */}
 
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
