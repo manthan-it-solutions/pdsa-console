@@ -45,7 +45,7 @@ const UserDetailsZonePage = () => {
 
       // Assuming the API response has data and totalCount
       setData(response.data || []);
-      setTotalRecords(response.totalCount || 0); // Total records from the API
+      setTotalRecords(response.total || 0); // Total records from the API
     } catch (err) {
       console.error("Error fetching data:", err);
       setError(err.response?.data?.message || "Failed to fetch data");

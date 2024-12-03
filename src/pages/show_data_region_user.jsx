@@ -48,7 +48,7 @@ const UserDetailspage = () => {
 
       // Update data, total records, and error handling
       setData(response.data || []); // Update the records
-      setTotalRecords(response.data.totalCount || 0); // Total number of records
+      setTotalRecords(response.total || 0); // Total number of records
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
