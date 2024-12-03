@@ -15,7 +15,7 @@
 }
 
 .Template_id_Card1 {
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 .Table {
@@ -234,7 +234,7 @@ div#tableContain {
 
 @media(max-width:498px) {
     .Head_titleTemplate {
-        text-align: left;
+        /* text-align: left; */
         padding-left: 10px;
         padding-right: 10px;
     }

@@ -6,6 +6,7 @@ import TablePagination from "@mui/material/TablePagination";
 import excel from '../Assets/images/excel.png'
 import search from '../Assets/images/search.png'
 
+
 const UserDetailsZonePage = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0); // 0-based index for Material UI pagination
@@ -33,7 +34,7 @@ const UserDetailsZonePage = () => {
   const handleFromDateChange = (e) => {
     const selectedFromDate = e.target.value;
     setFromDate(selectedFromDate);
-    setIsToDateEnabled(!!selectedFromDate); 
+    setIsToDateEnabled(!!selectedFromDate);
   };
 
   const handleToDateChange = (e) => {
@@ -42,7 +43,7 @@ const UserDetailsZonePage = () => {
 
 
 
-  
+
 
   // Retrieve `fromdate` and `todate` passed via state
   const stateDates = location.state || {};
@@ -160,10 +161,10 @@ const UserDetailsZonePage = () => {
       <h4 className="Head_titleTemplate">
         <div className="date_box date_box1">
           <input type="date" className="date_box_input" value={fromdate}
-              onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
+            onChange={handleFromDateChange} min={twoMonthsAgoString} max={todayString} />
           To
           <input type="date" className="date_box_input" value={todate}
-           onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString}  />
+            onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate} max={todayString} />
 
           {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
 
