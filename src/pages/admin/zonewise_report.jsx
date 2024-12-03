@@ -5,6 +5,8 @@ import ShowSnackBar from "../../components/snackBar";
 import TablePagination from "@mui/material/TablePagination";
 import { NavLink, useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";  // For downloading files
+import excel from '../../Assets/images/excel.png'
+import search from '../../Assets/images/search.png'
 
 const ZoneWise_Report = () => {
   const [data, setData] = useState([]); // API data
@@ -211,14 +213,15 @@ const ZoneWise_Report = () => {
             To
             <input type="date" className="date_box_input"   onChange={handleToDateChange} />
 
-
-            <button type="submit" onClick={Getdatetodata}>Submit</button>
+            <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div>
+            {/* <button type="submit" onClick={Getdatetodata}>Submit</button> */}
           </div>
 
 
 
           View Region Report
-          <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}  
+          {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
+          <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
         </h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
@@ -255,7 +258,7 @@ const ZoneWise_Report = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.zone,"video_send_count") || "Unknown"}
                         >
                           {region.video_send_count || 0}
@@ -263,7 +266,7 @@ const ZoneWise_Report = () => {
                       </td>
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.zone ,"video_click_count" ) || "Unknown"}
                         >
                           {region.video_click_count || 0}
@@ -272,7 +275,7 @@ const ZoneWise_Report = () => {
 
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.zone, "video_send_count" ) || "Unknown"}
                         >
                           {region.video_send_count || 0}
@@ -282,7 +285,7 @@ const ZoneWise_Report = () => {
 
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.zone,"total_feedback_click_count") || "Unknown"}
                         >
                           {region.total_feedback_click_count || 0}
@@ -292,7 +295,7 @@ const ZoneWise_Report = () => {
 
                       <td>
                         <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails(region.zone,"feedback_sms_video_count") || "Unknown"}
                         >
                           {region.feedback_sms_video_count || 0}
@@ -308,7 +311,7 @@ const ZoneWise_Report = () => {
                   <td>
 
                   <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails("total","video_send_count") || "Unknown"}
                         >
                           {totals.totalVideoSendCount}
@@ -317,7 +320,7 @@ const ZoneWise_Report = () => {
                   <td>
 
                   <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails("total","video_click_count") || "Unknown"}
                         >
                       {totals.totalVideoClickCount}
@@ -326,7 +329,7 @@ const ZoneWise_Report = () => {
                   <td>
 
                   <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails("total","video_send_count") || "Unknown"}
                         >
                      {totals.totalFeedbackSmsSent}
@@ -335,7 +338,7 @@ const ZoneWise_Report = () => {
                   <td>
 
                   <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1"
                           onClick={() => handleNavigateToDetails("total","total_feedback_click_count") || "Unknown"}
                         >
                    {totals.totalFeedbackClickCount}
@@ -345,7 +348,7 @@ const ZoneWise_Report = () => {
                   <td>
 
                   <button
-                          className="btn btn-link"
+                          className="btn btn-link btn-link1" 
                           onClick={() => handleNavigateToDetails("total","feedback_sms_video_count") || "Unknown"}
                         >
                  {totals.totalFeedbackSmsVideoCount}
