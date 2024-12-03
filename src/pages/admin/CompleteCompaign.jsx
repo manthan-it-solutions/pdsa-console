@@ -14,10 +14,28 @@ const CompeleteCampaign = () => {
   const [page, setPage] = useState(0); // Pagination: current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
   const [totalTemplates, setTotalTemplates] = useState(0); // Total templates count
-  const [fromdate, setFromDate] = useState(null)
+  const [fromdate, setFromDate] = useState(null);
   const [todate, setToDate] = useState(null)
   const navigate = useNavigate(); // For navigation to details page
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
 
+
+
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
+
+
+  const handleFromDateChange = (event) => {
+    // setFromDate(event.target.value); 
+    const selectedFromDate = event.target.value;
+    setFromDate(selectedFromDate);
+    if (selectedFromDate) {
+      setIsToDateEnabled(true);
+    }
+  };
   const getTemplates = async () => {
     try {
       const res = await apiCall({
@@ -38,15 +56,9 @@ const CompeleteCampaign = () => {
       });
     }
   };
-
   const handleToDateChange = (event) => {
     setToDate(event.target.value); // Update the state with the selected "To" date
   };
-
-  const handleFromDateChange = (event) => {
-    setFromDate(event.target.value); // Update the state with the selected "From" date
-  };
-
 
   // Fetch data from API
   const Getdatetodata = async () => {
@@ -72,9 +84,6 @@ const CompeleteCampaign = () => {
     }
   };
 
-
-
-
   useEffect(() => {
     getTemplates();
   }, [page, rowsPerPage]);
@@ -87,7 +96,6 @@ const CompeleteCampaign = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const calculateTotals = () => {
     return data.reduce(
       (totals, region) => ({
@@ -106,14 +114,10 @@ const CompeleteCampaign = () => {
       }
     );
   };
-
   const totals = calculateTotals();
-
-
-
   // Navigate to dealer details page with zone as a query parameter
   const handleNavigateToDetails = (zone, columnName) => {
-    console.log('columnName: ', columnName);
+    // console.log('columnName: ', columnName);
     navigate(`/DealerDetailsPageregion?zone=${zone}&columnName=${encodeURIComponent(columnName)}`, {
       state: {
         fromdate: fromdate,
@@ -122,9 +126,6 @@ const CompeleteCampaign = () => {
     }
     );
   };
-
-
-
   // Export data to CSV
   const exportToCSV = () => {
 
@@ -179,17 +180,22 @@ const CompeleteCampaign = () => {
     saveAs(blob, "region_report.csv");
   };
 
+
+
+
+
+
+
   return (
     <>
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate Head_titleTemplate_new">
           <div className="date_box date_box1">
-            <input type="date" className="date_box_input" onChange={handleFromDateChange} />
+            <input type="date" className="date_box_input" onChange={handleFromDateChange} min={twoMonthsAgoString} max={todayString} />
             To
-            <input type="date" className="date_box_input" onChange={handleToDateChange} />
+            <input type="date" className="date_box_input" onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate} max={todayString} />
 
             <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div>
-            {/* <button type="submit" onClick={Getdatetodata}>Submit</button> */}
           </div>
 
           View Region Report

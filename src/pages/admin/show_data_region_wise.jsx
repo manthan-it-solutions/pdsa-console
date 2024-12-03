@@ -9,21 +9,39 @@ import search from '../../Assets/images/search.png'
 const DealerDetailsPageregion = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-
-
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(10); // Pagination: rows per page
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [error, setError] = useState(null);
   const [fromdate, setFromDate] = useState("");
   const [todate, setToDate] = useState("");
-
-  // Extract the zone from the URL query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
+
+
+
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
+
+  const handleFromDateChange = (e) => {
+    const selectedFromDate = e.target.value;
+    setFromDate(selectedFromDate);
+    setIsToDateEnabled(!!selectedFromDate); 
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+  };
+
+
+  
 
   // Retrieve fromdate and todate passed via state
   const stateDates = location.state || {};
@@ -143,10 +161,10 @@ const DealerDetailsPageregion = () => {
       <h4 className="Head_titleTemplate">
         <div className="date_box date_box1">
           <input type="date" className="date_box_input" value={fromdate}
-            onChange={(e) => setFromDate(e.target.value)} />
+            onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
           To
           <input type="date" className="date_box_input" value={todate}
-            onChange={(e) => setToDate(e.target.value)} />
+            onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString} />
 
         </div>
 

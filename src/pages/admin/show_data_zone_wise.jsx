@@ -21,6 +21,35 @@ const DealerDetailsPage = () => {
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
 
+
+
+
+
+  const [isToDateEnabled, setIsToDateEnabled] = useState(false);
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const twoMonthsAgo = new Date(today);
+  twoMonthsAgo.setMonth(today.getMonth() - 2);
+  const twoMonthsAgoString = twoMonthsAgo.toISOString().split("T")[0];
+
+  const handleFromDateChange = (e) => {
+    const selectedFromDate = e.target.value;
+    setFromDate(selectedFromDate);
+    setIsToDateEnabled(!!selectedFromDate); 
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+  };
+
+
+
+
+
+
+
+
+
   // Retrieve fromdate and todate passed via state
   const stateDates = location.state || {};
   useEffect(() => {
@@ -161,10 +190,10 @@ const DealerDetailsPage = () => {
       </div> */}
         <div className="date_box date_box1">
           <input type="date" className="date_box_input" value={fromdate}
-            onChange={(e) => setFromDate(e.target.value)} />
+            onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
           To
           <input type="date" className="date_box_input" value={todate}
-            onChange={(e) => setToDate(e.target.value)} />
+           onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString}  />
 
           {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
         </div>
