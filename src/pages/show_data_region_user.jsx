@@ -72,6 +72,63 @@ const UserDetailspage = () => {
     setPage(0); // Reset to the first page
   };
 
+
+
+   // Export data to CSV
+   const exportToCSV = () => {
+    const header = [
+      "Region",
+      "Dealer Code",
+      "Creation Date",
+      "Creation Time",
+      "Dealer Name",
+      "Dealer Type",
+      "Dealer State",
+      "Dealer City",
+      "Model Name",
+      "Road Safety Tips Info",
+      "Road Safety Tips Form",
+      "Riding Simulator Experience",
+      "Sales Experience Satisfaction",
+      "Vehicle Delivery Feedback",
+      "Feedback Date",
+    ];
+
+    // Map rows for CSV data
+    const rows = data.map((item) => [
+      item.region || "Unknown",
+      item.dealer_code || "-",
+      item.cdate || "-",
+      item.ctime || "-",
+      item.dealer_name || "-",
+      item.dealer_type || "-",
+      item.Dealer_State || "-",
+      item.Dealer_City || "-",
+      item.model_name || "-",
+      item.feedback_answer1 || "-",
+      item.feedback_answer2 || "-",
+      item.feedback_answer3 || "-",
+      item.feedback_answer4 || "-",
+      item.feedback_answer5 || "-",
+      item.feedback_date || "-",
+    ]);
+
+    // Combine header and rows into CSV format
+    const csvContent = [
+      header.join(","), // Join headers with commas
+      ...rows.map((row) => row.join(",")), // Map rows and join with commas
+    ].join("\n"); // Separate rows with newlines
+
+    // Create a Blob and trigger download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Dealer_Details.csv"; // Set the CSV file name
+    link.click();
+    URL.revokeObjectURL(url); // Clean up the URL
+  };
+
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
@@ -94,6 +151,8 @@ const UserDetailspage = () => {
             />
           </label>
         </div>
+
+        <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}
       </h4>
       <div className="Template_id_Card1">
         <div className="table_contain" id="tableContain">

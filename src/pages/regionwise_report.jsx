@@ -185,19 +185,45 @@ const RegionWise_report_user = () => {
     <>
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate">
-        <div className="date_box">
-            <input type="date"  className="date_box_input"   onChange={handleFromDateChange}/>
-            To
-            <input type="date" className="date_box_input"   onChange={handleToDateChange} />
+        View Region Report
+        <div className="row">
+  <div className="col-auto">
+    <label className="mr-2" htmlFor="fromDate">From:</label>
+    <input
+      type="date"
+      className="form-control ms-3"
+      id="fromDate"
+      onChange={handleFromDateChange}
+    />
+  </div>
+
+  <div className="col-auto">
+    <label className="mr-2" htmlFor="toDate">To:</label>
+    <input
+      type="date"
+      className="form-control"
+      id="toDate"
+      onChange={handleToDateChange}
+    />
+  </div>
+
+  <div className="col-auto mt-3">
+    <button
+      type="button"
+      className="btn btn-primary p-2"
+      onClick={Getdatetodata}
+    >
+      Submit
+    </button>
+  </div>
+</div>
 
 
-            <button type="submit" onClick={Getdatetodata}>Submit</button>
-          </div>
-          View Region Report
+         
           
           
           
-          <button onClick={exportToCSV}>Export to CSV</button> {/* Export button */}</h4>
+          <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button> {/* Export button */}</h4>
         <div className="Template_id_Card1">
           <div className="table_contain" id="tableContain">
             <table className="Table w-100" id="Table">
