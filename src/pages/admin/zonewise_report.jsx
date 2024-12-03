@@ -219,7 +219,7 @@ const ZoneWise_Report = () => {
 
 
 
-          View Region Report
+          View Zone Report
           {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
           <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
         </h4>
