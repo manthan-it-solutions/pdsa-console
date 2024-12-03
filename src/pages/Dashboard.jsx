@@ -83,7 +83,7 @@ const Dashboard = () => {
           
 
           <div className="row">
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_submission"
                 id="total_HSM"
@@ -92,7 +92,7 @@ const Dashboard = () => {
                 src={Total}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_delivered"
                 data={` Vedio ${delivered_hsm}  | Feedback ${delivered_hsmfeedback}`}
@@ -100,7 +100,7 @@ const Dashboard = () => {
                 src={Delivered}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_failed"
                 data={`Vedio ${failed_hsm}  | Feedback ${failed_hsmfeedback}`}
@@ -108,7 +108,7 @@ const Dashboard = () => {
                 src={Failed}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_pending"
                data={` Vedio ${seen_hsm}  | Feedback  ${seen_hsmfeedback}`}
