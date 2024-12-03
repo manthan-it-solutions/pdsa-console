@@ -502,6 +502,9 @@ p {
     box-shadow: none;
     text-decoration: none;
 }
+.zone_f{
+    font-size: 20px;
+}
 
 @media (max-width: 1130px) {
     .Head_titleTemplate.date_input_container {
