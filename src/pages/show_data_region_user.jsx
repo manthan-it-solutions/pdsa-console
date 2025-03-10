@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { apiCall } from "../../services/authServieces";
+import { apiCall } from "../services/authServieces";
 import { useLocation } from "react-router-dom";
-import "../../css/wb_template.css";
+import "../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
-import excel from '../../Assets/images/excel.png'
-import search from '../../Assets/images/search.png'
+import excel from '../Assets/images/excel.png'
+import search from '../Assets/images/search.png'
 
-const DealerDetailsPage = () => {
+const UserDetailspage = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [totalItems, setTotalItems] = useState(0); // Store total item count
+  const [page, setPage] = useState(0); // Adjust to 0-based index
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Items per page
+  const [totalRecords, setTotalRecords] = useState(0); // Total records
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fromdate, setFromDate] = useState("");
   const [todate, setToDate] = useState("");
 
+  // Extract region and columnName from URL query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const zone = queryParams.get("zone");
+  const region = queryParams.get("region");
   const columnName = queryParams.get("columnName");
-
-
-
 
 
   const [isToDateEnabled, setIsToDateEnabled] = useState(false);
@@ -50,33 +48,38 @@ const DealerDetailsPage = () => {
 
 
 
-  // Retrieve fromdate and todate passed via state
+
+
+
+  // Retrieve `fromdate` and `todate` passed via state
   const stateDates = location.state || {};
   useEffect(() => {
     if (stateDates.fromdate) setFromDate(stateDates.fromdate);
     if (stateDates.todate) setToDate(stateDates.todate);
   }, [stateDates]);
 
-  // Fetch dealer details with pagination and date filtering
-  const fetchDealerDetails = async () => {
+  // Fetch user details
+  const fetchUserDetails = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await apiCall({
-        endpoint: `admin/getDealerDetailsZone?page=${page + 1}&limit=${rowsPerPage}`,
+        endpoint: `user/getUserDetailsRegion?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
         payload: {
-          zone,
-          columnName,
-          toDate: todate || null, // Use selected or passed "To" date
-          fromDate: fromdate || null, // Use selected or passed "From" date
+          region: region || "",
+          columnName: columnName || "",
+          fromdate: fromdate || null,
+          todate: todate || null,
         },
       });
 
-      console.log("API Response: ", response.data);
-      setData(response.data || []);
-      setTotalItems(response.count_total || 0); // Set total items for pagination
+      // Debugging: log the response
+      console.log("API Response:", response);
+
+      // Update data, total records, and error handling
+      setData(response.data || []); // Update the records
+      setTotalRecords(response.total || 0); // Total number of records
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
@@ -84,37 +87,28 @@ const DealerDetailsPage = () => {
     }
   };
 
-  // Trigger data fetch on page load, date change, or pagination changes
+  // Fetch data whenever filters, page, or rowsPerPage change
   useEffect(() => {
-    fetchDealerDetails();
-  }, [page, rowsPerPage, fromdate, todate]);
+    fetchUserDetails();
+  }, [region, page, rowsPerPage, fromdate, todate]);
 
+  // Handle pagination page change
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  // Handle rows per page change
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
-  };
-
-  const handleSearch = () => {
-    setPage(0); // Reset to the first page when performing a search
-    fetchDealerDetails();
+    setPage(0); // Reset to the first page
   };
 
 
 
-
-  const exportToCSV = () => {
-    if (data.length === 0) {
-      alert("No data available to export!");
-      return;
-    }
-
-    // Define CSV headers
-    const headers = [
-      "Zone",
+   // Export data to CSV
+   const exportToCSV = () => {
+    const header = [
+      "Region",
       "Dealer Code",
       "Creation Date",
       "Creation Time",
@@ -131,17 +125,17 @@ const DealerDetailsPage = () => {
       "Feedback Date",
     ];
 
-    // Map data to CSV rows
-    const csvRows = data.map((item) => [
-      item.zone || "",
-      item.dealer_code || "",
-      item.cdate || "",
-      item.ctime || "",
-      item.dealer_name || "",
-      item.dealer_type || "",
-      item.Dealer_State || "",
-      item.Dealer_City || "",
-      item.model_name || "",
+    // Map rows for CSV data
+    const rows = data.map((item) => [
+      item.region || "Unknown",
+      item.dealer_code || "-",
+      item.cdate || "-",
+      item.ctime || "-",
+      item.dealer_name || "-",
+      item.dealer_type || "-",
+      item.Dealer_State || "-",
+      item.Dealer_City || "-",
+      item.model_name || "-",
       item.feedback_answer1 || "-",
       item.feedback_answer2 || "-",
       item.feedback_answer3 || "-",
@@ -150,66 +144,62 @@ const DealerDetailsPage = () => {
       item.feedback_date || "-",
     ]);
 
-    // Combine headers and rows
-    const csvContent =
-      [headers.join(",")]
-        .concat(csvRows.map((row) => row.join(",")))
-        .join("\n");
+    // Combine header and rows into CSV format
+    const csvContent = [
+      header.join(","), // Join headers with commas
+      ...rows.map((row) => row.join(",")), // Map rows and join with commas
+    ].join("\n"); // Separate rows with newlines
 
-    // Create a Blob and download the file
+    // Create a Blob and trigger download
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute("download", "dealer_details_Zone.csv");
-    document.body.appendChild(link);
+    link.href = url;
+    link.download = "Dealer_Details.csv"; // Set the CSV file name
     link.click();
-    document.body.removeChild(link);
+    URL.revokeObjectURL(url); // Clean up the URL
   };
 
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
-        {/* <div className="date-filters">
-        <label>
-          From Date:
-          <input
-            type="date"
-            value={fromdate}
-            onChange={(e) => setFromDate(e.target.value)}
-          />
-        </label>
-        <label>
-          To Date:
-          <input
-            type="date"
-            value={todate}
-            onChange={(e) => setToDate(e.target.value)}
-          />
-        </label>
-     
-      </div> */}
-        <div className="date_box date_box1">
+      <div className="date_box date_box1">
           <input type="date" className="date_box_input" value={fromdate}
             onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
           To
           <input type="date" className="date_box_input" value={todate}
-           onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString}  />
+            onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString} />
 
-          {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
+        </div>
+        Dealer Details ( Region: {region || "All Regions"} )
+        {/* <div className="date-filters">
+          <label>
+            From Date:
+            <input
+              type="date"
+              value={fromdate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          </label>
+          <label>
+            To Date:
+            <input
+              type="date"
+              value={todate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
+          </label>
         </div>
 
+        <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
 
-        Dealer Details ( Zone: {zone || "All Zones"} )
-        {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
         <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
       </h4>
       <div className="Template_id_Card1">
-
         <div className="table_contain" id="tableContain">
-
-
-          {/* <center><h2>Zone: {zone || "All Zones"}</h2></center> */}
-
+          {/* <center>
+            <h2>Region: {region || "All Regions"}</h2>
+          </center> */}
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -217,9 +207,8 @@ const DealerDetailsPage = () => {
             <table className="Table w-100" id="Table">
               <thead>
                 <tr>
-                  <th>Zone</th>
+                  <th>Region</th>
                   <th>Dealer Code</th>
-                  <th>Video Send Count</th>
                   <th>Creation Date</th>
                   <th>Creation Time</th>
                   <th>Dealer Name</th>
@@ -239,9 +228,8 @@ const DealerDetailsPage = () => {
                 {data.length > 0 ? (
                   data.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.zone}</td>
+                      <td>{item.region}</td>
                       <td>{item.dealer_code}</td>
-                      <td>{item.video_send_count}</td>
                       <td>{item.cdate}</td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
@@ -267,10 +255,9 @@ const DealerDetailsPage = () => {
           )}
         </div>
       </div>
-
       <TablePagination
         component="div"
-        count={totalItems} // Set the count from the API response
+        count={totalRecords} // Total records for pagination
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
@@ -281,4 +268,4 @@ const DealerDetailsPage = () => {
   );
 };
 
-export default DealerDetailsPage;
+export default UserDetailspage;

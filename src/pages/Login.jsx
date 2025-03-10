@@ -110,7 +110,7 @@ const Login = () => {
           <div className="col-lg-7 ">
             <div className="LoginCardLeft">
               <div className="LoginLogoContain">
-                <img src="/images/meta-logo.png" alt="meta logo" />
+                {/* <img src="/images/meta-logo.png" alt="meta logo" /> */}
                 <img
                   src="/images/logo.png"
                   alt="manthan logo"

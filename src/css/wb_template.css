@@ -15,7 +15,7 @@
 }
 
 .Template_id_Card1 {
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 .Table {
@@ -234,7 +234,7 @@ div#tableContain {
 
 @media(max-width:498px) {
     .Head_titleTemplate {
-        text-align: left;
+        /* text-align: left; */
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -450,3 +450,95 @@ p {
 .Head_title.transition_head_title .TransactionSearch.new_search_t {
     right: 10px;
 }
+
+.date_box {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: 10px;
+    color: #000;
+    font-size: 12px;
+    margin-top: -3px;
+    background-color: #fff;
+    padding: 7px 6px;
+    border-radius: 4px;
+}
+
+.date_box_input {
+    font-size: 12px;
+    font-weight: 400;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: transparent;
+    width: 77px;
+}
+
+.excel_img_btn {
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.excel_img_btn img {
+    width: 25px;
+    height: 25px;
+}
+
+.sercah_icon_date {
+    cursor: pointer;
+}
+
+.sercah_icon_date img {
+    height: 15px;
+    width: 15px;
+}
+
+.btn.btn-link.btn-link1 {
+    background-color: transparent;
+    color: #0056b3;
+    box-shadow: none;
+    text-decoration: none;
+}
+.zone_f{
+    font-size: 20px;
+}
+
+@media (max-width: 1130px) {
+    .Head_titleTemplate.date_input_container {
+        text-align: right;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 570px) {
+    .Head_titleTemplate.date_input_container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .date_box {
+        position: initial;
+        padding-bottom: 10px;
+        justify-content: center;
+    }
+
+    .date_box.date_box1 {
+        width: 223px;
+        margin: auto;
+
+    }
+    .Head_titleTemplate.Head_titleTemplate_new {
+        text-align: center;
+    }
+
+    .excel_img_btn {
+        position: initial;
+    }
+}
+

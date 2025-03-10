@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { apiCall } from "../../services/authServieces";
+import { apiCall } from "../services/authServieces";
 import { useLocation } from "react-router-dom";
-import "../../css/wb_template.css";
+import "../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
-import excel from '../../Assets/images/excel.png'
-import search from '../../Assets/images/search.png'
+import excel from '../Assets/images/excel.png'
+import search from '../Assets/images/search.png'
 
-const DealerDetailsPage = () => {
+
+const UserDetailsZonePage = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [totalItems, setTotalItems] = useState(0); // Store total item count
+  const [page, setPage] = useState(0); // 0-based index for Material UI pagination
+  const [limit, setLimit] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fromdate, setFromDate] = useState("");
   const [todate, setToDate] = useState("");
 
+  // Extract the zone and columnName from the URL query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
-
-
-
 
 
   const [isToDateEnabled, setIsToDateEnabled] = useState(false);
@@ -35,7 +34,7 @@ const DealerDetailsPage = () => {
   const handleFromDateChange = (e) => {
     const selectedFromDate = e.target.value;
     setFromDate(selectedFromDate);
-    setIsToDateEnabled(!!selectedFromDate); 
+    setIsToDateEnabled(!!selectedFromDate);
   };
 
   const handleToDateChange = (e) => {
@@ -46,63 +45,53 @@ const DealerDetailsPage = () => {
 
 
 
-
-
-
-
-  // Retrieve fromdate and todate passed via state
+  // Retrieve `fromdate` and `todate` passed via state
   const stateDates = location.state || {};
   useEffect(() => {
     if (stateDates.fromdate) setFromDate(stateDates.fromdate);
     if (stateDates.todate) setToDate(stateDates.todate);
   }, [stateDates]);
 
-  // Fetch dealer details with pagination and date filtering
-  const fetchDealerDetails = async () => {
+  // Fetch user details based on filters and pagination
+  const fetchUserDetails = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await apiCall({
-        endpoint: `admin/getDealerDetailsZone?page=${page + 1}&limit=${rowsPerPage}`,
+        endpoint: `user/getUserDetailsZone?page=${page + 1}&limit=${limit}`, // Page is 1-based for API
         method: "post",
         payload: {
-          zone,
-          columnName,
-          toDate: todate || null, // Use selected or passed "To" date
-          fromDate: fromdate || null, // Use selected or passed "From" date
+          zone: zone || "",
+          columnName: columnName || "",
+          fromdate: fromdate || null,
+          todate: todate || null,
         },
       });
 
-      console.log("API Response: ", response.data);
+      // Assuming the API response has data and totalCount
       setData(response.data || []);
-      setTotalItems(response.count_total || 0); // Set total items for pagination
+      setTotalRecords(response.total || 0); // Total records from the API
     } catch (err) {
+      console.error("Error fetching data:", err);
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
       setLoading(false);
     }
   };
 
-  // Trigger data fetch on page load, date change, or pagination changes
   useEffect(() => {
-    fetchDealerDetails();
-  }, [page, rowsPerPage, fromdate, todate]);
+    fetchUserDetails();
+  }, [zone, columnName, page, limit, fromdate, todate]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
+    const newLimit = parseInt(event.target.value, 10);
+    setLimit(newLimit);
+    setPage(0);
   };
-
-  const handleSearch = () => {
-    setPage(0); // Reset to the first page when performing a search
-    fetchDealerDetails();
-  };
-
 
 
 
@@ -166,9 +155,24 @@ const DealerDetailsPage = () => {
     document.body.removeChild(link);
   };
 
+
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
+        <div className="date_box date_box1">
+          <input type="date" className="date_box_input" value={fromdate}
+            onChange={handleFromDateChange} min={twoMonthsAgoString} max={todayString} />
+          To
+          <input type="date" className="date_box_input" value={todate}
+            onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate} max={todayString} />
+
+          {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
+
+        </div>
+        Dealer Details ( Zone: {zone || "All zones"} )
+        <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
+
+
         {/* <div className="date-filters">
         <label>
           From Date:
@@ -187,29 +191,16 @@ const DealerDetailsPage = () => {
           />
         </label>
      
-      </div> */}
-        <div className="date_box date_box1">
-          <input type="date" className="date_box_input" value={fromdate}
-            onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
-          To
-          <input type="date" className="date_box_input" value={todate}
-           onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString}  />
-
-          {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
-        </div>
-
-
-        Dealer Details ( Zone: {zone || "All Zones"} )
-        {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
-        <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
+      </div>
+      
+      <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
       </h4>
       <div className="Template_id_Card1">
-
         <div className="table_contain" id="tableContain">
+          <center>
+            {/* <h2 className="zone_f">Zone: {zone || "All zones"}</h2> */}
 
-
-          {/* <center><h2>Zone: {zone || "All Zones"}</h2></center> */}
-
+          </center>
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -219,7 +210,6 @@ const DealerDetailsPage = () => {
                 <tr>
                   <th>Zone</th>
                   <th>Dealer Code</th>
-                  <th>Video Send Count</th>
                   <th>Creation Date</th>
                   <th>Creation Time</th>
                   <th>Dealer Name</th>
@@ -241,7 +231,6 @@ const DealerDetailsPage = () => {
                     <tr key={index}>
                       <td>{item.zone}</td>
                       <td>{item.dealer_code}</td>
-                      <td>{item.video_send_count}</td>
                       <td>{item.cdate}</td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
@@ -259,7 +248,7 @@ const DealerDetailsPage = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="16">No data available</td>
+                    <td colSpan="15">No data available</td>
                   </tr>
                 )}
               </tbody>
@@ -270,10 +259,10 @@ const DealerDetailsPage = () => {
 
       <TablePagination
         component="div"
-        count={totalItems} // Set the count from the API response
+        count={totalRecords} // Total records for pagination
         page={page}
         onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={limit}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
       />
@@ -281,4 +270,4 @@ const DealerDetailsPage = () => {
   );
 };
 
-export default DealerDetailsPage;
+export default UserDetailsZonePage;

@@ -23,6 +23,7 @@ const AdminDashboard = () => {
         method: "GET",
       });
     
+      
       if (response && response.data) {
         setDashboardData({
           sentToday: response.data[0].today_video_send_count || 0,
@@ -57,7 +58,7 @@ const AdminDashboard = () => {
          
 
           <div className="row">
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_submission"
                 data={` Vedio ${dashboardData.sentToday} | Feedback ${dashboardData.sentTodayFeedback}`} 
@@ -65,7 +66,7 @@ const AdminDashboard = () => {
                 src={Total}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_delivered"
                 data={ `Vedio  ${dashboardData.sentThisWeek} | Feedback ${dashboardData.sentThisWeekFeedback}`} // Set data dynamically from API
@@ -73,7 +74,7 @@ const AdminDashboard = () => {
                 src={Delivered}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_failed"
                 data={ ` Vedio  ${dashboardData.sentThisMonth} | Feedback ${dashboardData.sentThisMonthFeedback}`} // Set data dynamically from API
@@ -81,7 +82,7 @@ const AdminDashboard = () => {
                 src={Failed}
               />
             </div>
-            <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_pending"
                 data={`Vedio ${dashboardData.pendingSms} | Feedback ${dashboardData.pendingSmsFeedback}`} // Set data dynamically from API
