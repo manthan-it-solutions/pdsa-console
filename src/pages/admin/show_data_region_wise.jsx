@@ -69,10 +69,11 @@ const DealerDetailsPageregion = () => {
       });
 
       setData(response.data || []);
-      console.log('response: ', response);
+      console.log('response: ', response.data[0].video_send_count);
       const totalItems = response.data?.length || 0; // Total items in the response
-
-      setTotalPages(response.total || 0); // Calculate total pages based on data length
+   
+console.log(response.data,'response.data[0].video_send_count');
+      setTotalPages(response.data[0].video_send_count || 0); // Calculate total pages based on data length
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {

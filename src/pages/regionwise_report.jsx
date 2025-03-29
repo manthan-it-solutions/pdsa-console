@@ -50,6 +50,7 @@ const RegionWise_report_user = () => {
       });
 
       if (res?.success) {
+        
         setData(res.data || []); // Store the API response data
         setTotalTemplates(res.data.length || 0); // Update total count
       }
@@ -73,7 +74,7 @@ const RegionWise_report_user = () => {
 
       if (res?.success) {
         setData(res.data || []); // Store the API response data
-        setTotalTemplates(res.data.length || 0); // Update total templates count correctly
+        setTotalTemplates(res.data.video_send_count|| 0); // Update total templates count correctly
       }
 
     } catch (error) {
