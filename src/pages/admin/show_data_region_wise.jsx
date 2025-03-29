@@ -54,7 +54,9 @@ const DealerDetailsPageregion = () => {
   const fetchDealerDetails = async () => {
     setLoading(true);
     setError(null);
-    try {
+
+    
+    try { 
       const response = await apiCall({
         endpoint: `admin/getDealerDetailsRegion?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
@@ -71,9 +73,8 @@ const DealerDetailsPageregion = () => {
       setData(response.data || []);
       console.log('response: ', response.data[0].video_send_count);
       const totalItems = response.data?.length || 0; // Total items in the response
-   
-console.log(response.data,'response.data[0].video_send_count');
-      setTotalPages(response.data[0].video_send_count || 0); // Calculate total pages based on data length
+
+      setTotalPages(totalItems || 0); // Calculate total pages based on data length
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
