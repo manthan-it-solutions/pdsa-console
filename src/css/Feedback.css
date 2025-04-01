@@ -12,10 +12,14 @@
 }
 
 .header_f {
-    display: flex;
-    align-items: center;
+position: relative;
     margin-bottom: 1.5rem;
-    justify-content: space-between;
+  
+}
+#google_translate_element{
+    position: absolute;
+    right: 10px;
+    top: 0;
 }
 
 .logo_f {
@@ -29,6 +33,7 @@
     color: red;
     margin-left: 1rem;
     text-decoration: underline;
+    text-align: center;
 }
 
 .language-selector {

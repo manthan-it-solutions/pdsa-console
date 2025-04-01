@@ -61,8 +61,11 @@ const Feedback = () => {
 
             if (res.success) {
 
-                if(res.data[0].feedback_answer1 != ""){
+                if(res.data[0].feedback_date){
                     setButtonToggle(true)
+                }
+                else{
+                    setButtonToggle(false)  
                 }
                
                 setFormData((prev) => ({
@@ -158,6 +161,10 @@ const Feedback = () => {
             if (res.success) {
                 alert("Feedback submitted successfully!");
                 console.log("Submitted data: ", formData);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Reload after 1 second
+
             } else {
                 alert("Failed to submit feedback. Please try again.");
                 console.log("API response error: ", res.message);
@@ -167,8 +174,6 @@ const Feedback = () => {
         }
     };
     
-    
-
     useEffect(() => {
         SelectDetails();
     }, []);
@@ -183,7 +188,7 @@ const Feedback = () => {
         <div className="feedback-container">
             <div className="feedback-wrapper">
                 <div className="header_f">
-                    <img src={logo} alt="Honda Logo" className="logo_f" />
+                    {/* <img src={logo} alt="Honda Logo" className="logo_f" /> */}
                     <h1 className="title">Safety Advice Feedback Form</h1>
                     <div className="language-selector">
                         <GoogleTranslateWidget />
