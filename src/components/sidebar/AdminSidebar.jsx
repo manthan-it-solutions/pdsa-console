@@ -39,11 +39,6 @@ const AdminSidebar = () => {
           </div>
 
 
-
-
-
-
-
           <div className="accordion-item">
             <h2 className="accordion-header">
               <button className={`accordion-button collapsed ${isActivePath('/admin/manage-dealer') ? 'active' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target="#Dropdown_3" aria-expanded="false" aria-controls="Dropdown_3">

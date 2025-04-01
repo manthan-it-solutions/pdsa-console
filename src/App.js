@@ -7,7 +7,6 @@ import Dashboard from './pages/Dashboard.jsx'
 import Login from './pages/Login';
 import { useUIContext } from './context';
 import AuthGuard from './guards/authGuards';
-import { apiCall, Me } from './services/authServieces';
 import AdminGuard from './guards/AdminGuard';
 import Profile from './pages/profile';
 import Changepassword from './pages/Changepassword';
@@ -30,7 +29,6 @@ const Layout = () => {
   // const showNavbarFooter = !['/login', '/managebot', '/notfound'].includes(location.pathname);
   const { isSidebarCollapsed } = useUIContext();
   const [userType, setUserType] = useState(null);
-
   const excludedPaths = ['/login', '/managebot', '/notfound', '/feedback'];
   const isLoginPage = excludedPaths.includes(location.pathname);
   const showNavbarFooter = !excludedPaths.includes(location.pathname);
@@ -38,7 +36,12 @@ const Layout = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       const token = JSON.parse(localStorage.getItem('user-cred'));
+
+    let tag_new = location.pathname
+    console.log('tag_new: ', typeof tag_new );
       if (!token && location.pathname !== '/feedback') {
+
+    
         navigate('/login');
       } else if (token?.token) {
         if (location.pathname === '/') {
@@ -49,6 +52,7 @@ const Layout = () => {
           }
         }
       }
+
     };
   
     checkAuthStatus();

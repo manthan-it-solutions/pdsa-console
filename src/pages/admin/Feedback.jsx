@@ -43,7 +43,7 @@ const Feedback = () => {
 
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
-    console.log('id: ', id);
+ 
    
 
 
@@ -61,9 +61,12 @@ const Feedback = () => {
 
             if (res.success) {
 
-                if(res.data[0].feedback_answer1 != ""){
-                    setButtonToggle(true)
-                }
+               if (res.data[0].feedback_date) {
+    setButtonToggle(true);  // If feedback_date exists, set to true
+} else {
+    setButtonToggle(false); // Otherwise, set to false
+}
+
                
                 setFormData((prev) => ({
                     ...prev,
@@ -101,6 +104,7 @@ const Feedback = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setButtonToggle(true);
         
         // Check if formData is null or empty
         if (!formData || Object.keys(formData).length === 0) {
@@ -146,6 +150,7 @@ const Feedback = () => {
         }
     
         console.log("Form Data: ", formData);
+
     
         try {
             // API call to submit the feedback
@@ -157,7 +162,9 @@ const Feedback = () => {
     
             if (res.success) {
                 alert("Feedback submitted successfully!");
-                console.log("Submitted data: ", formData);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // Reload after 1 second
             } else {
                 alert("Failed to submit feedback. Please try again.");
                 console.log("API response error: ", res.message);
