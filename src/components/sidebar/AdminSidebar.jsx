@@ -38,6 +38,15 @@ const AdminSidebar = () => {
             </h2>
           </div>
 
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <NavLink to="/feedback">
+                <button className={`accordion-button bg_none collapsed `} type="button">
+                  <img src={Dash} alt="img" /> <span>Feedback</span>
+                </button>
+              </NavLink>
+            </h2>
+          </div>
 
 
 
