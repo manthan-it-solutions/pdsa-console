@@ -36,7 +36,7 @@ const Header = () => {
   const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   useEffect(() => {
-    // Balancefunc();
+    Balancefunc();
     
     const fetchData = async () => {
       try {
@@ -68,18 +68,18 @@ const Header = () => {
     };
   }, []);
 
-  // const Balancefunc = async () => {
-  //   try {
-  //     const response = await apiCall({ endpoint: 'api/wp_balance_header', method: 'get' });
-  //     if (response.data) {
-  //       setBalance(response.data.balance);
-  //       setInter(response.data.inter_bal);
-  //       setButton(response.data.button_bal);
-  //     }
-  //   } catch (err) {
-  //     console.log('no amount found');
-  //   }
-  // };
+  const Balancefunc = async () => {
+    try {
+      const response = await apiCall({ endpoint: 'api/wp_balance_header', method: 'get' });
+      if (response.balance) {
+        setBalance(response.balance);
+        
+        setButton(response.balance);
+      }
+    } catch (err) {
+      console.log('no amount found');
+    }
+  };
 
   const handleLogOut = () => {
     localStorage.removeItem("user-cred");

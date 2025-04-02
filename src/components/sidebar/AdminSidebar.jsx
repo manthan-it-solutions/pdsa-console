@@ -23,7 +23,7 @@ const AdminSidebar = () => {
       <div className="Sidebar_head">
         {/* <NavLink to="#"><img src={SmsIcon} alt="img" /></NavLink> */}
         <NavLink to="#"><img src={Logo} alt="img" /></NavLink>
-        <NavLink to="#">SMSCOUNTER</NavLink>
+        <NavLink to="#">ISLY</NavLink>
         <button id="Menu_close" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}><img src={CloseIcon} alt="img" /></button>
       </div>
       <div className="Sidebar_contain">

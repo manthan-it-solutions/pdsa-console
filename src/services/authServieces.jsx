@@ -4,14 +4,14 @@ import axios from 'axios';
 // const baseURL = process.env.NODE_ENV === 'production'? 'https://apipathwp.com' : ""
 
 //....................local...............................
- const baseURL = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : "http://localhost:8080"
+ const baseURL = process.env.NODE_ENV === 'development'? 'https://pdsaapi.smscounter.com' : "https://pdsaapi.smscounter.com"
 console.log('baseURL: ', process.env);
 
 
 
 
 //....................local...............................
- export const baseURLforPAth = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : "http://localhost:8080"
+ export const baseURLforPAth = process.env.NODE_ENV === 'development'? 'https://pdsaapi.smscounter.com' : "https://pdsaapi.smscounter.com"
 
 
 

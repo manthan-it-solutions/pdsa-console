@@ -80,10 +80,10 @@ const WbManageDealer = () => {
   });
   const columns = [
    
-    { id: "user_id", label: "User Id" },
+    { id: "user_id", label: "User ID" },
     { id: "name", label: "User Name" },
     { id: "email_id", label: "Email Id" },
-    { id: "mobile", label: "User Mobile" },
+    { id: "mobile", label: "User Mobile No." },
     { id: "emp_code", label: "Emp Code" },
     { id: "cdate", label: "Created Date" },
 
@@ -155,11 +155,11 @@ const WbManageDealer = () => {
     const errors = {};
     if (!formValues.user_id) errors.user_id = "Dealer Code is required";
     if (!formValues.name) errors.name = "User Name is required";
-    if (!formValues.password) errors.password = "password is required";
-    if (!formValues.email_id) errors.email_id = "Email is required";
-    if (!formValues.mobile) errors.mobile = "Mobile is required";
-    if (!formValues.emp_code) errors.emp_code = "emp code is required";
-    if (!formValues.designation) errors.status = "designation is required";
+    if (!formValues.password) errors.password = "Password is required";
+    if (!formValues.email_id) errors.email_id = "Email ID is required";
+    if (!formValues.mobile) errors.mobile = "Mobile No. is required";
+    if (!formValues.emp_code) errors.emp_code = "Emp code is required";
+    if (!formValues.designation) errors.status = "Designation is required";
 
     if (!update) {
       if (!formValues.password) errors.password = "Password is required";
