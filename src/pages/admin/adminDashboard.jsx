@@ -58,36 +58,41 @@ const AdminDashboard = () => {
          
 
           <div className="row">
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_submission"
-                data={` Vedio ${dashboardData.sentToday} | Feedback ${dashboardData.sentTodayFeedback}`} 
-                header="Vedio Feedback  Today"
+                // data={` Video ${dashboardData.sentToday} | Feedback ${dashboardData.sentTodayFeedback}`} 
+                data={` ${dashboardData.sentToday}`} 
+                header="Video Feedback  Today"
                 src={Total}
+                 cardClass="card-today"
               />
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_delivered"
-                data={ `Vedio  ${dashboardData.sentThisWeek} | Feedback ${dashboardData.sentThisWeekFeedback}`} // Set data dynamically from API
-                header="Vedio Feedback Send This Week"
+                data={ `Video  ${dashboardData.sentThisWeek}`} // Set data dynamically from API
+                header="Video Feedback Send This Week"
                 src={Delivered}
+                cardClass="card-week"
               />
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_failed"
-                data={ ` Vedio  ${dashboardData.sentThisMonth} | Feedback ${dashboardData.sentThisMonthFeedback}`} // Set data dynamically from API
-                header="Vedio Feedback  Sent Last >15 Days"
+                data={ ` Video  ${dashboardData.sentThisMonth} `} // Set data dynamically from API
+                header="Video Feedback  Sent Last >15 Days"
                 src={Failed}
+                cardClass="card-month"
               />
             </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_pending"
-                data={`Vedio ${dashboardData.pendingSms} | Feedback ${dashboardData.pendingSmsFeedback}`} // Set data dynamically from API
-                header="Vedio Feedback  Sent This Month"
+                data={`Video ${dashboardData.pendingSms} `} // Set data dynamically from API
+                header="Video Feedback  Sent This Month"
                 src={Read}
+                 cardClass="card-pending"
               />
             </div>
           </div>

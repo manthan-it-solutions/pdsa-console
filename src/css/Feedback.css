@@ -330,6 +330,17 @@ position: relative;
 @media (max-width: 768px) {
     .title {
         font-size: 22px;
+    }#google_translate_element.google-translate-container{
+        position: initial;
+      margin: auto;
+    }.header_f{
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+    }.language-selector{
+        align-items: center;
+        justify-content: center;
+        margin: auto;
     }
 }
 

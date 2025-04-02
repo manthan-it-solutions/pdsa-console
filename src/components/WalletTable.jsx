@@ -277,10 +277,7 @@ export default function CollapsibleTable({
             <TableCell />
             <TableCell align="right">User Id</TableCell>
             <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Wallet National</TableCell>
-            <TableCell align="right">Wallet International</TableCell>
-            <TableCell align="right">Wallet Button</TableCell>
-            <TableCell align="right">Add</TableCell>
+            <TableCell align="right">Wallet Balance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
