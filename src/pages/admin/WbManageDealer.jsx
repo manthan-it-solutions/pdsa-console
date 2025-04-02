@@ -510,6 +510,21 @@ const WbManageDealer = () => {
       
     }
   }
+
+
+  // utils.js
+ function formatDate(dateString) {
+  if (!dateString) return "N/A"; // अगर डेट null या undefined है
+  const dateObj = new Date(dateString);
+  if (isNaN(dateObj)) return "Invalid Date"; // अगर डेट वैलिड नहीं है
+
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const year = dateObj.getFullYear();
+
+  return `${day}-${month}-${year}`; // DD-MM-YYYY फॉर्मेट
+}
+
   
  
 
@@ -593,20 +608,6 @@ const WbManageDealer = () => {
                                   </MenuItem>
 
 
-                                  {/* <MenuItem
-                                    onClick={() =>
-                                      handleMenuAction("manage-waba")
-                                    }
-                                  >
-                                    <ManageAccountsIcon className="icon-spacing" />
-                                    Manage Waba
-                                  </MenuItem> */}
-                                  {/* <MenuItem
-                                    onClick={() => handleMenuAction("delete")}
-                                  >
-                                    <DeleteForeverIcon className="icon-spacing" />
-                                    Delete
-                                  </MenuItem> */}
                                 </Menu>
                               </>
                             ) : column.format && typeof value === "number" ? (

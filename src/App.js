@@ -20,6 +20,7 @@ import DealerDetailsPageregion from './pages/admin/show_data_region_wise.jsx'
 import NotFound from './pages/404_page.jsx'
 import AdminDashboard from './pages/admin/adminDashboard';
 import WbManageDealer from './pages/admin/WbManageDealer';
+import TransactionDetails from './pages/admin/Transaction_Details.jsx'
 import Feedback from './pages/admin/Feedback.jsx';
 import UserDetailspage from './pages/show_data_region_user.jsx';
 import UserDetailsZonePage from './pages/show_data_zone_user.jsx'
@@ -79,6 +80,8 @@ const Layout = () => {
             {/* report routes   start  */}
             <Route path="/CompleteCampaign" element={<AuthGuard><CompeleteCampaign /></AuthGuard>} />
             <Route path="/UserDetailsZonePage" element={<AuthGuard><UserDetailsZonePage/></AuthGuard>} />
+            <Route path="/transaction_details" element={<AuthGuard><TransactionDetails/></AuthGuard>} />
+            
 
             {/* Admin Routes*/}
             <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />

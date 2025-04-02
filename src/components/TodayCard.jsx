@@ -4,7 +4,7 @@ const TodayCard = (props) => {
   return (
     <>
 
-<div className="Today_card">
+<div className={`Today_card ${props.cardClass}`}>
                 <div className="Today_card_img_contain">
                     <div className={props.className}><img src={props.src} alt="img"/></div>
                     <span>: {props.data}</span>

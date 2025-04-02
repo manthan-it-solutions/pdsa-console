@@ -23,6 +23,7 @@ const Header = () => {
   const [balance, setBalance] = useState('0');
   const [Inter, setInter] = useState('0');
   const [Button, setButton] = useState('0');
+
   
   const [profile, setProfile] = useState({ image: "" });
   
@@ -70,10 +71,18 @@ const Header = () => {
 
   const Balancefunc = async () => {
     try {
+<<<<<<< HEAD
       const response = await apiCall({ endpoint: 'api/wp_balance_header', method: 'get' });
       if (response.balance) {
         setBalance(response.balance);
         
+=======
+      const response = await apiCall({ endpoint: 'admin/pdsa_balance_header', method: 'post' });
+      console.log('response: ', response);
+      if (response.balance) {
+        setBalance(response.balance);
+  
+>>>>>>> c46162b6a86f2c1e5bb72c0104fea7b8a5a7aa95
         setButton(response.balance);
       }
     } catch (err) {
@@ -122,7 +131,7 @@ const Header = () => {
               International Balance : <span>{Inter}</span>
             </p> */}
             <p>
-             Balance : <span>{Button}</span>
+             Balance : <span>{balance}</span>
             </p>
           </div>
           <div className="Header_end" ref={dropdownRef}>
