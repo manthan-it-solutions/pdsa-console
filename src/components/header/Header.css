@@ -193,6 +193,16 @@
     cursor: pointer;
     /* Make it look clickable */
 }
+/* .Header_content.admin_nav_item{
+    position: absolute;
+    right: 0;
+} */
+ .right_header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+ }
 
 .Header_content.admin_nav_item {
     gap: 40px;
@@ -202,7 +212,11 @@
 .Header_content.admin_nav_item p {
     color: #fff;
 }
-
+.WalletIcon {
+    filter: invert();
+    margin: 0 5px;
+    width: 30px;
+}
 @media (max-width: 992px) {
     .Header_content.admin_nav_item {
         gap: initial;

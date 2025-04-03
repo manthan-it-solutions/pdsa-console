@@ -14,6 +14,8 @@ import { Me } from "../../services/authServieces";
 import PersonIcon from '@mui/icons-material/Person';
 import KeyIcon from '@mui/icons-material/Key';
 import LogoutIcon from '@mui/icons-material/Logout';
+import walletIcon from "../../Assets/images/wallet.png";
+
 
 
 // ... other imports
@@ -116,6 +118,15 @@ const Header = () => {
             </button>
           </div>
 
+          {/* <div className="Header_content admin_nav_item">
+            
+            <p>
+             <img src={walletIcon} className="WalletIcon" alt="wallet icon" /> : <span>{balance} ₹</span>
+            </p>
+          </div> */}
+          <div div className="right_header">
+          
+
           <div className="Header_content admin_nav_item">
             {/* <p>
               National Balance : <span>{balance}</span>
@@ -124,7 +135,7 @@ const Header = () => {
               International Balance : <span>{Inter}</span>
             </p> */}
             <p>
-             Balance : <span>{balance}</span>
+             <img src={walletIcon} className="WalletIcon" alt="wallet icon" /> : <span>{balance} ₹</span>
             </p>
           </div>
           <div className="Header_end" ref={dropdownRef}>
@@ -141,6 +152,8 @@ const Header = () => {
               <button onClick={handleLogOut}> <LogoutIcon /> Logout</button>
             </div>
           </div>
+          </div>
+          
         </div>
       </header>
     </>
