@@ -72,7 +72,7 @@ const Header = () => {
   const Balancefunc = async () => {
     try {
       const response = await apiCall({ endpoint: 'admin/pdsa_balance_header', method: 'post' });
-      console.log('response: ', response);
+     
       if (response.balance) {
         setBalance(response.balance);
   
