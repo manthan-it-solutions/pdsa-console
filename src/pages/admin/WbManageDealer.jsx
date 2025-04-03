@@ -118,10 +118,6 @@ const [searchInput, setSearchInput] = useState(""); // Search Input State
   };
 
   const handleInputChange = (e) => {
-  
-   if(showCheck) {
-setuser_id(false)
-   }
     const { name, value } = e.target;
     console.log();
     if (name == "username") {
@@ -162,10 +158,10 @@ setuser_id(false)
    
     const errors = {};
     if (!formValues.user_id){
+      setShowCheck(false)
       errors.user_id = "Dealer Code is required";
-      setuser_id(false);
+
     } 
-  
     if (!formValues.name) errors.name = "User Name is required";
     if (!formValues.password) errors.password = "Password is required";
     if (!formValues.email_id) errors.email_id = "Email ID is required";
@@ -464,7 +460,6 @@ setuser_id(false)
      
     } else {
      
-      
     }
   };
 
@@ -631,7 +626,7 @@ const handleSearchChange = (e) => {
             const value = row[column.id]; 
             return (
               <TableCell key={column.id} align={column.align}>
-                {column.id === "cdate" ? (
+                {column.id === "created_date" ? (
                   new Date(value).toLocaleDateString("en-GB") // Format as DD-MM-YYYY
                 ) : column.id === "action" ? (
                   <>
@@ -728,7 +723,7 @@ const handleSearchChange = (e) => {
                           )}
                           {showCheck && !update && (
                             <>
-                              {!user_id || user_id === "" ? (
+                              {!user_id ? (
                                 <button
                                   onClick={checkDealer}
                                   className="check-dealer-button bg_blue"
