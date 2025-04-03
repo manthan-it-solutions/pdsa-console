@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                 className="Today_card_img bg_submission"
                 // data={` Video ${dashboardData.sentToday} | Feedback ${dashboardData.sentTodayFeedback}`} 
                 data={`${dashboardData.sentToday}`} 
-                header="Video Feedback  Today"
+                header="Whatsapp Sent (Today)"
                 src={Total}
                  cardClass="card-today"
               />
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
               <TodayCard
                 className="Today_card_img bg_delivered"
                 data={ `${dashboardData.sentThisWeek}`} // Set data dynamically from API
-                header="Video Feedback Send This Week"
+                header="Whatsapp Sent (This Week)"
                 src={Delivered}
                 cardClass="card-week"
               />
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
               <TodayCard
                 className="Today_card_img bg_failed"
                 data={ `${dashboardData.sentThisMonth} `} // Set data dynamically from API
-                header="Video Feedback  Sent Last >15 Days"
+                header="Whatsapp Sent (Last 15 Days)"
                 src={Failed}
                 cardClass="card-month"
               />
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
               <TodayCard
                 className="Today_card_img bg_pending"
                 data={`${dashboardData.pendingSms} `} // Set data dynamically from API
-                header="Video Feedback  Sent This Month"
+                header="Whatsapp Sent (Last Month)"
                 src={Read}
                  cardClass="card-pending"
               />
