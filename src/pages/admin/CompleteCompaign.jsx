@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";
 import excel from '../../Assets/images/excel.png'
 import search from '../../Assets/images/search.png'
+import Loader from "../../components/Loader"
 
 const CompeleteCampaign = () => {
   const [data, setData] = useState([]); // API data
@@ -18,7 +19,7 @@ const CompeleteCampaign = () => {
   const [todate, setToDate] = useState(null)
   const navigate = useNavigate(); // For navigation to details page
   const [isToDateEnabled, setIsToDateEnabled] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
 
   const today = new Date();
@@ -37,6 +38,7 @@ const CompeleteCampaign = () => {
     }
   };
   const getTemplates = async () => {
+    setLoading(true);
     try {
       const res = await apiCall({
         endpoint: `admin/getURL_data?page=${page + 1}&limit=${rowsPerPage}`,
@@ -55,6 +57,9 @@ const CompeleteCampaign = () => {
         message: error?.response?.data?.message || "An error occurred",
       });
     }
+    finally {
+      setLoading(false); 
+    }
   };
   const handleToDateChange = (event) => {
     setToDate(event.target.value); // Update the state with the selected "To" date
@@ -63,6 +68,7 @@ const CompeleteCampaign = () => {
   // Fetch data from API
   const Getdatetodata = async () => {
     try {
+      setLoading(true);
       const res = await apiCall({
         endpoint: `admin/Searh_button_api_region?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
@@ -81,6 +87,8 @@ const CompeleteCampaign = () => {
         severity: "error",
         message: error?.response?.data?.message || "An error occurred",
       });
+    }finally {
+      setLoading(false); 
     }
   };
 
@@ -135,8 +143,8 @@ const CompeleteCampaign = () => {
       "Video Click Count",
       "Total Feedback SMS Sent",
       "Total Feedback Click Count",
-      "Total Feedback Given",
-      "Sub Total"
+      "Total Feedback Given"
+      
     ];
 
     const rows = data.map(region => {
@@ -153,8 +161,8 @@ const CompeleteCampaign = () => {
         region.video_click_count || 0,
         region.total_feedback_sms_sent || 0,
         region.total_feedback_click_count || 0,
-        region.feedback_sms_video_count || 0,
-        subTotal,
+        region.feedback_sms_video_count || 0
+      
       ];
     });
 
@@ -188,6 +196,7 @@ const CompeleteCampaign = () => {
 
   return (
     <>
+    {loading && <Loader />}
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate Head_titleTemplate_new">
           <div className="date_box date_box1">
@@ -214,7 +223,7 @@ const CompeleteCampaign = () => {
                   <th>Total Feedback SMS Sent</th>
                   <th>Total Feedback Click Count</th>
                   <th>Total Feedback Given</th>
-                  <th>Sub Total</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -274,11 +283,7 @@ const CompeleteCampaign = () => {
                           {region.feedback_sms_video_count || 0}
                         </button>
                       </td>
-                      <td>
-
-                        {subTotal || 0}
-
-                      </td> {/* Subtotal for each row */}
+                     
                     </tr>
                   );
                 })}
@@ -332,13 +337,7 @@ const CompeleteCampaign = () => {
                       {totals.totalFeedbackSmsVideoCount}
                     </button>
                   </td>
-                  <td>
-                    {totals.totalVideoSendCount +
-                      totals.totalVideoClickCount +
-                      totals.totalVideoSendCount +
-                      totals.totalFeedbackClickCount +
-                      totals.totalFeedbackSmsVideoCount}
-                  </td>
+                 
                 </tr>
               </tbody>
             </table>

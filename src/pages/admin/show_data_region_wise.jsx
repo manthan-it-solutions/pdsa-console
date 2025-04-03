@@ -5,6 +5,8 @@ import "../../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
 import excel from '../../Assets/images/excel.png'
 import search from '../../Assets/images/search.png'
+import Loader from "../../components/Loader"
+
 
 const DealerDetailsPageregion = () => {
   const [data, setData] = useState([]);
@@ -72,7 +74,7 @@ const DealerDetailsPageregion = () => {
 
       setData(response.data || []);
       console.log('response: ', response);
-      const totalItems = response.data?.length || 0; // Total items in the response
+      const totalItems = response.total || 0; // Total items in the response
 
       setTotalPages(totalItems || 0); // Calculate total pages based on data length
     } catch (err) {
@@ -201,7 +203,7 @@ const DealerDetailsPageregion = () => {
 
           {/* <center> <h4>Region: {zone || "All Zones"}</h4></center> */}
 
-          {loading && <p>Loading...</p>}
+          {loading && <Loader />}
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           {!loading && !error && (

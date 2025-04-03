@@ -26,6 +26,7 @@ import Table from "@mui/material/Table";
 import { getRandomNum } from "../../utils/helper";
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
+import SearchIcon from "@mui/icons-material/Search";
 // import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 // import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
@@ -45,6 +46,9 @@ const WbManageDealer = () => {
   const [zone, setzone] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState([]);
+    const [dealers, setDealers] = useState([]); // Original Dealer List
+const [filteredRows, setFilteredRows] = useState([]);
+const [searchInput, setSearchInput] = useState(""); // Search Input State
 
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
@@ -316,8 +320,10 @@ const WbManageDealer = () => {
         method: "GET",
       });
       if (res?.success) {
+
         setRows(res?.data || []);
         setCount(res?.total);
+        setFilteredRows(res?.data || []); // Pehle sabhi users dikhana
       }
     } catch (err) {
       setSnackBar({
@@ -337,6 +343,7 @@ const WbManageDealer = () => {
       
       if (res?.message) {
         setuser_id(true);
+
         return res?.data;
 
       
@@ -351,6 +358,10 @@ const WbManageDealer = () => {
      
     }
   };
+
+
+
+
 
   const deleteDealer = async (user_id) => {
     const showSnackBar = (snackBarData) => setSnackBar(snackBarData);
@@ -526,103 +537,135 @@ const WbManageDealer = () => {
 }
 
   
- 
+
+const validateMobile = () => {
+  const mobilePattern = /^[6-9]\d{9}$/;
+  if (!mobilePattern.test(formValues.mobile)) {
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      mobile: "Enter a valid 10-digit mobile number starting with 6-9",
+    }));
+  } else {
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      mobile: "",
+    }));
+  }
+};
+
+
+
+
+const handleSearchChange = (e) => {
+  const value = e.target.value.toLowerCase();
+  console.log("Search Value:", value);
+  setSearchInput(value);
+
+  const filtered = rows.filter(user => {
+    console.log('user: ', user);
+
+    // Convert values to lowercase safely or use an empty string if undefined
+    const userId = user?.user_id ? user.user_id.toString().toLowerCase() : "";
+    const userName = user?.name ? user.name.toLowerCase() : "";
+    const userEmail = user?.email_id ? user.email_id.toLowerCase() : "";
+
+    // Check if the search value is present in any of the fields
+    return userId.includes(value) || userName.includes(value) || userEmail.includes(value);
+  });
+
+  setFilteredRows(filtered);
+};
+
+
+
 
   return (
     <>
       <div className="Template_id_contian">
         <h4 className="Head_title">
           Manage User
-          <input placeholder="Search" type="text" class="TransactionSearch" value="" />
-
+          <div className="Session_report_SearchContain">
+          <input
+            placeholder="Search"
+            value={searchInput}
+            onChange={handleSearchChange}
+            type="text"
+            className="TransactionSearch"
+          />
+     
+        </div>
           <button className="add_btn6" onClick={handleAddModalToggle}>
             <img src={Plus} alt="img" /> New
           </button>
         </h4>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table" className="Table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
+          <Table stickyHeader aria-label="sticky table" className="Table">
+  <TableHead>
+    <TableRow>
+      {columns.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{ minWidth: column.minWidth }}
+        >
+          {column.label}
+        </TableCell>
+      ))}
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {filteredRows.map((row) => {  // ✅ Yaha sirf filtered data use kiya hai
+      return (
+        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+          {columns.map((column) => {
+            const value = row[column.id]; 
+            return (
+              <TableCell key={column.id} align={column.align}>
+                {column.id === "created_date" ? (
+                  new Date(value).toLocaleDateString("en-GB") // Format as DD-MM-YYYY
+                ) : column.id === "action" ? (
+                  <>
+                    <IconButton
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={(event) => handleClick(event, row)}
                     >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
-                        const value = row[column.id]; 
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.id === "created_date" ? (
-                              new Date(value).toLocaleDateString("en-GB") // Format as DD-MM-YYYY
-                            ) : column.id === "action" ? (
-                              <>
-                                <IconButton
-                                  aria-controls="simple-menu"
-                                  aria-haspopup="true"
-                                  onClick={(event) => handleClick(event, row)}
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id="simple-menu"
-                                  anchorEl={anchorEl}
-                                  keepMounted
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                                  className="BoxShadowNone"
-                                >
-                                  <MenuItem
-                                    onClick={() => handleMenuAction("edit")}
-                                  >
-                                    <EditIcon className="icon-spacing" />
-                                    Edit
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      className="BoxShadowNone"
+                    >
+                      <MenuItem onClick={() => handleMenuAction("edit")}>
+                        <EditIcon className="icon-spacing" />
+                        Edit
+                      </MenuItem>
 
-                                    
+                      <MenuItem onClick={() => handleMenuAction("zone")}>
+                        <EditIcon className="icon-spacing" />
+                        Zone
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : column.format && typeof value === "number" ? (
+                  column.format(value)
+                ) : (
+                  value
+                )}
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      );
+    })}
+  </TableBody>
+</Table>
 
-
-                                    
-                                  </MenuItem>
-
-
-                                  <MenuItem
-                                    onClick={() => handleMenuAction("zone")}
-                                  >
-                                    <EditIcon className="icon-spacing" />
-                                    Zone
-
-                                    
-
-
-                        
-                                  </MenuItem>
-
-
-                                </Menu>
-                              </>
-                            ) : column.format && typeof value === "number" ? (
-                              column.format(value)
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
@@ -732,20 +775,20 @@ const WbManageDealer = () => {
                         )}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="mobile">
-                        Mobile No <span className="required_icon">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="mobile"
-                          placeholder="Enter Mobile"
-                          value={formValues.mobile}
-                          onChange={handleInputChange}
-                        />
-                        {formErrors.mobile && (
-                          <span className="error">{formErrors.mobile}</span>
-                        )}
-                      </div>
+  <label htmlFor="mobile">
+    Mobile No <span className="required_icon">*</span>
+  </label>
+  <input
+    type="number"
+    name="mobile"
+    placeholder="Enter Mobile"
+    value={formValues.mobile}
+    onChange={handleInputChange}
+    onBlur={validateMobile} // Call validation on blur
+  />
+  {formErrors.mobile && <span className="error">{formErrors.mobile}</span>}
+</div>
+
                     </div>
 
 

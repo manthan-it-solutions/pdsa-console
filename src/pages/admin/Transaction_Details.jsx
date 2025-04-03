@@ -9,6 +9,7 @@ import excelIcon from "../../Assets/images/excel.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { ClipLoader } from "react-spinners";
 import { SettingsApplicationsOutlined } from "@mui/icons-material";
+import Loader from "../../components/Loader"
 
 const WbTransactionDetail = () => {
   const [loading, setLoading] = useState(false);
@@ -151,16 +152,16 @@ const WbTransactionDetail = () => {
             value={searchInput}
             onChange={handleSearchChange}
             type="text"
-            className=""
+            className="TransactionSearch_new"
           />
-        <button type="button"><SearchIcon /></button>
+        <button type="button" className="search_btn_n"><SearchIcon /></button>
         </div>
           {/* <button className="add_btn7">
             <img src={Export} alt="img" /> Export
           </button> */}
-          <button type="button" className="ExcelIconContain add_btn7" onClick={handleExportToExcel}>
+          {/* <button type="button" className="ExcelIconContain add_btn7" onClick={handleExportToExcel}>
                 <img src={excelIcon} alt="excelIcon" className="ExcelIcon"/> 
-        </button>
+        </button> */}
         </h4>
         <div className="Manage_voice_Card">
           <div className="Wallet_table">
@@ -174,9 +175,7 @@ const WbTransactionDetail = () => {
         </div>
       </div>
       {loading && (
-        <div className="spinnerOverlay">
-          <ClipLoader loading={loading} size={50} />
-        </div>
+        <Loader />
       )}
       <ShowSnackBar
         open={snackBar.open}

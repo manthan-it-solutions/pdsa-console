@@ -5,8 +5,8 @@ import Total from "../../Assets/images/total.png";
 import Delivered from "../../Assets/images/delivered.png";
 import Failed from "../../Assets/images/failed.png";
 import Read from "../../Assets/images/read.png";
-import { apiCall } from "../../services/authServieces"; // Assuming this is your API service for making requests
-
+import { apiCall } from "../../services/authServieces"; 
+import Loader from "../../components/Loader";
 const AdminDashboard = () => {
   // State to hold count data
   const [dashboardData, setDashboardData] = useState({
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
     sentThisMonth: 0,
     pendingSms: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   const fetchDashboardData = async () => {
     try {
@@ -38,6 +39,8 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.error("Error fetching dashboard data", error);
+    }finally {
+      setLoading(false); 
     }
   };
   // Fetch data on component load
@@ -49,6 +52,9 @@ const AdminDashboard = () => {
 
   return (
     <>
+    {loading ? (
+        <Loader /> 
+      ) : (
       <div className="Dashboard_contain">
         <h4 className="Head_title">
           Admin Dashboard
@@ -62,7 +68,7 @@ const AdminDashboard = () => {
               <TodayCard
                 className="Today_card_img bg_submission"
                 // data={` Video ${dashboardData.sentToday} | Feedback ${dashboardData.sentTodayFeedback}`} 
-                data={` ${dashboardData.sentToday}`} 
+                data={`${dashboardData.sentToday}`} 
                 header="Video Feedback  Today"
                 src={Total}
                  cardClass="card-today"
@@ -71,7 +77,7 @@ const AdminDashboard = () => {
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_delivered"
-                data={ `Video  ${dashboardData.sentThisWeek}`} // Set data dynamically from API
+                data={ `${dashboardData.sentThisWeek}`} // Set data dynamically from API
                 header="Video Feedback Send This Week"
                 src={Delivered}
                 cardClass="card-week"
@@ -80,7 +86,7 @@ const AdminDashboard = () => {
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_failed"
-                data={ ` Video  ${dashboardData.sentThisMonth} `} // Set data dynamically from API
+                data={ `${dashboardData.sentThisMonth} `} // Set data dynamically from API
                 header="Video Feedback  Sent Last >15 Days"
                 src={Failed}
                 cardClass="card-month"
@@ -89,7 +95,7 @@ const AdminDashboard = () => {
             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-6">
               <TodayCard
                 className="Today_card_img bg_pending"
-                data={`Video ${dashboardData.pendingSms} `} // Set data dynamically from API
+                data={`${dashboardData.pendingSms} `} // Set data dynamically from API
                 header="Video Feedback  Sent This Month"
                 src={Read}
                  cardClass="card-pending"
@@ -98,6 +104,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 };

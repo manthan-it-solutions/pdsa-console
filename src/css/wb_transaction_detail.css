@@ -358,6 +358,23 @@
 
 p.Errormsg {
     font-size: 11px;
+}.TransactionSearch_new{
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 5px;
+    outline: none;
+}
+.search_btn_n{
+    position: absolute;
+    right: 12px;
+    background-color: transparent;
+    border: none;
+    top: 12px;
 }
 
 /* history table style end */

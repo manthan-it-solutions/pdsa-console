@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { saveAs } from "file-saver";  // For downloading files
 import excel from '../../Assets/images/excel.png'
 import search from '../../Assets/images/search.png'
+import Loader from "../../components/Loader"
 
 const ZoneWise_Report = () => {
   const [data, setData] = useState([]);
@@ -18,7 +19,7 @@ const ZoneWise_Report = () => {
   const [fromdate, setFromDate] = useState("null")
   const navigate = useNavigate();
   const [isToDateEnabled, setIsToDateEnabled] = useState(false);
-
+const [loading, setLoading] = useState(false);
 
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
@@ -44,6 +45,7 @@ const ZoneWise_Report = () => {
 
   // Fetch data from API
   const getTemplates = async () => {
+    setLoading(true);
     try {
       const res = await apiCall({
         endpoint: `admin/getURL_data_zone?page=${page + 1}&limit=${rowsPerPage}`,
@@ -52,8 +54,9 @@ const ZoneWise_Report = () => {
       });
 
       if (res?.success) {
+        console.log(res,'res');
         setData(res.data || []); // Store the API response data
-        setTotalTemplates(res.data.length || 0); // Update total count
+        setTotalTemplates(res.total_count || 0); // Update total count
       }
 
     } catch (error) {
@@ -62,12 +65,15 @@ const ZoneWise_Report = () => {
         severity: "error",
         message: error?.response?.data?.message || "An error occurred",
       });
+    }finally {
+      setLoading(false); 
     }
   };
 
   // Fetch data from API
   const Getdatetodata = async () => {
     try {
+      setLoading(true);
       const res = await apiCall({
         endpoint: `admin/Searh_button_api?page=${page + 1}&limit=${rowsPerPage}`,
         method: "post",
@@ -86,6 +92,8 @@ const ZoneWise_Report = () => {
         severity: "error",
         message: error?.response?.data?.message || "An error occurred",
       });
+    }finally {
+      setLoading(false); 
     }
   };
 
@@ -198,7 +206,7 @@ const ZoneWise_Report = () => {
 
   return (
     <>
-
+{loading && <Loader />}
 
       <div className="Template_id_contian1">
         <h4 className="Head_titleTemplate date_input_container">
@@ -231,7 +239,7 @@ const ZoneWise_Report = () => {
                   <th>Total Feedback Sent Count</th>
                   <th>Total Feedback Click Count</th>
                   <th>Total Feedback Given</th>
-                  <th>Sub Total</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -298,7 +306,7 @@ const ZoneWise_Report = () => {
                           {region.feedback_sms_video_count || 0}
                         </button>
                       </td>
-                      <td>{subTotal}</td> {/* Subtotal for each row */}
+                  
                     </tr>
                   );
                 })}
@@ -352,13 +360,7 @@ const ZoneWise_Report = () => {
                     </button>
 
                   </td>
-                  <td>
-                    {totals.totalVideoSendCount +
-                      totals.totalVideoClickCount +
-                      totals.totalFeedbackSmsSent +
-                      totals.totalFeedbackClickCount +
-                      totals.totalFeedbackSmsVideoCount}
-                  </td>
+                 
                 </tr>
               </tbody>
             </table>

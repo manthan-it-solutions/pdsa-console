@@ -74,9 +74,9 @@ const DealerDetailsPage = () => {
         },
       });
 
-      console.log("API Response: ", response.data);
+     
       setData(response.data || []);
-      setTotalItems(response.data.length || 0); // Set total items for pagination
+      setTotalItems(response.count_total || 0); // Set total items for pagination
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
