@@ -160,6 +160,20 @@ const DealerDetailsPageregion = () => {
 
 
 
+    // utils.js
+ function formatDate(dateString) {
+  if (!dateString) return "N/A"; // अगर डेट null या undefined है
+  const dateObj = new Date(dateString);
+  if (isNaN(dateObj)) return "Invalid Date"; // अगर डेट वैलिड नहीं है
+
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const year = dateObj.getFullYear();
+
+  return `${day}-${month}-${year}`; // DD-MM-YYYY फॉर्मेट
+}
+
+
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
@@ -235,10 +249,10 @@ const DealerDetailsPageregion = () => {
                       <td>{item.region}</td>
                       <td>{item.dealer_code}</td>
 
-                      <td>{item.cdate}</td>
+                      <td> {formatDate(item.cdate)}   </td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
-                      <td>{item.dealer_type}</td>
+                      <td>{item.network_type}</td>
                       <td>{item.Dealer_State}</td>
                       <td>{item.Dealer_City}</td>
                       <td>{item.model_name}</td>
