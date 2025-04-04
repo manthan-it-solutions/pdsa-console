@@ -1,190 +1,201 @@
+import Plus from "../../Assets/images/plus.png";
 import React, { useEffect, useState } from "react";
-import "../../css/wb_transaction_detail.css";
-import axios from "axios";
-import CollapsibleTable from "../../components/WalletTable";
 import { apiCall } from "../../services/authServieces";
 import ShowSnackBar from "../../components/snackBar";
-import Export from "../../Assets/images/export.png";
-import excelIcon from "../../Assets/images/excel.png";
-import SearchIcon from "@mui/icons-material/Search";
-import { ClipLoader } from "react-spinners";
-import { SettingsApplicationsOutlined } from "@mui/icons-material";
-import Loader from "../../components/Loader"
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import MenuItem from '@mui/material/MenuItem';
 
-const WbTransactionDetail = () => {
-  const [loading, setLoading] = useState(false);
-  const [searchInput, setSearchValue] = useState('');
-  const [debouncedSearchInput, setDebouncedSearchInput] = useState(searchInput); // State to store debounced value
-  const [snackBar, setSnackBar] = useState({
-    open: false,
-    severity: true,
-    message: "",
-  });
-
-  const [rows, setRows] = useState([]);
-  const [totalRows, setTotalRows] = useState(0);
+import { formatDate } from "../../utils/helper";
+import TablePagination from "@mui/material/TablePagination";
+import TableContainer from "@mui/material/TableContainer";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton from '@mui/material/IconButton';
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import Menu from '@mui/material/Menu';
 
 
-  const handleCloseSnackBar = () => {
-    setSnackBar((prevState) => ({ ...prevState, open: false }));
-  };
-
-  const fetchRowDetails = async()=>{
-    console.log('Fetch row details ')
-  }
-
-  const fetchTransactions = async (page = 1, limit = 10) => {
-    setLoading(true);
-    try {
-      let endpoint = `admin/get-transaction-admin?page=${page}&limit=${limit}`;
-      if (debouncedSearchInput) {
-        endpoint = `${endpoint}&user_name=${debouncedSearchInput}`;
-      }
-
-      const res = await apiCall({
-        endpoint: endpoint,
-        method: "GET",
-      });
-      if (res?.success) {
-        setRows(res?.data || []);
-        setTotalRows(res?.total || 0);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally{
-      setLoading(false);
-    }
-  };
-
-  // Debouncing effect
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      setDebouncedSearchInput(searchInput);
-    }, 500); // Set delay to 500ms
-
-    return () => clearTimeout(delayDebounceFn); // Clear the timeout if searchInput changes
-  }, [searchInput]);
-
-  useEffect(() => {
-    fetchTransactions();
-  }, [debouncedSearchInput]);
-
-  const handleSearchChange = (event) => {
-    const { value } = event.target;
-    setSearchValue(value);
-  };
-
-  // handle download to excel
-  const handleExportToExcel = async()=>{
-    setLoading(true);
-    try{
-      const endpoint = `admin/getTransactionalExcelData`;
-      
-      const url = `${endpoint}`;
-      const user = JSON.parse(localStorage.getItem("user-cred"));
-
-      const response = await axios.get(url, {
-        responseType: 'blob',
-        headers: {
-          'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Authorization': `Bearer ${user?.token}`
-        }
-      });
-      if (response.data.size === 0) {
-        throw new Error('Received empty file');
-    }
-
-    // Get filename from the response headers or use default
-    const contentDisposition = response.headers['content-disposition'];
-    let filename = `MIS_transactional_report.xlsx`;
-
-    if (contentDisposition) {
-        const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-        if (filenameMatch && filenameMatch[1]) {
-            filename = filenameMatch[1].replace(/['"]/g, '');
-        }
-    }
-
-    // Create download link
-    const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.style.display = 'none';
-    link.href = downloadUrl;
-    link.download = filename;
-
-    // Append to document, click, and cleanup
-    document.body.appendChild(link);
-    link.click();
-
-    setTimeout(() => {
-      setSnackBar({
-        open:true,
-        severity: true,
-        message: 'Excel File Downloaded Successfully'
-      })
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(downloadUrl);
-    }, 100);
-
-    }catch(error){
-      console.log('Error downloading Excel file: ', error);
-      return setSnackBar({
-        open: true,
-        severity: false,
-        message: 'Failed to download excel file'
-      })
-    } finally{
-      setLoading(false);
-    }
-  }
-
-
+const WpUserTransactionDetails = () => {
+    const [count, setCount] = useState(0);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [SelectedRow, setSelectedRow] = ('');
+    
   
-  return (
-    <>
-      <div className="Manage_voice_contian">
-        <h4 className="Head_title AdminSearchContain">
-          Transaction Details{" "}
-          
-        <div className="Session_report_SearchContain">
-          <input
-            placeholder="Search"
-            value={searchInput}
-            onChange={handleSearchChange}
-            type="text"
-            className="TransactionSearch_new"
-          />
-        <button type="button" className="search_btn_n"><SearchIcon /></button>
-        </div>
-          {/* <button className="add_btn7">
-            <img src={Export} alt="img" /> Export
-          </button> */}
-          {/* <button type="button" className="ExcelIconContain add_btn7" onClick={handleExportToExcel}>
-                <img src={excelIcon} alt="excelIcon" className="ExcelIcon"/> 
-        </button> */}
-        </h4>
-        <div className="Manage_voice_Card">
-          <div className="Wallet_table">
-            <CollapsibleTable
-              rows={rows}
-              totalRows={totalRows}
-              fetchTransactions={fetchTransactions}
-              fetchRowDetails={fetchRowDetails}
-            />
-          </div>
-        </div>
-      </div>
-      {loading && (
-        <Loader />
-      )}
-      <ShowSnackBar
-        open={snackBar.open}
-        severity={snackBar.severity}
-        message={snackBar.message}
-        onClose={handleCloseSnackBar}
-      />
-    </>
-  );
-};
+    const [snackBar, setSnackBar] = useState({
+      open: false,
+      severity: true,
+      message: "",
+    });
+    const [rows, setRows] = useState([]);
+  
+    const fetchNumberList = async (page = 1, limit = 10) => {
+      try {
+        const res = await apiCall({
+          endpoint: `admin/pdsa_transaction_details?page=${page}&limit=${limit}`,
+          method: "GET",
+        });
+      
+        if (res?.response) {
+          setRows(res?.response?.data || []);
+          setCount(res?.response?.total);
+        }
+      } catch (err) {
+        setSnackBar({
+          open: true,
+          severity: false,
+          message: err?.response?.data?.message || "An error occurred",
+        });
+      }
+    };
+  
+    useEffect(() => {
+      fetchNumberList();
+    }, []);
+  
+    const handleCloseSnackBar = () => {
+      setSnackBar((prevState) => ({ ...prevState, open: false }));
+    };
+  
+    const handleChangePage = async (event, newPage) => {
+      const updatedPage = newPage + 1;
+      await fetchNumberList(updatedPage, rowsPerPage);
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = async (event) => {
+      setRowsPerPage(+event.target.value);
+      setPage(0);
+      await fetchNumberList(page, parseInt(event.target.value));
+    };
+  
+    const handleClick = (event, row) => {
+      setAnchorEl(event.currentTarget);
+      setSelectedRow(row);
+    };
+    const [anchorEl, setAnchorEl] = useState(null);
+  
+    const columns = [
+      { id: "trans_date", label: "Date" },
+      { id: "trans_time", label: "Time" },
+      { id: "amount", label: "Amount" },
+      { id: "remarks", label: "Remark" },
+      { id: "type", label: "Type" },
+    ];
+  
 
-export default WbTransactionDetail;
+    function formatDate(dateString) {
+      if (!dateString) return "N/A"; // अगर डेट null या undefined है
+      const dateObj = new Date(dateString);
+      if (isNaN(dateObj)) return "Invalid Date"; // अगर डेट वैलिड नहीं है
+    
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+    
+      return `${day}-${month}-${year}`; // DD-MM-YYYY फॉर्मेट
+    }
+    return (
+      <>
+        <div className="Block_number_contian">
+          <h4 className="Head_title">Transaction Details</h4>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 440 }} className="table_contain">
+              <Table stickyHeader aria-label="sticky table" className="Table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row, index) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        let value = row[column.id];
+  
+                        if (column.id === "type") {
+                          // Normalize the type value to lowercase for comparison
+                          const typeValue = value?.toLowerCase();
+                          const color =
+                            typeValue === "add"
+                              ? "green"
+                              : typeValue === "deduct"
+                              ? "red"
+                              : "black";
+  
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <span style={{ color: color }}>
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
+                              </span>
+                            </TableCell>
+                          );
+                        }
+
+
+
+                        if (column.id === "trans_date") {
+                          // Normalize the type value to lowercase for comparison
+                  
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <span >
+                                {value === "trans_date"
+                                  ? column.formatDate(value)
+                                  :formatDate(value)}
+                              </span>
+                            </TableCell>
+                          );
+                        }
+
+                        
+  
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={count}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </div>
+        <ShowSnackBar
+          open={snackBar.open}
+          severity={snackBar.severity}
+          message={snackBar.message}
+          onClose={handleCloseSnackBar}
+        />
+      </>
+    );
+  };
+  
+
+export default WpUserTransactionDetails;
