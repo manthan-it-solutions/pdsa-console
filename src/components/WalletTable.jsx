@@ -257,6 +257,7 @@ export default function CollapsibleTable({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
  
+  console.log(rows,'rowsrowsrows');
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -275,14 +276,17 @@ export default function CollapsibleTable({
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="right">User Id</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Wallet Balance</TableCell>
+            <TableCell align="right">Data</TableCell>
+            <TableCell align="right">Time</TableCell>
+            <TableCell align="right">Amount </TableCell>
+            <TableCell align="right">Remark</TableCell>
+            <TableCell align="right">Type </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {/* Change: Render rows dynamically */}
           {rows.map((row, index) => (
+           
            
             
             <Row key={row.id} row={row} onSubmit={onSubmit} index={index} />

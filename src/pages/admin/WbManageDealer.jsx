@@ -54,6 +54,8 @@ const [searchInput, setSearchInput] = useState(""); // Search Input State
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
   const [selectedValue, setSelectedValue] = useState('');
+  const [designations, setDesignations] = useState([]); // Store fetched designations
+  
 
 
   const openDialog = (title, description) => {
@@ -71,7 +73,7 @@ const [searchInput, setSearchInput] = useState(""); // Search Input State
     mobile: "",
     password: "",
     emp_code: "",
-    designation:"",
+    designation:[],
     region: [],  // Ensure it's an array
     zone: [],    // Ensure it's an array
     
@@ -268,13 +270,15 @@ setuser_id(false)
             const regionArray = region_name ? region_name.split(',').map((item) => item.trim()) : [];
    
           
-      
-         
+
+          
+            
             // Update form values with the fetched and processed data
             setFormValues((prevValues) => ({
               ...prevValues,
               zone: zoneArray, // Pre-select the zones
               region: regionArray, // Pre-select the regions
+          
             }));
           } else {
             console.error("No data received from the API or response is empty.");
@@ -298,6 +302,34 @@ setuser_id(false)
     
     
     };
+
+
+    async function PageLoadedDesignation() {
+      const response_designation = await apiCall({
+        endpoint: "admin/get_designation_data",
+        method: "POST",
+        payload: { user_id },
+      });
+    
+      console.log(response_designation, "yvj");
+    
+      if (response_designation.data && response_designation.data.length > 0) {
+        // Extract user_designation values from all records
+        const designationArray = response_designation.data.map((item) => item.user_designation);
+    
+        console.log("designationArray: ", designationArray);
+    
+        // Update the designations state for mapping in the dropdown
+        setDesignations(designationArray);
+    
+        // Pre-select the first designation (if available)
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          designation: designationArray.length > 0 ? designationArray[0] : "",
+        }));
+      }
+    }
+    
     
 
   const modalClose = () => {
@@ -382,6 +414,7 @@ setuser_id(false)
   useEffect(() => {
     console.log('Testing Ramkesh')
     fetchUsers();
+    PageLoadedDesignation()
   }, []);
 
 
@@ -855,17 +888,20 @@ const handleSearchChange = (e) => {
   Designation<span className="required_icon">*</span>
   </label>
 
-  <select
-        name="Designation"
-        value={formValues.designation}
-        onChange={handleSelectChange}
-        className="form-control p-2"
-      >
+ <select
+  name="Designation"
+  value={formValues.designation}
+  onChange={handleSelectChange}
+  className="form-control p-2"
+>
+  <option value="">---Select Designation---</option>
+  {designations.map((designation, index) => (
+    <option key={index} value={designation}>
+      {designation}
+    </option>
+  ))}
+</select>
 
-<option value="">---Section Designation-------</option>
-        <option value="Section Head">Section Head</option>
-        <option value="Team Member">Team Member</option>
-      </select>
 
   {formErrors.designation && (
     <span className="error">

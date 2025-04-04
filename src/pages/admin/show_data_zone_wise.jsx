@@ -268,7 +268,7 @@ const DealerDetailsPage = () => {
                       <td>{item.feedback_answer3 || "-"}</td>
                       <td>{item.feedback_answer4 || "-"}</td>
                       <td>{item.feedback_answer5 || "-"}</td>
-                      <td>{item.feedback_date || "-"}</td>
+                      <td>{formatDate(item.feedback_date) || "-"}</td>
                     </tr>
                   ))
                 ) : (
