@@ -659,8 +659,8 @@ const handleSearchChange = (e) => {
             const value = row[column.id]; 
             return (
               <TableCell key={column.id} align={column.align}>
-                {column.id === "created_date" ? (
-                  new Date(value).toLocaleDateString("en-GB") // Format as DD-MM-YYYY
+                {column.id === "cdate" ? (
+                formatDate(value)// Format as DD-MM-YYYY
                 ) : column.id === "action" ? (
                   <>
                     <IconButton
