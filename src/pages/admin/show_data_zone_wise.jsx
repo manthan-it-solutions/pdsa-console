@@ -233,7 +233,6 @@ const DealerDetailsPage = () => {
                 <tr>
                   <th>Zone</th>
                   <th>Dealer Code</th>
-                  <th>Video Send Count</th>
                   <th>Creation Date</th>
                   <th>Creation Time</th>
                   <th>Dealer Name</th>
@@ -255,7 +254,6 @@ const DealerDetailsPage = () => {
                     <tr key={index}>
                       <td>{item.zone}</td>
                       <td>{item.dealer_code}</td>
-                      <td>{item.video_send_count}</td>
                       <td> {formatDate(item.cdate)} </td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
