@@ -47,10 +47,10 @@ const DealerDetailsPageregion = () => {
 
   // Retrieve fromdate and todate passed via state
   const stateDates = location.state || {};
-  useEffect(() => {
-    if (stateDates.fromdate) setFromDate(stateDates.fromdate);
-    if (stateDates.todate) setToDate(stateDates.todate);
-  }, [stateDates]);
+  // useEffect(() => {
+  //   if (stateDates.fromdate) setFromDate(stateDates.fromdate);
+  //   if (stateDates.todate) setToDate(stateDates.todate);
+  // }, [stateDates]);
 
   // Fetch all dealer details
   const fetchDealerDetails = async () => {
@@ -85,9 +85,29 @@ const DealerDetailsPageregion = () => {
     }
   };
 
+
+
+
+const Getdatetodata = async () => {
+    try {
+      setLoading(true);
+    
+
+      fetchDealerDetails();
+
+    } catch (error) {
+      
+    }finally {
+      setLoading(false); 
+    }
+  };
+
+
   useEffect(() => {
+    if (stateDates.fromdate) setFromDate(stateDates.fromdate);
+    if (stateDates.todate) setToDate(stateDates.todate)
     fetchDealerDetails();
-  }, [page, rowsPerPage, fromdate, todate]);
+  }, [page, rowsPerPage]);
 
 
   const handleChangePage = (event, newPage) => {
@@ -178,13 +198,13 @@ const DealerDetailsPageregion = () => {
   return (
     <div className="Template_id_contian1">
       <h4 className="Head_titleTemplate">
-        <div className="date_box date_box1">
+        <div className="date_box date_box1 new_css">
           <input type="date" className="date_box_input" value={fromdate}
             onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
           To
           <input type="date" className="date_box_input" value={todate}
             onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString} />
-
+<div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div>
         </div>
 
 

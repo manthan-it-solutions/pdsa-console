@@ -311,7 +311,8 @@ const [loading, setLoading] = useState(false);
                   );
                 })}
                 <tr className="font-weight-bold">
-                  <td>Total</td>
+                  <td><b>
+                    Total</b></td>
 
                   <td>
 
