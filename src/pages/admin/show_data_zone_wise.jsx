@@ -221,11 +221,13 @@ const DealerDetailsPage = () => {
           </div>
           {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
         </div>
-        Dealer Details ( Zone: {zone || "All Zones"} )
+
+        Dealer Details ( Region: {zone === "total" ? "Total" : zone || "All Zones"} )
         {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
         <div onClick={exportToCSV} className="excel_img_btn">
           <img src={excel} />
         </div>
+        
       </h4>
       <div className="Template_id_Card1">
         <div className="table_contain" id="tableContain">

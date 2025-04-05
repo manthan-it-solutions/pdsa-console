@@ -228,7 +228,7 @@ const Getdatetodata = async () => {
      
       </div> */}
 
-        Dealer Details ( Region: {zone || "All Zones"} )
+Dealer Details ( Region: {zone === "total" ? "Total" : zone || "All Zones"} )
         {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
         <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
       </h4>
