@@ -66,7 +66,7 @@ const DealerDetailsPage = () => {
       });
 
       setData(response.data || []);
-      setTotalItems(response.count_total || 0); // Set total items for pagination
+      setTotalItems(response.data.length || 0); // Set total items for pagination
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch data");
     } finally {
@@ -242,6 +242,7 @@ const DealerDetailsPage = () => {
                 <tr>
                   <th>Zone</th>
                   <th>Dealer Code</th>
+                  <th>Video Send Count</th>
                   <th>Creation Date</th>
                   <th>Creation Time</th>
                   <th>Dealer Name</th>
@@ -263,10 +264,11 @@ const DealerDetailsPage = () => {
                     <tr key={index}>
                       <td>{item.zone}</td>
                       <td>{item.dealer_code}</td>
-                      <td> {formatDate(item.cdate)} </td>
+                      <td>{item.video_send_count}</td>
+                      <td>{item.cdate}</td>
                       <td>{item.ctime}</td>
                       <td>{item.dealer_name}</td>
-                      <td>{item.network_type}</td>
+                      <td>{item.dealer_type}</td>
                       <td>{item.Dealer_State}</td>
                       <td>{item.Dealer_City}</td>
                       <td>{item.model_name}</td>
@@ -275,7 +277,7 @@ const DealerDetailsPage = () => {
                       <td>{item.feedback_answer3 || "-"}</td>
                       <td>{item.feedback_answer4 || "-"}</td>
                       <td>{item.feedback_answer5 || "-"}</td>
-                      <td>{formatDate(item.feedback_date) || "-"}</td>
+                      <td>{item.feedback_date || "-"}</td>
                     </tr>
                   ))
                 ) : (
