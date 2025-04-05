@@ -26,6 +26,7 @@ import Table from "@mui/material/Table";
 import { getRandomNum } from "../../utils/helper";
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
+import SearchIcon from "@mui/icons-material/Search";
 // import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 // import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
@@ -45,11 +46,16 @@ const WbManageDealer = () => {
   const [zone, setzone] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = useState([]);
+    const [dealers, setDealers] = useState([]); // Original Dealer List
+const [filteredRows, setFilteredRows] = useState([]);
+const [searchInput, setSearchInput] = useState(""); // Search Input State
 
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
   const [selectedValue, setSelectedValue] = useState('');
+  const [designations, setDesignations] = useState([]); // Store fetched designations
+  
 
 
   const openDialog = (title, description) => {
@@ -67,7 +73,7 @@ const WbManageDealer = () => {
     mobile: "",
     password: "",
     emp_code: "",
-    designation:"",
+    designation:[],
     region: [],  // Ensure it's an array
     zone: [],    // Ensure it's an array
     
@@ -80,10 +86,10 @@ const WbManageDealer = () => {
   });
   const columns = [
    
-    { id: "user_id", label: "User Id" },
+    { id: "user_id", label: "User ID" },
     { id: "name", label: "User Name" },
     { id: "email_id", label: "Email Id" },
-    { id: "mobile", label: "User Mobile" },
+    { id: "mobile", label: "User Mobile No." },
     { id: "emp_code", label: "Emp Code" },
     { id: "cdate", label: "Created Date" },
 
@@ -153,13 +159,17 @@ const WbManageDealer = () => {
   const validateForm = () => {
    
     const errors = {};
-    if (!formValues.user_id) errors.user_id = "Dealer Code is required";
+    if (!formValues.user_id){
+      setShowCheck(false)
+      errors.user_id = "Dealer Code is required";
+
+    } 
     if (!formValues.name) errors.name = "User Name is required";
-    if (!formValues.password) errors.password = "password is required";
-    if (!formValues.email_id) errors.email_id = "Email is required";
-    if (!formValues.mobile) errors.mobile = "Mobile is required";
-    if (!formValues.emp_code) errors.emp_code = "emp code is required";
-    if (!formValues.designation) errors.status = "designation is required";
+    if (!formValues.password) errors.password = "Password is required";
+    if (!formValues.email_id) errors.email_id = "Email ID is required";
+    if (!formValues.mobile) errors.mobile = "Mobile No. is required";
+    if (!formValues.emp_code) errors.emp_code = "Emp code is required";
+    if (!formValues.designation) errors.status = "Designation is required";
 
     if (!update) {
       if (!formValues.password) errors.password = "Password is required";
@@ -256,13 +266,15 @@ const WbManageDealer = () => {
             const regionArray = region_name ? region_name.split(',').map((item) => item.trim()) : [];
    
           
-      
-         
+
+          
+            
             // Update form values with the fetched and processed data
             setFormValues((prevValues) => ({
               ...prevValues,
               zone: zoneArray, // Pre-select the zones
               region: regionArray, // Pre-select the regions
+          
             }));
           } else {
             console.error("No data received from the API or response is empty.");
@@ -286,6 +298,34 @@ const WbManageDealer = () => {
     
     
     };
+
+
+    async function PageLoadedDesignation() {
+      const response_designation = await apiCall({
+        endpoint: "admin/get_designation_data",
+        method: "POST",
+        payload: { user_id },
+      });
+    
+      console.log(response_designation, "yvj");
+    
+      if (response_designation.data && response_designation.data.length > 0) {
+        // Extract user_designation values from all records
+        const designationArray = response_designation.data.map((item) => item.user_designation);
+    
+        console.log("designationArray: ", designationArray);
+    
+        // Update the designations state for mapping in the dropdown
+        setDesignations(designationArray);
+    
+        // Pre-select the first designation (if available)
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          designation: designationArray.length > 0 ? designationArray[0] : "",
+        }));
+      }
+    }
+    
     
 
   const modalClose = () => {
@@ -316,8 +356,10 @@ const WbManageDealer = () => {
         method: "GET",
       });
       if (res?.success) {
+
         setRows(res?.data || []);
         setCount(res?.total);
+        setFilteredRows(res?.data || []); // Pehle sabhi users dikhana
       }
     } catch (err) {
       setSnackBar({
@@ -337,6 +379,7 @@ const WbManageDealer = () => {
       
       if (res?.message) {
         setuser_id(true);
+
         return res?.data;
 
       
@@ -352,6 +395,10 @@ const WbManageDealer = () => {
     }
   };
 
+
+
+
+
   const deleteDealer = async (user_id) => {
     const showSnackBar = (snackBarData) => setSnackBar(snackBarData);
     await deleteDealers(user_id, showSnackBar);
@@ -363,6 +410,7 @@ const WbManageDealer = () => {
   useEffect(() => {
     console.log('Testing Ramkesh')
     fetchUsers();
+    PageLoadedDesignation()
   }, []);
 
 
@@ -510,118 +558,151 @@ const WbManageDealer = () => {
       
     }
   }
+
+
+  // utils.js
+ function formatDate(dateString) {
+  if (!dateString) return "N/A"; // अगर डेट null या undefined है
+  const dateObj = new Date(dateString);
+  if (isNaN(dateObj)) return "Invalid Date"; // अगर डेट वैलिड नहीं है
+
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const year = dateObj.getFullYear();
+
+  return `${day}-${month}-${year}`; // DD-MM-YYYY फॉर्मेट
+}
+
   
- 
+
+const validateMobile = () => {
+  const mobilePattern = /^[6-9]\d{9}$/;
+  if (!mobilePattern.test(formValues.mobile)) {
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      mobile: "Enter a valid 10-digit mobile number starting with 6-9",
+    }));
+  } else {
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      mobile: "",
+    }));
+  }
+};
+
+
+
+
+const handleSearchChange = (e) => {
+  const value = e.target.value.toLowerCase();
+  console.log("Search Value:", value);
+  setSearchInput(value);
+
+  const filtered = rows.filter(user => {
+    console.log('user: ', user);
+
+    // Convert values to lowercase safely or use an empty string if undefined
+    const userId = user?.user_id ? user.user_id.toString().toLowerCase() : "";
+    const userName = user?.name ? user.name.toLowerCase() : "";
+    const userEmail = user?.email_id ? user.email_id.toLowerCase() : "";
+
+    // Check if the search value is present in any of the fields
+    return userId.includes(value) || userName.includes(value) || userEmail.includes(value);
+  });
+
+  setFilteredRows(filtered);
+};
+
+
+
 
   return (
     <>
       <div className="Template_id_contian">
         <h4 className="Head_title">
           Manage User
-          <input placeholder="Search" type="text" class="TransactionSearch" value="" />
-
+          <div className="Session_report_SearchContain">
+          <input
+            placeholder="Search"
+            value={searchInput}
+            onChange={handleSearchChange}
+            type="text"
+            className="TransactionSearch"
+          />
+     
+        </div>
           <button className="add_btn6" onClick={handleAddModalToggle}>
             <img src={Plus} alt="img" /> New
           </button>
         </h4>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table" className="Table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
+          <Table stickyHeader aria-label="sticky table" className="Table">
+  <TableHead>
+    <TableRow>
+      {columns.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{ minWidth: column.minWidth }}
+        >
+          {column.label}
+        </TableCell>
+      ))}
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {filteredRows.map((row) => {  // ✅ Yaha sirf filtered data use kiya hai
+      return (
+        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+          {columns.map((column) => {
+            const value = row[column.id]; 
+            return (
+              <TableCell key={column.id} align={column.align}>
+                {column.id === "cdate" ? (
+                formatDate(value)// Format as DD-MM-YYYY
+                ) : column.id === "action" ? (
+                  <>
+                    <IconButton
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={(event) => handleClick(event, row)}
                     >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      {columns.map((column) => {
-                        const value = row[column.id]; 
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.id === "created_date" ? (
-                              new Date(value).toLocaleDateString("en-GB") // Format as DD-MM-YYYY
-                            ) : column.id === "action" ? (
-                              <>
-                                <IconButton
-                                  aria-controls="simple-menu"
-                                  aria-haspopup="true"
-                                  onClick={(event) => handleClick(event, row)}
-                                >
-                                  <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                  id="simple-menu"
-                                  anchorEl={anchorEl}
-                                  keepMounted
-                                  open={Boolean(anchorEl)}
-                                  onClose={handleClose}
-                                  className="BoxShadowNone"
-                                >
-                                  <MenuItem
-                                    onClick={() => handleMenuAction("edit")}
-                                  >
-                                    <EditIcon className="icon-spacing" />
-                                    Edit
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      className="BoxShadowNone"
+                    >
+                      <MenuItem onClick={() => handleMenuAction("edit")}>
+                        <EditIcon className="icon-spacing" />
+                        Edit
+                      </MenuItem>
 
-                                    
+                      <MenuItem onClick={() => handleMenuAction("zone")}>
+                        <EditIcon className="icon-spacing" />
+                        Zone
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : column.format && typeof value === "number" ? (
+                  column.format(value)
+                ) : (
+                  value
+                )}
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      );
+    })}
+  </TableBody>
+</Table>
 
-
-                                    
-                                  </MenuItem>
-
-
-                                  <MenuItem
-                                    onClick={() => handleMenuAction("zone")}
-                                  >
-                                    <EditIcon className="icon-spacing" />
-                                    Zone
-
-                                    
-
-
-                        
-                                  </MenuItem>
-
-
-                                  {/* <MenuItem
-                                    onClick={() =>
-                                      handleMenuAction("manage-waba")
-                                    }
-                                  >
-                                    <ManageAccountsIcon className="icon-spacing" />
-                                    Manage Waba
-                                  </MenuItem> */}
-                                  {/* <MenuItem
-                                    onClick={() => handleMenuAction("delete")}
-                                  >
-                                    <DeleteForeverIcon className="icon-spacing" />
-                                    Delete
-                                  </MenuItem> */}
-                                </Menu>
-                              </>
-                            ) : column.format && typeof value === "number" ? (
-                              column.format(value)
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
@@ -731,20 +812,20 @@ const WbManageDealer = () => {
                         )}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="mobile">
-                        Mobile No <span className="required_icon">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="mobile"
-                          placeholder="Enter Mobile"
-                          value={formValues.mobile}
-                          onChange={handleInputChange}
-                        />
-                        {formErrors.mobile && (
-                          <span className="error">{formErrors.mobile}</span>
-                        )}
-                      </div>
+  <label htmlFor="mobile">
+    Mobile No <span className="required_icon">*</span>
+  </label>
+  <input
+    type="number"
+    name="mobile"
+    placeholder="Enter Mobile"
+    value={formValues.mobile}
+    onChange={handleInputChange}
+    onBlur={validateMobile} // Call validation on blur
+  />
+  {formErrors.mobile && <span className="error">{formErrors.mobile}</span>}
+</div>
+
                     </div>
 
 
@@ -802,17 +883,20 @@ const WbManageDealer = () => {
   Designation<span className="required_icon">*</span>
   </label>
 
-  <select
-        name="Designation"
-        value={formValues.designation}
-        onChange={handleSelectChange}
-        className="form-control p-2"
-      >
+ <select
+  name="Designation"
+  value={formValues.designation}
+  onChange={handleSelectChange}
+  className="form-control p-2"
+>
+  <option value="">---Select Designation---</option>
+  {designations.map((designation, index) => (
+    <option key={index} value={designation}>
+      {designation}
+    </option>
+  ))}
+</select>
 
-<option value="">---Section Designation-------</option>
-        <option value="Section Head">Section Head</option>
-        <option value="Team Member">Team Member</option>
-      </select>
 
   {formErrors.designation && (
     <span className="error">
