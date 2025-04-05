@@ -73,8 +73,9 @@ const DealerDetailsPageregion = () => {
       });
 
       setData(response.data || []);
-      console.log('response: ', response);
+      
       const totalItems = response.total || 0; // Total items in the response
+      
 
       setTotalPages(totalItems || 0); // Calculate total pages based on data length
     } catch (err) {
