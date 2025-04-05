@@ -303,7 +303,8 @@ const ZoneWise_Report = () => {
                   );
                 })}
                 <tr className="font-weight-bold">
-                  <td>Total</td>
+                  <td><b>
+                    Total</b></td>
 
                   <td>
 

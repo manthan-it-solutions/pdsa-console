@@ -542,3 +542,9 @@ p {
     }
 }
 
+@media (max-width: 570px) {
+    .date_box.date_box1.new_css {
+        width: 260px;
+        margin: auto;
+    }
+}
