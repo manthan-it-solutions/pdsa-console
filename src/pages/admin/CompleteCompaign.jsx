@@ -220,7 +220,7 @@ const CompeleteCampaign = () => {
                   <th>Region</th>
                   <th>Video Send Count</th>
                   <th>Video Click Count</th>
-                  <th>Total Feedback SMS Sent</th>
+                  <th>Total Feedback Sent Count</th>
                   <th>Total Feedback Click Count</th>
                   <th>Total Feedback Given</th>
                  
@@ -288,7 +288,7 @@ const CompeleteCampaign = () => {
                   );
                 })}
                 <tr className="font-weight-bold">
-                  <td>Total</td>
+                  <td><b>Total</b></td>
                   <td>
 
                     <button
