@@ -3,8 +3,9 @@ import { apiCall } from "../../services/authServieces";
 import { useLocation } from "react-router-dom";
 import "../../css/wb_template.css";
 import TablePagination from "@mui/material/TablePagination";
-import excel from '../../Assets/images/excel.png'
-import search from '../../Assets/images/search.png'
+import excel from "../../Assets/images/excel.png";
+import search from "../../Assets/images/search.png";
+import Loader from "../../components/Loader";
 
 const DealerDetailsPage = () => {
   const [data, setData] = useState([]);
@@ -21,10 +22,6 @@ const DealerDetailsPage = () => {
   const zone = queryParams.get("zone");
   const columnName = queryParams.get("columnName");
 
-
-
-
-
   const [isToDateEnabled, setIsToDateEnabled] = useState(false);
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
@@ -35,20 +32,12 @@ const DealerDetailsPage = () => {
   const handleFromDateChange = (e) => {
     const selectedFromDate = e.target.value;
     setFromDate(selectedFromDate);
-    setIsToDateEnabled(!!selectedFromDate); 
+    setIsToDateEnabled(!!selectedFromDate);
   };
 
   const handleToDateChange = (e) => {
     setToDate(e.target.value);
   };
-
-
-
-
-
-
-
-
 
   // Retrieve fromdate and todate passed via state
   const stateDates = location.state || {};
@@ -64,7 +53,9 @@ const DealerDetailsPage = () => {
 
     try {
       const response = await apiCall({
-        endpoint: `admin/getDealerDetailsZone?page=${page + 1}&limit=${rowsPerPage}`,
+        endpoint: `admin/getDealerDetailsZone?page=${
+          page + 1
+        }&limit=${rowsPerPage}`,
         method: "post",
         payload: {
           zone,
@@ -74,7 +65,6 @@ const DealerDetailsPage = () => {
         },
       });
 
-      console.log("API Response: ", response.data);
       setData(response.data || []);
       setTotalItems(response.data.length || 0); // Set total items for pagination
     } catch (err) {
@@ -84,10 +74,21 @@ const DealerDetailsPage = () => {
     }
   };
 
+  const Getdatetodata = async () => {
+    try {
+      setLoading(true);
+
+      fetchDealerDetails();
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Trigger data fetch on page load, date change, or pagination changes
   useEffect(() => {
     fetchDealerDetails();
-  }, [page, rowsPerPage, fromdate, todate]);
+  }, [page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -102,9 +103,6 @@ const DealerDetailsPage = () => {
     setPage(0); // Reset to the first page when performing a search
     fetchDealerDetails();
   };
-
-
-
 
   const exportToCSV = () => {
     if (data.length === 0) {
@@ -151,10 +149,9 @@ const DealerDetailsPage = () => {
     ]);
 
     // Combine headers and rows
-    const csvContent =
-      [headers.join(",")]
-        .concat(csvRows.map((row) => row.join(",")))
-        .join("\n");
+    const csvContent = [headers.join(",")]
+      .concat(csvRows.map((row) => row.join(",")))
+      .join("\n");
 
     // Create a Blob and download the file
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -165,6 +162,18 @@ const DealerDetailsPage = () => {
     link.click();
     document.body.removeChild(link);
   };
+
+  function formatDate(dateString) {
+    if (!dateString) return "N/A"; // अगर डेट null या undefined है
+    const dateObj = new Date(dateString);
+    if (isNaN(dateObj)) return "Invalid Date"; // अगर डेट वैलिड नहीं है
+
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const year = dateObj.getFullYear();
+
+    return `${day}-${month}-${year}`; // DD-MM-YYYY फॉर्मेट
+  }
 
   return (
     <div className="Template_id_contian1">
@@ -189,28 +198,42 @@ const DealerDetailsPage = () => {
      
       </div> */}
         <div className="date_box date_box1">
-          <input type="date" className="date_box_input" value={fromdate}
-            onChange={handleFromDateChange}  min={twoMonthsAgoString} max={todayString} />
+          <input
+            type="date"
+            className="date_box_input"
+            value={fromdate}
+            onChange={handleFromDateChange}
+            min={twoMonthsAgoString}
+            max={todayString}
+          />
           To
-          <input type="date" className="date_box_input" value={todate}
-           onChange={handleToDateChange} disabled={!isToDateEnabled} min={fromdate}  max={todayString}  />
-
+          <input
+            type="date"
+            className="date_box_input"
+            value={todate}
+            onChange={handleToDateChange}
+            disabled={!isToDateEnabled}
+            min={fromdate}
+            max={todayString}
+          />
+          <div onClick={Getdatetodata} className="sercah_icon_date">
+            <img src={search} />
+          </div>
           {/* <div onClick={Getdatetodata} className="sercah_icon_date"><img src={search} /></div> */}
         </div>
 
-
-        Dealer Details ( Zone: {zone || "All Zones"} )
+        Dealer Details ( Region: {zone === "total" ? "Total" : zone || "All Zones"} )
         {/* <button className="btn btn-primary p-2 " onClick={exportToCSV}>Export to CSV</button>  */}
-        <div onClick={exportToCSV} className="excel_img_btn" ><img src={excel} /></div>
+        <div onClick={exportToCSV} className="excel_img_btn">
+          <img src={excel} />
+        </div>
+        
       </h4>
       <div className="Template_id_Card1">
-
         <div className="table_contain" id="tableContain">
-
-
           {/* <center><h2>Zone: {zone || "All Zones"}</h2></center> */}
 
-          {loading && <p>Loading...</p>}
+          {loading &&<><Loader /> <p>Loading...</p></> }
           {error && <p style={{ color: "red" }}>{error}</p>}
 
           {!loading && !error && (
